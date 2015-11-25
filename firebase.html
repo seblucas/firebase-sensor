@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html ng-app="sensorReadingApp">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <!-- AngularJS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+  <!-- Firebase -->
+  <script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+  <!-- AngularFire -->
+  <script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-nvd3-directives/0.0.7/angularjs-nvd3-directives.min.js"></script>
+  <script>
+    var app = angular.module("sensorReadingApp", ["firebase", "nvd3ChartDirectives"]);
+    app.controller("readingsCtrl", function($scope, $firebaseArray, dateFilter, $firebaseAuth) {
+      var fireBaseUrl = "https://<YOUR OWN APP URL>.firebaseio.com";
+      $scope.getLastReading = function(room, limit) {
+        var ref = new Firebase(fireBaseUrl + "/readings/" + room);
+        // Only the last readings are interesting
+        ref = ref.limitToLast(limit);
+        return $firebaseArray(ref);
+      };
+
+      $scope.loadGraphs = function() {
+        $scope.temperatures = [];
+        $scope.humidities = [];
+        $scope.rooms.$loaded()
+        .then(function(data){
+            var limit = new Date() / 1000;
+            limit -= 3600 * 24;
+            tempData = {};
+            humData = {};
+            angular.forEach(data, function(room, key) {
+              if (room.readings.temp === 0 && room.readings.hum === 0) {
+                return;
+              }
+              var readings = $scope.getLastReading(room.$id, 96); // 4 readings per hour * 24 = 96
+              tempData[room.$id] = {key: room.$id, color: room.color, values: []};
+              humData[room.$id] = {key: room.$id, color: room.color, values: []};
+              readings.$loaded().then(function(values){
+                angular.forEach(values, function(reading) {
+                  if (reading.time > limit) {
+                    if (room.readings.hum === 1) {
+                      humData[room.$id].values.push ([reading.time, reading.hum]);
+                    }
+                    if (room.readings.temp === 1) {
+                      tempData[room.$id].values.push ([reading.time, reading.temp]);
+                    }
+                  }
+                });
+                if (room.readings.temp === 1) {
+                  $scope.temperatures.push(tempData[room.$id]);
+                }
+                if (room.readings.hum === 1) {
+                  $scope.humidities.push(humData[room.$id]);
+                }
+                // Freeup some watches as we don't want to autoupdate the graph
+                values.$destroy();
+              });
+            });
+        });
+      };
+
+      $scope.login = function() {
+        var ref = new Firebase(fireBaseUrl);
+        var auth = $firebaseAuth(ref);
+        auth.$authWithOAuthPopup("google").then(function(authData) {
+           $scope.authData = authData;
+        }).catch(function(error) {
+           console.error("Authentication failed:", error);
+        });
+      };
+
+      $scope.logout = function() {
+        var ref = new Firebase(fireBaseUrl);
+        ref.unauth();
+      };
+
+      $scope.xAxisFormat = function() {
+        return function(entry) {
+          return dateFilter(new Date(entry * 1000), 'yyyy-MM-dd HH:mm');
+        };
+      };
+
+      var authRef = new Firebase(fireBaseUrl);
+      $scope.authData = authRef.getAuth();
+
+      var ref = new Firebase(fireBaseUrl + "/rooms");
+      $scope.rooms = $firebaseArray(ref);
+      ref = new Firebase(fireBaseUrl + "/errors");
+      $scope.errors = $firebaseArray(ref);
+      $scope.loadGraphs();
+    });
+  </script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css">
+</head>
+  <body ng-controller="readingsCtrl">
+    <div class="container">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Capteurs</a>
+          </div>
+          <div class="collapse navbar-collapse" id="menu">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#errors"><span class="badge  progress-bar-danger">{{ errors.length }}</span></a></li>
+              <li><a href="#" ng-click="loadGraphs()"><span class="glyphicon glyphicon-refresh"></span></a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li ng-if="!authData"><a href="#" ng-click="login()">Log In</a></li>
+                  <li ng-if="authData"><a href="#">Logged as {{ authData.google.displayName }}</a></li>
+                  <li ng-if="authData"><a href="#" ng-click="logout()">Log Out</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" ng-repeat="room in rooms">
+          <b ng-init="readings = getLastReading(room.$id, 1)" ></b>
+          <div class="panel panel-default" ng-repeat="temp in readings">
+            <div class="panel-body">
+              <h1><span class="glyphicon {{ room.icon }}" ng-style="{'color': room.color}"></span> {{temp.temp | number:1}}<small>°C</small><span ng-if="room.readings.hum"> / {{temp.hum |  number:0}}<small>%</small></span>
+              </h1>
+            </div>
+            <div class="panel-footer">
+              <p>{{ room.label }}</p>
+              <small>{{ temp.time * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}<br/></small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <nvd3-line-chart
+              id="temperature"
+              data="temperatures"
+              showXAxis="true"
+              xAxisTickFormat="xAxisFormat()"
+              showYAxis="true"
+              tooltips="true"
+              height="350"
+              objectEquality=true
+              interpolate="basis-open"
+              interactive="true">
+          </nvd3-line-chart>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <nvd3-line-chart
+              id="humidity"
+              data="humidities"
+              showXAxis="true"
+              xAxisTickFormat="xAxisFormat()"
+              showYAxis="true"
+              tooltips="true"
+              height="350"
+              objectEquality=true
+              interpolate="basis-open"
+              interactive="true">
+          </nvd3-line-chart>
+        </div>
+      </div>
+      <div id="errors" class="row">
+        <div class="alert alert-danger" ng-repeat="error in errors" role="alert">
+          <span class="glyphicon glyphicon-trash" style="cursor: pointer" ng-click="errors.$remove(error)"></span>
+          <b>{{ error.time * 1000 | date:'dd/MM/yyyy HH:mm:ss'}} / </b>{{ error.message }}
+        </div>
+      </div>
+      <div class="visible-xs hidden-sm hidden-md hidden-lg">xs</div>
+      <div class="hidden-xs visible-sm hidden-md hidden-lg">sm</div>
+      <div class="hidden-xs hidden-sm visible-md hidden-lg">md</div>
+      <div class="hidden-xs hidden-sm hidden-md visible-lg">lg</div>
+    </div>
+  </body>
+</html>
