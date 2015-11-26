@@ -63,6 +63,20 @@ Easy :
  * Put `firebase.html` on your web server.
  * Access it.
 
-# Licence
+## Sending values to Firebase
+
+TODO
+
+## Monitoring
+
+I wanted to make sure to be notified if no new data are added to Firebase (because I lost my Internet connection or a crash happenned).
+
+So I created `monitoring.php` to check the time of the last child of one of my reading (in my case `readings/consigne.json`). I simply compare the node's date with the current date and print `Monitoring OK` if the difference between them is lower that 31 minutes.
+
+This PHP script only dependency is php5-curl.
+
+The only thing left is to add a keyword monitor to [UptimeRobot](http://uptimerobot.com/).
+
+## Licence
 
 As stated in the LICENCE file, everything here is licensed under the GPL V2
