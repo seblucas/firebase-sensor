@@ -21,7 +21,7 @@ if (preg_match('/"time":(\d+)\}/', $response, $matches)) {
     $current = time();
     echo "\nCurrent date: " . date('c', $current);
     echo "\nLast Update: " . date('c', $lastUpdate);
-    if (($current - $lastUpdate) <= 1000 * 60 * 31) {
+    if (($current - $lastUpdate) <= 60 * 31) {
         echo ("\nMonitoring OK");
         return;
     }
