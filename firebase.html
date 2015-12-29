@@ -68,19 +68,41 @@
         });
       };
 
+      var showData = function() {
+        var ref = new Firebase(fireBaseUrl + "/rooms");
+        $scope.rooms = $firebaseArray(ref);
+        $scope.readings = {};
+        $scope.rooms.$loaded()
+        .then(function(data){
+          angular.forEach(data, function(room) {
+            $scope.readings[room.$id] = $scope.getLastReading(room.$id, 1);
+          });
+        });
+        ref = new Firebase(fireBaseUrl + "/errors");
+        $scope.errors = $firebaseArray(ref);
+        $scope.loadGraphs();
+      };
+
       $scope.login = function() {
         var ref = new Firebase(fireBaseUrl);
         var auth = $firebaseAuth(ref);
         auth.$authWithOAuthPopup("google").then(function(authData) {
-           $scope.authData = authData;
+           // No need to do anything here it's handled by onAuth
         }).catch(function(error) {
            console.error("Authentication failed:", error);
         });
       };
 
       $scope.logout = function() {
-        var ref = new Firebase(fireBaseUrl);
-        ref.unauth();
+        angular.forEach($scope.rooms, function(room) {
+            $scope.readings[room.$id].$destroy();
+          });
+        if ($scope.rooms) $scope.rooms.$destroy();
+        if ($scope.errors) $scope.errors.$destroy();
+        $scope.temperatures = null;
+        $scope.nvd3Temperature.refresh();
+        $scope.humidities = null;
+        authRef.unauth();
       };
 
       $scope.xAxisFormat = function() {
@@ -90,13 +112,16 @@
       };
 
       var authRef = new Firebase(fireBaseUrl);
-      $scope.authData = authRef.getAuth();
-
-      var ref = new Firebase(fireBaseUrl + "/rooms");
-      $scope.rooms = $firebaseArray(ref);
-      ref = new Firebase(fireBaseUrl + "/errors");
-      $scope.errors = $firebaseArray(ref);
-      $scope.loadGraphs();
+      authRef.onAuth(function(authData) {
+        if (authData) {
+          $scope.authData = authData;
+          console.log("Logged in as:", authData.uid);
+          showData();
+        } else {
+          console.log("Logged out");
+          $scope.authData = null;
+        }
+      });
     });
   </script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -133,9 +158,15 @@
         </div>
       </nav>
       <div class="row">
+        <div class="col-xs-12">
+          <div class="alert alert-warning" role="alert" ng-if="!authData">
+            Please Log in to use this page
+          </div>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" ng-repeat="room in rooms">
-          <b ng-init="readings = getLastReading(room.$id, 1)" ></b>
-          <div class="panel panel-default" ng-repeat="temp in readings">
+          <div class="panel panel-default" ng-repeat="temp in readings[room.$id]">
             <div class="panel-body">
               <h1><span class="glyphicon {{ room.icon }}" ng-style="{'color': room.color}"></span> {{temp.temp | number:1}}<small>°C</small><span ng-if="room.readings.hum"> / {{temp.hum |  number:0}}<small>%</small></span>
               </h1>
@@ -151,6 +182,7 @@
         <div class="col-lg-12">
           <nvd3-line-chart
               id="temperature"
+              api="nvd3Temperature"
               data="temperatures"
               showXAxis="true"
               xAxisTickFormat="xAxisFormat()"
