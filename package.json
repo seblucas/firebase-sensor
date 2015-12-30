@@ -1,0 +1,21 @@
+{
+  "name": "firebase-sensor",
+  "version": "0.0.0",
+  "description": "",
+  "main": "app/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sébastien Lucas",
+  "license": "GPLv2",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-bootlint": "^0.7.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-replace": "^0.5.4",
+    "gulp-filter": "^3.0.1",
+    "gulp-jshint": "^2.0.0",
+    "gulp-debug": "^2.1.2",
+    "main-bower-files": "^2.9.0"
+  }
+}

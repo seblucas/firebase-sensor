@@ -1,0 +1,4 @@
+*.sublime-*
+app/bower_components/**
+node_modules/**
+public/**
