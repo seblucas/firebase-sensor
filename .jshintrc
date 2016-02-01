@@ -23,6 +23,7 @@
   "globals" : {
     "$" : false,
     "angular" : false,
+    "Firebase" : false,
     "browser" : false,
     "repeater" : false,
     "element" : false,
