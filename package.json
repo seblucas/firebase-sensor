@@ -1,22 +1,31 @@
-﻿{
+{
   "name": "firebase-sensor",
-  "version": "0.0.0",
-  "description": "## The idea",
-  "main": "app/index.html",
+  "version": "1.0.0",
+  "description": "Web page to follow temperature / humidity sensors",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-angular-templatecache": "^1.8.0",
+    "gulp-bootlint": "^0.7.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-debug": "^2.1.2",
+    "gulp-filter": "^3.0.1",
+    "gulp-jshint": "^2.0.0",
+    "jshint": "^2.9.1",
+    "main-bower-files": "^2.11.1"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seblucas/firebase-sensor.git"
+  },
   "author": "Sébastien Lucas",
   "license": "GPL-2.0",
-  "devDependencies": {
-    "gulp": "3.9.0",
-    "gulp-angular-templatecache": "1.8.0",
-    "gulp-bootlint": "0.7.1",
-    "gulp-concat": "2.6.0",
-    "gulp-debug": "2.1.2",
-    "gulp-filter": "3.0.1",
-    "gulp-jshint": "2.0.0",
-    "jshint": "2.9.1",
-    "main-bower-files": "2.11.1"
-  }
+  "bugs": {
+    "url": "https://github.com/seblucas/firebase-sensor/issues"
+  },
+  "homepage": "https://github.com/seblucas/firebase-sensor#readme"
 }
