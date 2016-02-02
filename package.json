@@ -1,13 +1,13 @@
 ﻿{
   "name": "firebase-sensor",
   "version": "0.0.0",
-  "description": "",
+  "description": "## The idea",
   "main": "app/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sébastien Lucas",
-  "license": "GPLv2",
+  "license": "GPL-2.0",
   "devDependencies": {
     "gulp": "3.9.0",
     "gulp-angular-templatecache": "1.8.0",
