@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 var gulp = require('gulp');
 
@@ -8,7 +8,7 @@ var mainBowerFiles = require('main-bower-files');
 var concat = require('gulp-concat');
 var bootlint = require('gulp-bootlint');
 var gulpFilter = require('gulp-filter');
-var replace = require('gulp-replace');
+var templateCache = require('gulp-angular-templatecache');
 var debug = require('gulp-debug');
 
 var source = 'app/';
@@ -98,7 +98,7 @@ gulp.task('html', function() {
         .pipe(gulp.dest(dist.js));
 });
 
-gulp.task('other', ['index', 'lang', 'html']);
+gulp.task('other', ['index', 'html']);
 
 gulp.task('default', ['bower', 'css', 'js', 'other']);
 
@@ -108,4 +108,4 @@ gulp.task('watch', ['default'], function() {
   gulp.watch(htmlSources, ['html']);
 }); // development
 
-gulp.task('ci', ['lint', 'bootlint', 'test']);
+gulp.task('ci', ['lint', 'bootlint']);
