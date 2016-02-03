@@ -1,15 +1,7 @@
 ﻿'use strict';
 
 angular.module('sensorReadingApp').
-controller('readingsCtrl', function($scope, $firebaseArray, dateFilter, $firebaseAuth) {
-  var fireBaseUrl = 'https://<YOUR OWN APP URL>.firebaseio.com';
-  $scope.getLastReading = function(room, limit) {
-    var ref = new Firebase(fireBaseUrl + '/readings/' + room);
-    // Only the last readings are interesting
-    ref = ref.limitToLast(limit);
-    return $firebaseArray(ref);
-  };
-
+controller('readingsCtrl', function($scope, lineChartService, $firebaseAuth, firebaseHelperService) {
   $scope.loadGraphs = function() {
     $scope.temperatures = [];
     $scope.humidities = [];
@@ -23,7 +15,7 @@ controller('readingsCtrl', function($scope, $firebaseArray, dateFilter, $firebas
         if (room.readings.temp === 0 && room.readings.hum === 0) {
           return;
         }
-        var readings = $scope.getLastReading(room.$id, 96); // 4 readings per hour * 24 = 96
+        var readings = firebaseHelperService.getLastReading(room.$id, 96); // 4 readings per hour * 24 = 96
         tempData[room.$id] = {key: room.$id, color: room.color, values: []};
         humData[room.$id] = {key: room.$id, color: room.color, values: []};
         readings.$loaded().then(function(values){
@@ -51,22 +43,20 @@ controller('readingsCtrl', function($scope, $firebaseArray, dateFilter, $firebas
   };
 
   var showData = function() {
-    var ref = new Firebase(fireBaseUrl + '/rooms');
-    $scope.rooms = $firebaseArray(ref);
+    $scope.rooms = firebaseHelperService.getData('/rooms');
     $scope.readings = {};
     $scope.rooms.$loaded()
     .then(function(data){
       angular.forEach(data, function(room) {
-        $scope.readings[room.$id] = $scope.getLastReading(room.$id, 1);
+        $scope.readings[room.$id] = firebaseHelperService.getLastReading(room.$id, 1);
       });
     });
-    ref = new Firebase(fireBaseUrl + '/errors');
-    $scope.errors = $firebaseArray(ref);
+    $scope.errors = firebaseHelperService.getData('/errors');
     $scope.loadGraphs();
   };
 
   $scope.login = function() {
-    var ref = new Firebase(fireBaseUrl);
+    var ref = new Firebase(firebaseHelperService.getFirebaseUrl());
     var auth = $firebaseAuth(ref);
     auth.$authWithOAuthPopup('google').then(function() {
        // No need to do anything here it's handled by onAuth
@@ -75,7 +65,7 @@ controller('readingsCtrl', function($scope, $firebaseArray, dateFilter, $firebas
     });
   };
 
-  var authRef = new Firebase(fireBaseUrl);
+  var authRef = new Firebase(firebaseHelperService.getFirebaseUrl());
   authRef.onAuth(function(authData) {
     if (authData) {
       $scope.authData = authData;
@@ -100,67 +90,7 @@ controller('readingsCtrl', function($scope, $firebaseArray, dateFilter, $firebas
     authRef.unauth();
   };
 
-  $scope.tempOptions = {
-        chart: {
-            type: 'lineChart',
-            height: 450,
-            margin : {
-                top: 20,
-                right: 20,
-                bottom: 40,
-                left: 55
-            },
-            interpolate: 'basis-open',
-            x: function(entry){ return entry[0]; },
-            y: function(entry){ return entry[1]; },
-            useInteractiveGuideline: true,
-            xAxis: {
-                axisLabel: 'Time',
-                tickFormat: function(d){
-                    return dateFilter(new Date(d * 1000), 'yyyy-MM-dd HH:mm');
-                },
-                axisLabelDistance: -10
-            },
-            yAxis: {
-                axisLabel: 'Temperature (°C)',
-                axisLabelDistance: -10
-            },
-        },
-        title: {
-            enable: true,
-            text: 'Temperature'
-        }
-  };
+  $scope.tempOptions = lineChartService.getChartOption('Temperature', 'Time', 'Temperature (°C)');
+  $scope.humOptions = lineChartService.getChartOption('Humidity', 'Time', 'Humidity (%)');
 
-  $scope.humOptions = {
-        chart: {
-            type: 'lineChart',
-            height: 450,
-            margin : {
-                top: 20,
-                right: 20,
-                bottom: 40,
-                left: 55
-            },
-            interpolate: 'basis-open',
-            x: function(entry){ return entry[0]; },
-            y: function(entry){ return entry[1]; },
-            useInteractiveGuideline: true,
-            xAxis: {
-                axisLabel: 'Time',
-                tickFormat: function(d){
-                    return dateFilter(new Date(d * 1000), 'yyyy-MM-dd HH:mm');
-                },
-                axisLabelDistance: -10
-            },
-            yAxis: {
-                axisLabel: 'Humidity (%)',
-                axisLabelDistance: -10
-            },
-        },
-        title: {
-            enable: true,
-            text: 'Humidity'
-        }
-  };
 });
