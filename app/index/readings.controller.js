@@ -11,7 +11,7 @@ controller('readingsCtrl', function($scope, lineChartService, $firebaseAuth, fir
       limit -= 3600 * 24;
       var tempData = {};
       var humData = {};
-      angular.forEach(data, function(room, key) {
+      angular.forEach(data, function(room) {
         if (room.readings.temp === 0 && room.readings.hum === 0) {
           return;
         }

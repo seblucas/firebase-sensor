@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" ng-repeat="room in rooms">
+        <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="room in rooms">
           <div class="panel panel-default" ng-repeat="temp in readings[room.$id]">
             <div class="panel-body">
               <h1><span class="glyphicon {{ room.icon }}" ng-style="{'color': room.color}"></span> {{temp.temp | number:1}}<small>°C</small><span ng-if="room.readings.hum"> / {{temp.hum |  number:0}}<small>%</small></span>
@@ -70,7 +70,7 @@
         </div>
       </div>
       <div id="errors" class="row">
-        <div class="alert alert-danger" ng-repeat="error in errors" role="alert">
+        <div class="col-lg-12 alert alert-danger" ng-repeat="error in errors" role="alert">
           <span class="glyphicon glyphicon-trash" style="cursor: pointer" ng-click="errors.$remove(error)"></span>
           <b>{{ error.time * 1000 | date:'dd/MM/yyyy HH:mm:ss'}} / </b>{{ error.message }}
         </div>
