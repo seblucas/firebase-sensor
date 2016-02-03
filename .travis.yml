@@ -12,7 +12,6 @@ before_install:
 script:
   - gulp ci
 
-
 cache:
   directories:
     - node_modules

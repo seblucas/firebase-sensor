@@ -84,9 +84,7 @@ controller('readingsCtrl', function($scope, lineChartService, $firebaseAuth, fir
     if ($scope.rooms) { $scope.rooms.$destroy(); }
     if ($scope.errors) { $scope.errors.$destroy(); }
     $scope.temperatures = [];
-    //$scope.nvd3Temperature.refresh();
     $scope.humidities = [];
-    //$scope.nvd3Humidities.refresh();
     authRef.unauth();
   };
 
