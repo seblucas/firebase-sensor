@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('sensorReadingApp').
-controller('readingsCtrl', function($scope, lineChartService, $firebaseAuth, firebaseHelperService) {
+controller('readingsCtrl', function($scope, lineChartService, firebaseHelperService) {
   $scope.loadGraphs = function() {
     $scope.temperatures = [];
     $scope.humidities = [];
@@ -55,17 +55,16 @@ controller('readingsCtrl', function($scope, lineChartService, $firebaseAuth, fir
     $scope.loadGraphs();
   };
 
+  var authRef = firebaseHelperService.getAuth();
+
   $scope.login = function() {
-    var ref = new Firebase(firebaseHelperService.getFirebaseUrl());
-    var auth = $firebaseAuth(ref);
-    auth.$authWithOAuthPopup('google').then(function() {
+    authRef.$authWithOAuthPopup('google').then(function() {
        // No need to do anything here it's handled by onAuth
     }).catch(function(error) {
        console.error('Authentication failed:', error);
     });
   };
 
-  var authRef = new Firebase(firebaseHelperService.getFirebaseUrl());
   authRef.onAuth(function(authData) {
     if (authData) {
       $scope.authData = authData;
