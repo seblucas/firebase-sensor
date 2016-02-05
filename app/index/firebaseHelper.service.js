@@ -3,8 +3,8 @@
 angular.module('sensorReadingApp').
 factory('firebaseHelperService', function($firebaseArray, $firebaseAuth) {
   var fireBaseUrl = 'https://<YOUR OWN APP URL>.firebaseio.com';
-  var ref = new Firebase(fireBaseUrl);
-  var firebaseAuth = $firebaseAuth(ref);
+  var rootReference = new Firebase(fireBaseUrl);
+  var firebaseAuth = $firebaseAuth(rootReference);
   return {
     getFirebaseUrl: function() {
       return fireBaseUrl;
@@ -20,6 +20,9 @@ factory('firebaseHelperService', function($firebaseArray, $firebaseAuth) {
     getData: function(url) {
       var ref = new Firebase(fireBaseUrl + url);
       return $firebaseArray(ref);
+    },
+    getRootReference: function() {
+      return rootReference;
     },
     getAuth: function() {
       return firebaseAuth;

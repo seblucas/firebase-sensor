@@ -55,7 +55,7 @@ controller('readingsCtrl', function($scope, lineChartService, firebaseHelperServ
     $scope.loadGraphs();
   };
 
-  var authRef = firebaseHelperService.getAuth();
+  var authRef = firebaseHelperService.getRootReference();
 
   $scope.login = function() {
     authRef.$authWithOAuthPopup('google').then(function() {
