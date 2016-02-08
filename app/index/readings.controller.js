@@ -55,7 +55,8 @@ controller('readingsCtrl', function($scope, lineChartService, firebaseHelperServ
     $scope.loadGraphs();
   };
 
-  var authRef = firebaseHelperService.getRootReference();
+  var rootRef = firebaseHelperService.getRootReference();
+  var authRef = firebaseHelperService.getAuth();
 
   $scope.login = function() {
     authRef.$authWithOAuthPopup('google').then(function() {
@@ -65,7 +66,7 @@ controller('readingsCtrl', function($scope, lineChartService, firebaseHelperServ
     });
   };
 
-  authRef.onAuth(function(authData) {
+  rootRef.onAuth(function(authData) {
     if (authData) {
       $scope.authData = authData;
       console.log('Logged in as:', authData.uid);
@@ -84,7 +85,7 @@ controller('readingsCtrl', function($scope, lineChartService, firebaseHelperServ
     if ($scope.errors) { $scope.errors.$destroy(); }
     $scope.temperatures = [];
     $scope.humidities = [];
-    authRef.unauth();
+    rootRef.unauth();
   };
 
   $scope.tempOptions = lineChartService.getChartOption('Temperature', 'Time', 'Temperature (°C)');
