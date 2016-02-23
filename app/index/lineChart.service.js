@@ -44,13 +44,13 @@ factory('lineChartService', function(dateFilter, firebaseHelperService, $q) {
         }
       });
     },
-    getChartData: function(rooms, typeOfData) {
+    getChartData: function(rooms, typeOfData, numberOfHours) {
       var deferred = $q.defer();
       var output = [];
       rooms.$loaded()
       .then(function(data){
         var limit = new Date() / 1000;
-        limit -= 3600 * 24;
+        limit -= 3600 * numberOfHours;
         var tempData = {};
         var promisesId = [];
         var promises = [];
@@ -59,7 +59,8 @@ factory('lineChartService', function(dateFilter, firebaseHelperService, $q) {
             return;
           }
           promisesId.push(room.$id);
-          promises.push(firebaseHelperService.getLastReading(room.$id, 96).$loaded());
+          // 4 readings per hours
+          promises.push(firebaseHelperService.getLastReading(room.$id, 4 * numberOfHours).$loaded());
           tempData[room.$id] = {key: room.$id, color: room.color, values: []};
         });
 

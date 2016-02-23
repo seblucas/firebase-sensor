@@ -5,10 +5,10 @@ controller('readingsCtrl', function($scope, lineChartService, firebaseHelperServ
   $scope.loadGraphs = function() {
     $scope.temperatures = [];
     $scope.humidities = [];
-    lineChartService.getChartData($scope.rooms, 'hum').then(function(data) {
+    lineChartService.getChartData($scope.rooms, 'hum', 48).then(function(data) {
       $scope.humidities = data;
     });
-    lineChartService.getChartData($scope.rooms, 'temp').then(function(data) {
+    lineChartService.getChartData($scope.rooms, 'temp', 48).then(function(data) {
       $scope.temperatures = data;
     });
   };
