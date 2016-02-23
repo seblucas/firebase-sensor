@@ -5,40 +5,11 @@ controller('readingsCtrl', function($scope, lineChartService, firebaseHelperServ
   $scope.loadGraphs = function() {
     $scope.temperatures = [];
     $scope.humidities = [];
-    $scope.rooms.$loaded()
-    .then(function(data){
-      var limit = new Date() / 1000;
-      limit -= 3600 * 24;
-      var tempData = {};
-      var humData = {};
-      angular.forEach(data, function(room) {
-        if (room.readings.temp === 0 && room.readings.hum === 0) {
-          return;
-        }
-        var readings = firebaseHelperService.getLastReading(room.$id, 96); // 4 readings per hour * 24 = 96
-        tempData[room.$id] = {key: room.$id, color: room.color, values: []};
-        humData[room.$id] = {key: room.$id, color: room.color, values: []};
-        readings.$loaded().then(function(values){
-          angular.forEach(values, function(reading) {
-            if (reading.time > limit) {
-              if (room.readings.hum === 1) {
-                humData[room.$id].values.push ([reading.time, reading.hum]);
-              }
-              if (room.readings.temp === 1) {
-                tempData[room.$id].values.push ([reading.time, reading.temp]);
-              }
-            }
-          });
-          if (room.readings.temp === 1) {
-            $scope.temperatures.push(tempData[room.$id]);
-          }
-          if (room.readings.hum === 1) {
-            $scope.humidities.push(humData[room.$id]);
-          }
-          // Freeup some watches as we don't want to autoupdate the graph
-          values.$destroy();
-        });
-      });
+    lineChartService.getChartData($scope.rooms, 'hum').then(function(data) {
+      $scope.humidities = data;
+    });
+    lineChartService.getChartData($scope.rooms, 'temp').then(function(data) {
+      $scope.temperatures = data;
     });
   };
 

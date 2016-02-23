@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('sensorReadingApp').
-factory('lineChartService', function(dateFilter) {
+factory('lineChartService', function(dateFilter, firebaseHelperService, $q) {
   var defaultChartOptions = {
     chart: {
         type: 'lineChart',
@@ -43,6 +43,45 @@ factory('lineChartService', function(dateFilter) {
           'yAxis' : {'axisLabel': yAxisLabel}
         }
       });
+    },
+    getChartData: function(rooms, typeOfData) {
+      var deferred = $q.defer();
+      var output = [];
+      rooms.$loaded()
+      .then(function(data){
+        var limit = new Date() / 1000;
+        limit -= 3600 * 24;
+        var tempData = {};
+        var promisesId = [];
+        var promises = [];
+        angular.forEach(data, function(room) {
+          if (room.readings[typeOfData] === 0) {
+            return;
+          }
+          promisesId.push(room.$id);
+          promises.push(firebaseHelperService.getLastReading(room.$id, 96).$loaded());
+          tempData[room.$id] = {key: room.$id, color: room.color, values: []};
+        });
+
+        $q.all(promises).then(function(valuesArray){
+          for (var i = 0; i < valuesArray.length; i++) {
+            var values = valuesArray [i];
+            var roomId = promisesId[i];
+            for (var j = 0; j < values.length; j++) {
+              var reading = values [j];
+              if (reading.time > limit) {
+                var value = reading[typeOfData];
+                tempData[roomId].values.push ([reading.time, value]);
+              }
+            }
+            output.push(tempData[roomId]);
+            // Freeup some watches as we don't want to autoupdate the graph
+            values.$destroy();
+          }
+          deferred.resolve(output);
+        });
+      });
+      return deferred.promise;
     }
-  };
+    };
 });
