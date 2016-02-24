@@ -65,10 +65,10 @@
     }
   },
   "dependencies": {
-    "jquery": "2.2.x",
-    "angular": "1.4.x",
-    "bootstrap": "3.3.x",
-    "angular-nvd3": "1.0.x",
-    "angularfire": "1.1.x"
+    "jquery": "2.2.1",
+    "angular": "1.5.0",
+    "bootstrap": "3.3.6",
+    "angular-nvd3": "1.0.5",
+    "angularfire": "1.1.4"
   }
 }
