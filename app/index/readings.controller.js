@@ -2,13 +2,17 @@
 
 angular.module('sensorReadingApp').
 controller('readingsCtrl', function($scope, lineChartService, firebaseHelperService) {
+  $scope.chartAllSizes = [{id: '24', value: '24 hours'},
+                          {id: '48', value: '48 hours'},
+                          {id: '168', value: '1 week'}];
+  $scope.chartSize = {id: '24'};
   $scope.loadGraphs = function() {
     $scope.temperatures = [];
     $scope.humidities = [];
-    lineChartService.getChartData($scope.rooms, 'hum', 48).then(function(data) {
+    lineChartService.getChartData($scope.rooms, 'hum', $scope.chartSize.id).then(function(data) {
       $scope.humidities = data;
     });
-    lineChartService.getChartData($scope.rooms, 'temp', 48).then(function(data) {
+    lineChartService.getChartData($scope.rooms, 'temp', $scope.chartSize.id).then(function(data) {
       $scope.temperatures = data;
     });
   };
