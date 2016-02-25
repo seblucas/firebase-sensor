@@ -1,39 +1,41 @@
 ﻿'use strict';
 
-angular.module('sensorReadingApp').
-controller('readingsCtrl', function($scope, lineChartService, firebaseHelperService) {
-  $scope.chartAllSizes = [{id: '24', value: '24 hours'},
+function readingsCtrl(lineChartService, firebaseHelperService) {
+  /* jshint validthis: true */
+  var ctrl = this;
+  ctrl.chartAllSizes = [{id: '24', value: '24 hours'},
                           {id: '48', value: '48 hours'},
                           {id: '168', value: '1 week'}];
-  $scope.chartSize = {id: '24'};
-  $scope.loadGraphs = function() {
-    $scope.temperatures = [];
-    $scope.humidities = [];
-    lineChartService.getChartData($scope.rooms, 'hum', $scope.chartSize.id).then(function(data) {
-      $scope.humidities = data;
+  ctrl.chartSize = {id: '24'};
+  ctrl.rooms = {};
+  ctrl.loadGraphs = function() {
+    ctrl.temperatures = [];
+    ctrl.humidities = [];
+    lineChartService.getChartData(ctrl.rooms, 'hum', ctrl.chartSize.id).then(function(data) {
+      ctrl.humidities = data;
     });
-    lineChartService.getChartData($scope.rooms, 'temp', $scope.chartSize.id).then(function(data) {
-      $scope.temperatures = data;
+    lineChartService.getChartData(ctrl.rooms, 'temp', ctrl.chartSize.id).then(function(data) {
+      ctrl.temperatures = data;
     });
   };
 
   var showData = function() {
-    $scope.rooms = firebaseHelperService.getData('/rooms');
-    $scope.readings = {};
-    $scope.rooms.$loaded()
+    ctrl.rooms = firebaseHelperService.getData('/rooms');
+    ctrl.readings = {};
+    ctrl.rooms.$loaded()
     .then(function(data){
       angular.forEach(data, function(room) {
-        $scope.readings[room.$id] = firebaseHelperService.getLastReading(room.$id, 1);
+        ctrl.readings[room.$id] = firebaseHelperService.getLastReading(room.$id, 1);
       });
     });
-    $scope.errors = firebaseHelperService.getData('/errors');
-    $scope.loadGraphs();
+    ctrl.errors = firebaseHelperService.getData('/errors');
+    ctrl.loadGraphs();
   };
 
   var rootRef = firebaseHelperService.getRootReference();
   var authRef = firebaseHelperService.getAuth();
 
-  $scope.login = function() {
+  ctrl.login = function() {
     authRef.$authWithOAuthPopup('google').then(function() {
        // No need to do anything here it's handled by onAuth
     }).catch(function(error) {
@@ -43,27 +45,33 @@ controller('readingsCtrl', function($scope, lineChartService, firebaseHelperServ
 
   rootRef.onAuth(function(authData) {
     if (authData) {
-      $scope.authData = authData;
+      ctrl.authData = authData;
       console.log('Logged in as:', authData.uid);
       showData();
     } else {
       console.log('Logged out');
-      $scope.authData = null;
+      ctrl.authData = null;
     }
   });
 
-  $scope.logout = function() {
-    angular.forEach($scope.rooms, function(room) {
-        $scope.readings[room.$id].$destroy();
+  ctrl.logout = function() {
+    angular.forEach(ctrl.rooms, function(room) {
+        ctrl.readings[room.$id].$destroy();
       });
-    if ($scope.rooms) { $scope.rooms.$destroy(); }
-    if ($scope.errors) { $scope.errors.$destroy(); }
-    $scope.temperatures = [];
-    $scope.humidities = [];
+    if (ctrl.rooms) { ctrl.rooms.$destroy(); }
+    if (ctrl.errors) { ctrl.errors.$destroy(); }
+    ctrl.temperatures = [];
+    ctrl.humidities = [];
     rootRef.unauth();
   };
 
-  $scope.tempOptions = lineChartService.getChartOption('Temperature', 'Time', 'Temperature (°C)');
-  $scope.humOptions = lineChartService.getChartOption('Humidity', 'Time', 'Humidity (%)');
+  ctrl.tempOptions = lineChartService.getChartOption('Temperature', 'Time', 'Temperature (°C)');
+  ctrl.humOptions = lineChartService.getChartOption('Humidity', 'Time', 'Humidity (%)');
 
+}
+
+angular.module('sensorReadingApp').
+component('readings', {
+  templateUrl: 'index/readings.html',
+  controller: readingsCtrl
 });

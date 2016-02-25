@@ -2,4 +2,4 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('sensorReadingApp', ['firebase', 'nvd3']);
+angular.module('sensorReadingApp', ['firebase', 'nvd3', 'templates']);

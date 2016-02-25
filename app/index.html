@@ -5,85 +5,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="js/vendor.js"></script>
+  <script src="js/templates.js"></script>
   <script src="js/app.js"></script>
   <link rel="stylesheet" href="css/vendor.css">
 </head>
-  <body ng-controller="readingsCtrl">
+  <body>
     <div class="container">
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-1" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Capteurs</a>
-          </div>
-          <div class="collapse navbar-collapse" id="menu-1">
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="#errors"><span class="badge  progress-bar-danger">{{ errors.length }}</span></a></li>
-              <li><a href="#" ng-click="loadGraphs()"><span class="glyphicon glyphicon-refresh"></span></a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li ng-if="!authData"><a href="#" ng-click="login()">Log In</a></li>
-                  <li ng-if="authData"><a href="#">Uid {{ authData.uid }}</a></li>
-                  <li ng-if="authData"><a href="#">Logged as {{ authData.google.displayName }}</a></li>
-                  <li ng-if="authData"><a href="#" ng-click="logout()">Log Out</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="alert alert-warning" role="alert" ng-if="!authData">
-            Please Log in to use this page
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="room in rooms">
-          <div class="panel panel-default" ng-repeat="temp in readings[room.$id]">
-            <div class="panel-body">
-              <h1><span class="glyphicon {{ room.icon }}" ng-style="{'color': room.color}"></span> {{temp.temp | number:1}}<small>°C</small><span ng-if="room.readings.hum"> / {{temp.hum |  number:0}}<small>%</small></span>
-              </h1>
-            </div>
-            <div class="panel-footer">
-              <p>{{ room.label }}</p>
-              <small>{{ temp.time * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}<br/></small>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-4">
-          <select class="form-control"
-                  ng-model="chartSize"
-                  ng-change="loadGraphs()"
-                  ng-options="v.value for v in chartAllSizes track by v.id">
-          </select>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <nvd3 options="tempOptions" data="temperatures" api="nvd3Temperature"></nvd3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <nvd3 options="humOptions" data="humidities" api="nvd3Humidities"></nvd3>
-        </div>
-      </div>
-      <div id="errors" class="row">
-        <div class="col-lg-12 alert alert-danger" ng-repeat="error in errors" role="alert">
-          <span class="glyphicon glyphicon-trash" style="cursor: pointer" ng-click="errors.$remove(error)"></span>
-          <b>{{ error.time * 1000 | date:'dd/MM/yyyy HH:mm:ss'}} / </b>{{ error.message }}
-        </div>
-      </div>
+      <readings></readings>
       <div class="visible-xs hidden-sm hidden-md hidden-lg">xs</div>
       <div class="hidden-xs visible-sm hidden-md hidden-lg">sm</div>
       <div class="hidden-xs hidden-sm visible-md hidden-lg">md</div>
