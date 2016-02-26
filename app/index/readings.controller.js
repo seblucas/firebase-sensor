@@ -7,7 +7,7 @@ function readingsCtrl(lineChartService, firebaseHelperService) {
                           {id: '48', value: '48 hours'},
                           {id: '168', value: '1 week'}];
   ctrl.chartSize = {id: '24'};
-  ctrl.rooms = {};
+  ctrl.rooms = false;
   ctrl.loadGraphs = function() {
     ctrl.temperatures = [];
     ctrl.humidities = [];
@@ -20,16 +20,13 @@ function readingsCtrl(lineChartService, firebaseHelperService) {
   };
 
   var showData = function() {
-    ctrl.rooms = firebaseHelperService.getData('/rooms');
-    ctrl.readings = {};
-    ctrl.rooms.$loaded()
+    var tempRooms = firebaseHelperService.getData('/rooms');
+    tempRooms.$loaded()
     .then(function(data){
-      angular.forEach(data, function(room) {
-        ctrl.readings[room.$id] = firebaseHelperService.getLastReading(room.$id, 1);
-      });
+      ctrl.rooms = data;
+      ctrl.loadGraphs();
     });
     ctrl.errors = firebaseHelperService.getData('/errors');
-    ctrl.loadGraphs();
   };
 
   var rootRef = firebaseHelperService.getRootReference();
