@@ -1,7 +1,6 @@
 ﻿'use strict';
 
-function readingsCtrl(lineChartService, firebaseHelperService) {
-  /* jshint validthis: true */
+function ReadingsCtrl(lineChartService, firebaseHelperService) {
   var ctrl = this;
   ctrl.chartAllSizes = [{id: '24', value: '24 hours'},
                           {id: '48', value: '48 hours'},
@@ -70,5 +69,5 @@ function readingsCtrl(lineChartService, firebaseHelperService) {
 angular.module('sensorReadingApp').
 component('readings', {
   templateUrl: 'index/readings.html',
-  controller: readingsCtrl
+  controller: ReadingsCtrl
 });

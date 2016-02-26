@@ -1,10 +1,7 @@
 ﻿'use strict';
 
-function recentDataCtrl(firebaseHelperService) {
-  /* jshint validthis: true */
+function RecentDataCtrl(firebaseHelperService) {
   var ctrl = this;
-  console.log('working');
-  console.log(ctrl.rooms);
   ctrl.readings = {};
 
   angular.forEach(ctrl.rooms, function(room) {
@@ -18,5 +15,5 @@ component('recentData', {
     rooms: '='
   },
   templateUrl: 'index/recentData.html',
-  controller: recentDataCtrl
+  controller: RecentDataCtrl
 });
