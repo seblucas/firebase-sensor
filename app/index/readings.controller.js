@@ -7,6 +7,7 @@ function ReadingsCtrl(lineChartService, firebaseHelperService) {
                           {id: '168', value: '1 week'}];
   ctrl.chartSize = {id: '24'};
   ctrl.rooms = false;
+  ctrl.errors = false;
   ctrl.loadGraphs = function() {
     ctrl.temperatures = [];
     ctrl.humidities = [];
@@ -25,7 +26,11 @@ function ReadingsCtrl(lineChartService, firebaseHelperService) {
       ctrl.rooms = data;
       ctrl.loadGraphs();
     });
-    ctrl.errors = firebaseHelperService.getData('/errors');
+    var tempErrors = firebaseHelperService.getData('/errors');
+    tempErrors.$loaded()
+    .then(function(data){
+      ctrl.errors = data;
+    });
   };
 
   var rootRef = firebaseHelperService.getRootReference();
@@ -56,7 +61,7 @@ function ReadingsCtrl(lineChartService, firebaseHelperService) {
         ctrl.readings[room.$id].$destroy();
       });*/
     if (ctrl.rooms) { ctrl.rooms.$destroy(); ctrl.rooms = false; }
-    if (ctrl.errors) { ctrl.errors.$destroy(); ctrl.rooms = false; }
+    if (ctrl.errors) { ctrl.errors.$destroy(); ctrl.errors = false; }
     ctrl.temperatures = [];
     ctrl.humidities = [];
     rootRef.unauth();
