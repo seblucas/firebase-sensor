@@ -73,7 +73,4 @@ function ReadingsCtrl(lineChartService, firebaseHelperService) {
 }
 
 angular.module('sensorReadingApp').
-component('readings', {
-  templateUrl: 'index/readings.html',
-  controller: ReadingsCtrl
-});
+controller('readingsCtrl', ReadingsCtrl);
