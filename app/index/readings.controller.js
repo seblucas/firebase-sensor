@@ -51,18 +51,19 @@ function ReadingsCtrl(lineChartService, firebaseHelperService) {
   });
 
   ctrl.logout = function() {
-    angular.forEach(ctrl.rooms, function(room) {
+    // Todo fix with the components
+   /* angular.forEach(ctrl.rooms, function(room) {
         ctrl.readings[room.$id].$destroy();
-      });
-    if (ctrl.rooms) { ctrl.rooms.$destroy(); }
-    if (ctrl.errors) { ctrl.errors.$destroy(); }
+      });*/
+    if (ctrl.rooms) { ctrl.rooms.$destroy(); ctrl.rooms = false; }
+    if (ctrl.errors) { ctrl.errors.$destroy(); ctrl.rooms = false; }
     ctrl.temperatures = [];
     ctrl.humidities = [];
     rootRef.unauth();
   };
 
-  ctrl.tempOptions = lineChartService.getChartOption('Temperature', 'Time', 'Temperature (°C)');
-  ctrl.humOptions = lineChartService.getChartOption('Humidity', 'Time', 'Humidity (%)');
+  ctrl.tempOptions = lineChartService.getChartOption('temp');
+  ctrl.humOptions = lineChartService.getChartOption('hum');
 
 }
 

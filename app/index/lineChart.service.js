@@ -34,15 +34,25 @@ factory('lineChartService', function(dateFilter, firebaseHelperService, $q) {
     }
   };
 
-  return {
-    getChartOption: function(title, xAxisLabel, yAxisLabel) {
-      return angular.merge ({}, defaultChartOptions, {
+  var _getSpecificOption = function(title, xAxisLabel, yAxisLabel) {
+    return {
         'title': {'text': title},
         'chart': {
           'xAxis' : {'axisLabel': xAxisLabel},
           'yAxis' : {'axisLabel': yAxisLabel}
         }
-      });
+      };
+  };
+
+  return {
+    getChartOption: function(type) {
+      var options = {};
+      if (type === 'temp') {
+        options = _getSpecificOption('Temperature', 'Time', 'Temperature (°C)');
+      } else if (type === 'hum') {
+        options = _getSpecificOption('Humidity', 'Time', 'Humidity (%)');
+      }
+      return angular.merge ({}, defaultChartOptions, options);
     },
     getChartData: function(rooms, typeOfData, numberOfHours) {
       var deferred = $q.defer();
