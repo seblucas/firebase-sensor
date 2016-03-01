@@ -9,6 +9,6 @@ angular.module('sensorReadingApp', ['firebase', 'nvd3', 'templates', 'ngRoute'])
     template: '<home-page rooms="vm.rooms" errors="vm.errors"></home-page>'
   })
   .when('/errors', {
-    template: '<home-page rooms="vm.rooms" errors="vm.errors"></home-page>'
+    template: '<reading-errors errors="vm.errors"></reading-errors>'
   });
 });
