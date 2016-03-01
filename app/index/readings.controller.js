@@ -1,30 +1,17 @@
 ﻿'use strict';
 
-function ReadingsCtrl(lineChartService, firebaseHelperService) {
+function ReadingsCtrl(firebaseHelperService) {
   var ctrl = this;
-  ctrl.chartAllSizes = [{id: '24', value: '24 hours'},
-                          {id: '48', value: '48 hours'},
-                          {id: '168', value: '1 week'}];
-  ctrl.chartSize = {id: '24'};
+
   ctrl.rooms = false;
   ctrl.errors = false;
-  ctrl.loadGraphs = function() {
-    ctrl.temperatures = [];
-    ctrl.humidities = [];
-    lineChartService.getChartData(ctrl.rooms, 'hum', ctrl.chartSize.id).then(function(data) {
-      ctrl.humidities = data;
-    });
-    lineChartService.getChartData(ctrl.rooms, 'temp', ctrl.chartSize.id).then(function(data) {
-      ctrl.temperatures = data;
-    });
-  };
+
 
   var showData = function() {
     var tempRooms = firebaseHelperService.getData('/rooms');
     tempRooms.$loaded()
     .then(function(data){
       ctrl.rooms = data;
-      ctrl.loadGraphs();
     });
     var tempErrors = firebaseHelperService.getData('/errors');
     tempErrors.$loaded()
@@ -62,14 +49,10 @@ function ReadingsCtrl(lineChartService, firebaseHelperService) {
       });*/
     if (ctrl.rooms) { ctrl.rooms.$destroy(); ctrl.rooms = false; }
     if (ctrl.errors) { ctrl.errors.$destroy(); ctrl.errors = false; }
-    ctrl.temperatures = [];
-    ctrl.humidities = [];
+    /*ctrl.temperatures = [];
+    ctrl.humidities = [];*/
     rootRef.unauth();
   };
-
-  ctrl.tempOptions = lineChartService.getChartOption('temp');
-  ctrl.humOptions = lineChartService.getChartOption('hum');
-
 }
 
 angular.module('sensorReadingApp').

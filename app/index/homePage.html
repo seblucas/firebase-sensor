@@ -1,0 +1,25 @@
+﻿      <div class="row" ng-if="$ctrl.rooms">
+        <recent-data rooms="$ctrl.rooms"></recent-data>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4">
+          <select class="form-control"
+                  ng-model="$ctrl.chartSize"
+                  ng-change="$ctrl.loadGraphs()"
+                  ng-options="v.value for v in $ctrl.chartAllSizes track by v.id">
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <nvd3 options="$ctrl.tempOptions" data="$ctrl.temperatures" api="nvd3Temperature"></nvd3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <nvd3 options="$ctrl.humOptions" data="$ctrl.humidities" api="nvd3Humidities"></nvd3>
+        </div>
+      </div>
+      <div id="errors" class="row" ng-if="$ctrl.errors">
+        <reading-errors errors="$ctrl.errors"></reading-errors>
+      </div>
