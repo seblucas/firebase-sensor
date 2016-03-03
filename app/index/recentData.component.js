@@ -12,7 +12,7 @@ function RecentDataCtrl(firebaseHelperService) {
 angular.module('sensorReadingApp').
 component('recentData', {
   bindings: {
-    rooms: '='
+    rooms: '<'
   },
   templateUrl: 'index/recentData.html',
   controller: RecentDataCtrl

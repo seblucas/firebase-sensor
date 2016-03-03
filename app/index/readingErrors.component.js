@@ -3,7 +3,7 @@
 angular.module('sensorReadingApp').
 component('readingErrors', {
   bindings: {
-    errors: '='
+    errors: '<'
   },
   templateUrl: 'index/readingErrors.html'
 });
