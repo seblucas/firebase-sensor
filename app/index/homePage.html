@@ -8,13 +8,6 @@
           </select>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <nvd3 options="$ctrl.tempOptions" data="$ctrl.temperatures" api="nvd3Temperature"></nvd3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <nvd3 options="$ctrl.humOptions" data="$ctrl.humidities" api="nvd3Humidities"></nvd3>
-        </div>
+      <div ng-repeat="dataType in $ctrl.dataTypes">
+        <chart-data rooms="$ctrl.rooms" size="$ctrl.chartSize.id" type="dataType.type" ></chart-data>
       </div>
