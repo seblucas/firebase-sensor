@@ -4,28 +4,40 @@ var gulp = require('gulp');
 
 // Import dependencies
 var jshint = require('gulp-jshint');
-var mainBowerFiles = require('main-bower-files');
 var concat = require('gulp-concat');
 var bootlint = require('gulp-bootlint');
-var gulpFilter = require('gulp-filter');
 var templateCache = require('gulp-angular-templatecache');
+var replace = require('gulp-replace');
 var debug = require('gulp-debug');
 
 var source = 'app/';
+var depSource = 'node_modules/';
 
 var jsSources = [source + 'app.module.js',
                  source + 'app.config.js',
                  source + '**/*.js',
-                 '!' + source + 'bower_components/**/*.js',
                  '!' + source + '**/*.spec.js',
                  '!' + source + '**/*.e2e.js',
                  '!' + source + '**/*.mock.js'];
 
-var cssSources = [source + '**/*.css',
-                  '!' + source + 'bower_components/**/*.css'];
+var jsDeps = [depSource + 'jquery/dist/jquery.min.js',
+              depSource + 'angular/angular.min.js',
+              depSource + 'angular-route/angular-route.min.js',
+              depSource + 'bootstrap/dist/js/bootstrap.min.js',
+              depSource + 'd3/d3.min.js',
+              depSource + 'nvd3/build/nv.d3.min.js',
+              depSource + 'angular-nvd3/dist/angular-nvd3.min.js',
+              depSource + 'firebase/lib/firebase-web.js',
+              depSource + 'angularfire/dist/angularfire.min.js'];
+
+var cssSources = [source + '**/*.css'];
+
+var cssDeps = [depSource + 'bootstrap/dist/css/bootstrap.min.css',
+               depSource + 'nvd3/build/nv.d3.min.css'];
+
+var fontDeps = [depSource + 'bootstrap/dist/fonts/glyphicons*'];
 
 var htmlSources = [source + '**/*.html',
-                   '!' + source + 'bower_components/**/*.html',
                    '!' + source + 'index*.html'];
 
 var publishdir = 'public';
@@ -54,26 +66,29 @@ gulp.task('lint', function () {
         .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('bower', function() {
-    var jsFilter = gulpFilter('**/*.js', {restore: true});
-    var cssFilter = gulpFilter('**/*.css', {restore: true});
-    var fontFilter = gulpFilter('**/*.{otf,eot,svg,ttf,woff,woff2}', {restore: true});
-
-    return gulp.src(mainBowerFiles({ env: 'production' }))
-        .pipe(jsFilter)
-        .pipe(debug({title: 'js:'}))
-        .pipe(concat('vendor.js'))
-        .pipe(gulp.dest(dist.js))
-        .pipe(jsFilter.restore)
-        .pipe(cssFilter)
-        .pipe(debug({title: 'css:'}))
-        .pipe(concat('vendor.css'))
-        .pipe(gulp.dest(dist.css))
-        .pipe(cssFilter.restore)
-        .pipe(fontFilter)
-        .pipe(debug({title: 'font:'}))
-        .pipe(gulp.dest(dist.fonts));
+gulp.task('bower:js', function() {
+    return gulp.src(jsDeps)
+            .pipe(debug({title: 'js:'}))
+            .pipe(concat('vendor.js'))
+            .pipe(replace('module.exports = Firebase;', ''))
+            .pipe(gulp.dest(dist.js));
 });
+
+gulp.task('bower:css', function() {
+    return gulp.src(cssDeps)
+            .pipe(debug({title: 'css:'}))
+            .pipe(concat('vendor.css'))
+            .pipe(gulp.dest(dist.css));
+});
+
+gulp.task('bower:font', function() {
+    return gulp.src(fontDeps)
+            .pipe(debug({title: 'font:'}))
+            .pipe(gulp.dest(dist.fonts));
+});
+
+
+gulp.task('bower', ['bower:js', 'bower:css', 'bower:font']);
 
 gulp.task('js', function() {
     return gulp.src(jsSources)
