@@ -3,7 +3,6 @@
         <div class="col-xs-12 col-sm-6 col-md-4">
           <select class="form-control"
                   ng-model="$ctrl.chartSize"
-                  ng-change="$ctrl.loadGraphs()"
                   ng-options="v.value for v in $ctrl.chartAllSizes track by v.id">
           </select>
         </div>
