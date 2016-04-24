@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 function HomePageCtrl() {
-  var ctrl = this;
+  //var ctrl = this;
 }
 
 angular.module('sensorReadingApp').
