@@ -1,12 +1,2 @@
 ﻿      <recent-data rooms="$ctrl.rooms"></recent-data>
-      <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-4">
-          <select class="form-control"
-                  ng-model="$ctrl.chartSize"
-                  ng-options="v.value for v in $ctrl.chartAllSizes track by v.id">
-          </select>
-        </div>
-      </div>
-      <div ng-repeat="dataType in $ctrl.dataTypes">
-        <chart-data rooms="$ctrl.rooms" size="$ctrl.chartSize.id" type="dataType.type" ></chart-data>
-      </div>
+      <chart-data rooms="$ctrl.rooms"></chart-data>

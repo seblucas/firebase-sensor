@@ -3,23 +3,39 @@
 function ChartDataCtrl(lineChartService) {
   var ctrl = this;
 
+  ctrl.chartAllSizes = [{id: '24', value: '24 hours'},
+                          {id: '48', value: '48 hours'},
+                          {id: '168', value: '1 week'}];
+  ctrl.chartSize = {id: '24'};
+  ctrl.dataTypes = [{type: 'temp'}, {type: 'hum'}];
+  ctrl.chartData = [];
+  ctrl.chartOptions= [];
+
   ctrl.loadGraphs = function() {
-    ctrl.chartData = [];
-    lineChartService.getChartData(ctrl.rooms, ctrl.type, ctrl.size).then(function(data) {
-      ctrl.chartData = data;
+    /*for (var i = 0; i < ctrl.dataTypes.length; i++) {
+      var dataType = ctrl.dataTypes[i];
+      ctrl.chartOptions[dataType.type] = lineChartService.getChartOption(dataType.type);
+      ctrl.chartData[dataType.type] = [];
+      lineChartService.getChartData(ctrl.rooms, dataType.type, ctrl.chartSize.id).then(function(data) {
+        ctrl.chartData[dataType.type] = data;
+      });
+    }*/
+    angular.forEach(ctrl.dataTypes, function(dataType){
+      ctrl.chartOptions[dataType.type] = lineChartService.getChartOption(dataType.type);
+      ctrl.chartData[dataType.type] = [];
+      lineChartService.getChartData(ctrl.rooms, dataType.type, ctrl.chartSize.id).then(function(data) {
+        ctrl.chartData[dataType.type] = data;
+      });
     });
   };
 
-  ctrl.chartOptions = lineChartService.getChartOption(ctrl.type);
   ctrl.loadGraphs();
 }
 
 angular.module('sensorReadingApp').
 component('chartData', {
   bindings: {
-    rooms: '<',
-    size: '<',
-    type: '<'
+    rooms: '<'
   },
   templateUrl: 'index/chartData.html',
   controller: ChartDataCtrl
