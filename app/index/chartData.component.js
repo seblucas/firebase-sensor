@@ -12,14 +12,6 @@ function ChartDataCtrl(lineChartService) {
   ctrl.chartOptions= [];
 
   ctrl.loadGraphs = function() {
-    /*for (var i = 0; i < ctrl.dataTypes.length; i++) {
-      var dataType = ctrl.dataTypes[i];
-      ctrl.chartOptions[dataType.type] = lineChartService.getChartOption(dataType.type);
-      ctrl.chartData[dataType.type] = [];
-      lineChartService.getChartData(ctrl.rooms, dataType.type, ctrl.chartSize.id).then(function(data) {
-        ctrl.chartData[dataType.type] = data;
-      });
-    }*/
     angular.forEach(ctrl.dataTypes, function(dataType){
       ctrl.chartOptions[dataType.type] = lineChartService.getChartOption(dataType.type);
       ctrl.chartData[dataType.type] = [];
