@@ -26,12 +26,12 @@
             <ul class="nav navbar-nav navbar-right">
               <li><a href="#/errors"><span class="badge progress-bar-danger">{{ vm.errors.length }}</span></a></li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" target="_self" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li ng-if="!vm.authData"><a href="#" ng-click="vm.login()">Log In</a></li>
-                  <li ng-if="vm.authData"><a href="#">Uid {{ vm.authData.uid }}</a></li>
-                  <li ng-if="vm.authData"><a href="#">Logged as {{ vm.authData.google.displayName }}</a></li>
-                  <li ng-if="vm.authData"><a href="#" ng-click="vm.logout()">Log Out</a></li>
+                  <li ng-if="!vm.authData"><a href="#" target="_self" ng-click="vm.login()">Log In</a></li>
+                  <li ng-if="vm.authData"><a href="#" target="_self">Uid {{ vm.authData.uid }}</a></li>
+                  <li ng-if="vm.authData"><a href="#" target="_self">Logged as {{ vm.authData.google.displayName }}</a></li>
+                  <li ng-if="vm.authData"><a href="#" target="_self" ng-click="vm.logout()">Log Out</a></li>
                 </ul>
               </li>
             </ul>
