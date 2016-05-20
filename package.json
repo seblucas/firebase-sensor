@@ -9,16 +9,16 @@
     "gulp-bootlint": "0.7.2",
     "gulp-concat": "2.6.0",
     "gulp-debug": "2.1.2",
-    "gulp-jshint": "2.0.0",
+    "gulp-jshint": "2.0.1",
     "gulp-replace": "0.5.4",
     "jshint": "2.9.2"
   },
   "dependencies": {
     "jquery": "2.2.3",
     "angular": "1.5.5",
-    "d3": "3.5.16",
-    "nvd3": "1.8.2",
-    "angular-nvd3": "1.0.6",
+    "d3": "3.5.17",
+    "nvd3": "1.8.3",
+    "angular-nvd3": "1.0.7",
     "angular-route": "1.5.5",
     "angularfire": "1.2.0",
     "bootstrap": "3.3.6"
