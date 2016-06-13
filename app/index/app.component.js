@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-function ReadingsCtrl(firebaseHelperService) {
+function AppCtrl(firebaseHelperService) {
   var ctrl = this;
 
   ctrl.rooms = false;
@@ -56,4 +56,8 @@ function ReadingsCtrl(firebaseHelperService) {
 }
 
 angular.module('sensorReadingApp').
-controller('readingsCtrl', ReadingsCtrl);
+component('app', {
+  templateUrl: 'index/app.html',
+  controllerAs: 'vm',
+  controller: AppCtrl
+});

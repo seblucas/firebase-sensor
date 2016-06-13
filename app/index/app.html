@@ -1,0 +1,43 @@
+﻿    <div class="container">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/">Capteurs</a>
+          </div>
+          <div class="collapse navbar-collapse" id="menu-1">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#/errors"><span class="badge progress-bar-danger">{{ vm.errors.length }}</span></a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" target="_self" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li ng-if="!vm.authData"><a href="#" target="_self" ng-click="vm.login()">Log In</a></li>
+                  <li ng-if="vm.authData"><a href="#" target="_self">Uid {{ vm.authData.uid }}</a></li>
+                  <li ng-if="vm.authData"><a href="#" target="_self">Logged as {{ vm.authData.google.displayName }}</a></li>
+                  <li ng-if="vm.authData"><a href="#" target="_self" ng-click="vm.logout()">Log Out</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="alert alert-warning" role="alert" ng-if="!vm.authData">
+            Please Log in to use this page
+          </div>
+        </div>
+      </div>
+      <div ng-if="vm.rooms && vm.errors">
+        <div ng-view></div>
+      </div>
+      <div class="visible-xs hidden-sm hidden-md hidden-lg">xs</div>
+      <div class="hidden-xs visible-sm hidden-md hidden-lg">sm</div>
+      <div class="hidden-xs hidden-sm visible-md hidden-lg">md</div>
+      <div class="hidden-xs hidden-sm hidden-md visible-lg">lg</div>
+    </div>
