@@ -5,13 +5,13 @@
   "main": "gulpfile.js",
   "devDependencies": {
     "gulp": "3.9.1",
-    "gulp-angular-templatecache": "1.8.0",
-    "gulp-bootlint": "0.7.2",
+    "gulp-angular-templatecache": "2.0.0",
+    "gulp-bootlint": "0.8.0",
     "gulp-concat": "2.6.0",
     "gulp-debug": "2.1.2",
     "gulp-jshint": "2.0.1",
     "gulp-replace": "0.5.4",
-    "jshint": "2.9.2"
+    "jshint": "2.9.3"
   },
   "dependencies": {
     "@angular/router": "^0.2.0",
