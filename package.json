@@ -16,12 +16,12 @@
   "dependencies": {
     "@angular/router": "^0.2.0",
     "angular": "1.5.8",
-    "angular-nvd3": "1.0.7",
+    "angular-nvd3": "1.0.9",
     "angularfire": "1.2.0",
     "bootstrap": "3.3.6",
     "d3": "3.5.17",
     "jquery": "2.2.4",
-    "nvd3": "1.8.3"
+    "nvd3": "1.8.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
