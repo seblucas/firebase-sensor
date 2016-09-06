@@ -12,7 +12,7 @@
           </div>
           <div class="collapse navbar-collapse" id="menu-1">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#/errors"><span class="badge progress-bar-danger">{{ vm.errors.length }}</span></a></li>
+              <li><a ng-link="['ErrorListPage']"><span class="badge progress-bar-danger">{{ vm.errors.length }}</span></a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" target="_self" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div ng-if="vm.rooms && vm.errors">
-        <div ng-view></div>
+        <ng-outlet></ng-outlet>
       </div>
       <div class="visible-xs hidden-sm hidden-md hidden-lg">xs</div>
       <div class="hidden-xs visible-sm hidden-md hidden-lg">sm</div>

@@ -22,7 +22,7 @@ var jsSources = [source + 'app.module.js',
 
 var jsDeps = [depSource + 'jquery/dist/jquery.min.js',
               depSource + 'angular/angular.min.js',
-              depSource + 'angular-route/angular-route.min.js',
+              depSource + '@angular/router/angular1/angular_1_router.js',
               depSource + 'bootstrap/dist/js/bootstrap.min.js',
               depSource + 'd3/d3.min.js',
               depSource + 'nvd3/build/nv.d3.min.js',

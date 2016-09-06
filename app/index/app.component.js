@@ -59,5 +59,9 @@ angular.module('sensorReadingApp').
 component('app', {
   templateUrl: 'index/app.html',
   controllerAs: 'vm',
-  controller: AppCtrl
+  controller: AppCtrl,
+  $routeConfig: [
+    {path: '/', name: 'HomePage', component: 'homePage', useAsDefault: true},
+    {path: '/errors', name: 'ErrorListPage', component: 'readingErrors' }
+  ]
 });

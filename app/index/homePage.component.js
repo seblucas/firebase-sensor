@@ -1,14 +1,18 @@
 ﻿'use strict';
 
 function HomePageCtrl() {
-  //var ctrl = this;
+  var ctrl = this;
+
+  ctrl.$onInit = function() {
+    ctrl.rooms = ctrl.app.rooms;
+    ctrl.errors = ctrl.app.errors;
+  };
 }
 
 angular.module('sensorReadingApp').
 component('homePage', {
-  bindings: {
-    rooms: '<',
-    errors: '='
+  require: {
+    app: '^app'
   },
   templateUrl: 'index/homePage.html',
   controller: HomePageCtrl

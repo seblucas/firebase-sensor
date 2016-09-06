@@ -14,14 +14,15 @@
     "jshint": "2.9.2"
   },
   "dependencies": {
-    "jquery": "2.2.3",
+    "@angular/router": "^0.2.0",
     "angular": "1.5.5",
-    "d3": "3.5.17",
-    "nvd3": "1.8.3",
     "angular-nvd3": "1.0.7",
     "angular-route": "1.5.5",
     "angularfire": "1.2.0",
-    "bootstrap": "3.3.6"
+    "bootstrap": "3.3.6",
+    "d3": "3.5.17",
+    "jquery": "2.2.3",
+    "nvd3": "1.8.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
