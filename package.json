@@ -15,12 +15,12 @@
   },
   "dependencies": {
     "@angular/router": "^0.2.0",
-    "angular": "1.5.5",
+    "angular": "1.5.8",
     "angular-nvd3": "1.0.7",
     "angularfire": "1.2.0",
     "bootstrap": "3.3.6",
     "d3": "3.5.17",
-    "jquery": "2.2.3",
+    "jquery": "2.2.4",
     "nvd3": "1.8.3"
   },
   "scripts": {
