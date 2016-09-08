@@ -126,7 +126,7 @@ gulp.task('watch', ['default'], function() {
 
 gulp.task('ci', ['lint', 'bootlint']);
 
-gulp.task('zip', function() {
+gulp.task('zip', ['default'], function() {
   return gulp.src('public/**')
         .pipe(zip('firebase-sensor.zip'))
         .pipe(gulp.dest('./'));
