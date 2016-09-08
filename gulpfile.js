@@ -9,6 +9,7 @@ var bootlint = require('gulp-bootlint');
 var templateCache = require('gulp-angular-templatecache');
 var replace = require('gulp-replace');
 var debug = require('gulp-debug');
+var zip = require('gulp-zip');
 
 var source = 'app/';
 var depSource = 'node_modules/';
@@ -124,3 +125,9 @@ gulp.task('watch', ['default'], function() {
 }); // development
 
 gulp.task('ci', ['lint', 'bootlint']);
+
+gulp.task('zip', function() {
+  return gulp.src('public/**')
+        .pipe(zip('firebase-sensor.zip'))
+        .pipe(gulp.dest('./'));
+});

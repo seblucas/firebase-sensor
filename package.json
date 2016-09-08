@@ -11,6 +11,7 @@
     "gulp-debug": "2.1.2",
     "gulp-jshint": "2.0.1",
     "gulp-replace": "0.5.4",
+    "gulp-zip": "3.2.0",
     "jshint": "2.9.3"
   },
   "dependencies": {
