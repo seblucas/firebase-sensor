@@ -52,7 +52,7 @@ factory('lineChartService', function(dateFilter, firebaseHelperService, $q) {
       } else if (type === 'hum') {
         options = _getSpecificOption('Humidity', 'Time', 'Humidity (%)');
       } else if (type === 'lum') {
-        options = _getSpecificOption('Illuminance', 'Time', 'Illuminance (%)');
+        options = _getSpecificOption('Illuminance', 'Time', 'Illuminance (lx)');
       }
       return angular.merge ({}, defaultChartOptions, options);
     },
