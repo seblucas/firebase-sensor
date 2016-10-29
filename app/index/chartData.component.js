@@ -7,7 +7,7 @@ function ChartDataCtrl(lineChartService) {
                           {id: '48', value: '48 hours'},
                           {id: '168', value: '1 week'}];
   ctrl.chartSize = {id: '24'};
-  ctrl.dataTypes = [{type: 'temp'}, {type: 'hum'}];
+  ctrl.dataTypes = [{type: 'temp'}, {type: 'hum'}, {type: 'lum'}];
   ctrl.chartData = [];
   ctrl.chartOptions= [];
 

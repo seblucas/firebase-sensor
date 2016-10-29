@@ -51,6 +51,8 @@ factory('lineChartService', function(dateFilter, firebaseHelperService, $q) {
         options = _getSpecificOption('Temperature', 'Time', 'Temperature (°C)');
       } else if (type === 'hum') {
         options = _getSpecificOption('Humidity', 'Time', 'Humidity (%)');
+      } else if (type === 'lum') {
+        options = _getSpecificOption('Illuminance', 'Time', 'Illuminance (%)');
       }
       return angular.merge ({}, defaultChartOptions, options);
     },
