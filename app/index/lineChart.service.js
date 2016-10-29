@@ -83,7 +83,7 @@ factory('lineChartService', function(dateFilter, firebaseHelperService, $q) {
             for (var j = 0; j < values.length; j++) {
               var reading = values [j];
               if (reading.time > limit) {
-                var value = reading[typeOfData];
+                var value = parseFloat(reading[typeOfData]);
                 tempData[roomId].values.push ([reading.time, value]);
               }
             }
