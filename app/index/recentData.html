@@ -7,7 +7,7 @@
             </div>
             <div class="panel-footer">
               <p>{{ room.label }}</p>
-              <small>{{ temp.time * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}<br/></small>
+              <small>{{ temp.time * 1000 | date:'dd/MM/yyyy HH:mm:ss'}}  <span ng-if='$ctrl.currentTimeLimit > temp.time' class="glyphicon glyphicon-warning-sign text-warning" ></span><br/></small>
             </div>
           </div>
         </div>
