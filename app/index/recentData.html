@@ -2,7 +2,11 @@
         <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="room in $ctrl.rooms">
           <div class="panel panel-default" ng-repeat="temp in $ctrl.readings[room.$id]">
             <div class="panel-body">
-              <h2><span class="glyphicon {{ room.icon }}" ng-style="{'color': room.color}"></span> {{temp.temp | number:1}}<small>°C</small><span ng-if="room.readings.hum"> / {{temp.hum |  number:0}}<small>%</small></span><span ng-if="room.readings.lum"> / {{temp.lum |  number:0}}<small>lx</small></span>
+              <h2>
+                <span class="glyphicon {{ room.icon }}" ng-style="{'color': room.color}"></span>
+                <span ng-repeat="category in $ctrl.categories">
+                  <span ng-if="room.readings[category.$id]"><span ng-if="!$first"> / </span>{{temp[category.$id] |  number:category.fractionSize}}<small>{{ category.unit }}</small></span>
+                </span>
               </h2>
             </div>
             <div class="panel-footer">

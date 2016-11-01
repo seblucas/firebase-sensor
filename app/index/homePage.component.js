@@ -6,6 +6,7 @@ function HomePageCtrl() {
   ctrl.$onInit = function() {
     ctrl.rooms = ctrl.app.rooms;
     ctrl.errors = ctrl.app.errors;
+    ctrl.readingCategories = ctrl.app.readingCategories;
   };
 }
 

@@ -20,7 +20,8 @@ function RecentDataCtrl(firebaseHelperService, $timeout) {
 angular.module('sensorReadingApp').
 component('recentData', {
   bindings: {
-    rooms: '<'
+    rooms: '<',
+    categories: '<'
   },
   templateUrl: 'index/recentData.html',
   controller: RecentDataCtrl

@@ -17,7 +17,7 @@ factory('firebaseHelperService', function($firebaseArray, $firebaseAuth) {
       }
       return $firebaseArray(ref);
     },
-    getData: function(url) {
+    getData: function(url, orderBy) {
       var ref = new Firebase(fireBaseUrl + url);
       return $firebaseArray(ref);
     },

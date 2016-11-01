@@ -4,6 +4,7 @@ function AppCtrl(firebaseHelperService) {
   var ctrl = this;
 
   ctrl.rooms = false;
+  ctrl.readingCategories = false;
   ctrl.errors = false;
 
 
@@ -12,6 +13,11 @@ function AppCtrl(firebaseHelperService) {
     tempRooms.$loaded()
     .then(function(data){
       ctrl.rooms = data;
+    });
+    var tempReadingCategories = firebaseHelperService.getData('/readingCategories', 'order');
+    tempReadingCategories.$loaded()
+    .then(function(data){
+      ctrl.readingCategories = data;
     });
     var tempErrors = firebaseHelperService.getData('/errors');
     tempErrors.$loaded()
@@ -49,6 +55,7 @@ function AppCtrl(firebaseHelperService) {
       });*/
     if (ctrl.rooms) { ctrl.rooms.$destroy(); ctrl.rooms = false; }
     if (ctrl.errors) { ctrl.errors.$destroy(); ctrl.errors = false; }
+    if (ctrl.readingCategories) { ctrl.readingCategories.$destroy(); ctrl.readingCategories = false; }
     /*ctrl.temperatures = [];
     ctrl.humidities = [];*/
     rootRef.unauth();
