@@ -19,6 +19,10 @@ factory('firebaseHelperService', function($firebaseArray, $firebaseAuth) {
     },
     getData: function(url, orderBy) {
       var ref = new Firebase(fireBaseUrl + url);
+      if (orderBy !== undefined && orderBy !== null) {
+        console.log(orderBy);
+        ref = ref.orderByChild(orderBy);
+      }
       return $firebaseArray(ref);
     },
     getRootReference: function() {
