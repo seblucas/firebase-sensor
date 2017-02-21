@@ -22,12 +22,19 @@ root
     GUID
       time
       message
+  readingCategories
+    [hum|lum|temp]
+      fractionSize
+      label
+      order
+      unit
   readings
     room_id
       GUID
         time
         temp
         hum
+        lum
   rooms
     room_id
       label
@@ -36,6 +43,7 @@ root
       readings
         temp
         hum
+        lum
 ```
 
 ### Security
@@ -48,10 +56,6 @@ I'll probably add the battery level of some sensors, that will mean changing the
 
 ## The Web UI
 
-### Disclaimer
-
-For now it is only one file with the angular code, the dependencies and the HTML. I know that's bad design. On the other side the page is really small so it make things easy. Going to a full bower, gulp, npm powered app is on my todo list.
-
 ### How does it look ?
 
 ![Image](firebase-sensor.png)
@@ -59,8 +63,8 @@ For now it is only one file with the angular code, the dependencies and the HTML
 ### How do I make this work
 
 Easy :
- * Edit `firebase.html` and adapt this line `var fireBaseUrl = "https://<YOUR OWN APP URL>.firebaseio.com";`
- * Put `firebase.html` on your web server.
+ * Get latest [release](https://github.com/seblucas/firebase-sensor/releases) and decompress it on your webserver
+ * Copy `app.config.js.example` into `app.config.js` and adapt the content
  * Access it.
 
 ## Sending values to Firebase

@@ -1,8 +1,8 @@
 ﻿'use strict';
 
 angular.module('sensorReadingApp').
-factory('firebaseHelperService', function($firebaseArray, $firebaseAuth) {
-  var fireBaseUrl = 'https://<YOUR OWN APP URL>.firebaseio.com';
+factory('firebaseHelperService', function($firebaseArray, $firebaseAuth, firebaseConfig) {
+  var fireBaseUrl = firebaseConfig.url;
   var rootReference = new Firebase(fireBaseUrl);
   var firebaseAuth = $firebaseAuth(rootReference);
   return {
