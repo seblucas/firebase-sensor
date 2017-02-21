@@ -108,13 +108,18 @@ gulp.task('index', function() {
         .pipe(gulp.dest(publishdir));
 });
 
+gulp.task('config', function() {
+    return gulp.src(['app.config.js.example'])
+        .pipe(gulp.dest(publishdir));
+});
+
 gulp.task('html', function() {
   return gulp.src(htmlSources)
         .pipe(templateCache('templates.js', { standalone: true }))
         .pipe(gulp.dest(dist.js));
 });
 
-gulp.task('other', ['index', 'html']);
+gulp.task('other', ['index', 'html', 'config']);
 
 gulp.task('default', ['bower', 'css', 'js', 'other']);
 
