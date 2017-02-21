@@ -6,13 +6,13 @@
   "devDependencies": {
     "gulp": "3.9.1",
     "gulp-angular-templatecache": "2.0.0",
-    "gulp-bootlint": "0.8.0",
-    "gulp-concat": "2.6.0",
-    "gulp-debug": "2.1.2",
-    "gulp-jshint": "2.0.1",
+    "gulp-bootlint": "0.8.1",
+    "gulp-concat": "2.6.1",
+    "gulp-debug": "3.1.0",
+    "gulp-jshint": "2.0.4",
     "gulp-replace": "0.5.4",
-    "gulp-zip": "3.2.0",
-    "jshint": "2.9.3"
+    "gulp-zip": "4.0.0",
+    "jshint": "2.9.4"
   },
   "dependencies": {
     "@angular/router": "^0.2.0",
