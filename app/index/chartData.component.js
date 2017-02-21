@@ -3,13 +3,17 @@
 function ChartDataCtrl(lineChartService) {
   var ctrl = this;
 
-  ctrl.chartAllSizes = [{id: '24', value: '24 hours'},
+  ctrl.$onInit = function() {
+    ctrl.chartAllSizes = [{id: '24', value: '24 hours'},
                           {id: '48', value: '48 hours'},
                           {id: '168', value: '1 week'}];
-  ctrl.chartSize = {id: '24'};
-  ctrl.dataTypes = [{type: 'temp'}, {type: 'hum'}, {type: 'lum'}];
-  ctrl.chartData = [];
-  ctrl.chartOptions= [];
+    ctrl.chartSize = {id: '24'};
+    ctrl.dataTypes = [{type: 'temp'}, {type: 'hum'}, {type: 'lum'}];
+    ctrl.chartData = [];
+    ctrl.chartOptions= [];
+
+    ctrl.loadGraphs();
+  };
 
   ctrl.loadGraphs = function() {
     angular.forEach(ctrl.dataTypes, function(dataType){
@@ -20,8 +24,6 @@ function ChartDataCtrl(lineChartService) {
       });
     });
   };
-
-  ctrl.loadGraphs();
 }
 
 angular.module('sensorReadingApp').

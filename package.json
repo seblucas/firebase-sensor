@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@angular/router": "^0.2.0",
-    "angular": "1.5.8",
+    "angular": "1.6.2",
     "angular-nvd3": "1.0.9",
     "angularfire": "1.2.0",
     "bootstrap": "3.3.7",
