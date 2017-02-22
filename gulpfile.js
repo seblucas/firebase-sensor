@@ -28,7 +28,7 @@ var jsDeps = [depSource + 'jquery/dist/jquery.min.js',
               depSource + 'd3/d3.min.js',
               depSource + 'nvd3/build/nv.d3.min.js',
               depSource + 'angular-nvd3/dist/angular-nvd3.min.js',
-              depSource + 'firebase/lib/firebase-web.js',
+              depSource + 'firebase/firebase.js',
               depSource + 'angularfire/dist/angularfire.min.js'];
 
 var cssSources = [source + '**/*.css'];

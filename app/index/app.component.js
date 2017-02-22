@@ -9,35 +9,34 @@ function AppCtrl(firebaseHelperService) {
 
 
   var showData = function() {
-    var tempRooms = firebaseHelperService.getData('/rooms');
+    var tempRooms = firebaseHelperService.getData('rooms');
     tempRooms.$loaded()
     .then(function(data){
       ctrl.rooms = data;
     });
-    var tempReadingCategories = firebaseHelperService.getData('/readingCategories', 'order');
+    var tempReadingCategories = firebaseHelperService.getData('readingCategories', 'order');
     tempReadingCategories.$loaded()
     .then(function(data){
       ctrl.readingCategories = data;
     });
-    var tempErrors = firebaseHelperService.getData('/errors');
+    var tempErrors = firebaseHelperService.getData('errors');
     tempErrors.$loaded()
     .then(function(data){
       ctrl.errors = data;
     });
   };
 
-  var rootRef = firebaseHelperService.getRootReference();
   var authRef = firebaseHelperService.getAuth();
 
   ctrl.login = function() {
-    authRef.$authWithOAuthPopup('google').then(function() {
-       // No need to do anything here it's handled by onAuth
+    authRef.$signInWithPopup('google').then(function() {
+       // No need to do anything here it's handled by $onAuthStateChanged
     }).catch(function(error) {
        console.error('Authentication failed:', error);
     });
   };
 
-  rootRef.onAuth(function(authData) {
+  authRef.$onAuthStateChanged(function(authData) {
     if (authData) {
       ctrl.authData = authData;
       console.log('Logged in as:', authData.uid);
@@ -58,7 +57,11 @@ function AppCtrl(firebaseHelperService) {
     if (ctrl.readingCategories) { ctrl.readingCategories.$destroy(); ctrl.readingCategories = false; }
     /*ctrl.temperatures = [];
     ctrl.humidities = [];*/
-    rootRef.unauth();
+    authRef.$signOut().then(function() {
+       console.log('Unauthentication completed');
+    }).catch(function(error) {
+       console.error('Unauthentication failed:', error);
+    });
   };
 }
 

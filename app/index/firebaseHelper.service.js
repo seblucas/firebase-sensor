@@ -1,16 +1,13 @@
 ﻿'use strict';
 
+/*global firebase */
+
 angular.module('sensorReadingApp').
-factory('firebaseHelperService', function($firebaseArray, $firebaseAuth, firebaseConfig) {
-  var fireBaseUrl = firebaseConfig.url;
-  var rootReference = new Firebase(fireBaseUrl);
-  var firebaseAuth = $firebaseAuth(rootReference);
+factory('firebaseHelperService', function($firebaseArray, $firebaseAuth) {
+  var firebaseAuth = $firebaseAuth();
   return {
-    getFirebaseUrl: function() {
-      return fireBaseUrl;
-    },
     getLastReading: function(room, limit) {
-      var ref = new Firebase(fireBaseUrl + '/readings/' + room);
+      var ref = firebase.database().ref('readings/' + room);
       // Only the last readings are interesting
       if (limit > 0) {
         ref = ref.limitToLast(limit);
@@ -18,14 +15,11 @@ factory('firebaseHelperService', function($firebaseArray, $firebaseAuth, firebas
       return $firebaseArray(ref);
     },
     getData: function(url, orderBy) {
-      var ref = new Firebase(fireBaseUrl + url);
+      var ref = firebase.database().ref(url);
       if (orderBy !== undefined && orderBy !== null) {
         ref = ref.orderByChild(orderBy);
       }
       return $firebaseArray(ref);
-    },
-    getRootReference: function() {
-      return rootReference;
     },
     getAuth: function() {
       return firebaseAuth;
