@@ -72,6 +72,7 @@ component('app', {
   controller: AppCtrl,
   $routeConfig: [
     {path: '/', name: 'HomePage', component: 'homePage', useAsDefault: true},
-    {path: '/errors', name: 'ErrorListPage', component: 'readingErrors' }
+    {path: '/errors', name: 'ErrorListPage', component: 'readingErrors' },
+    {path: '/line-chart', name: 'LineChartPage', component: 'lineChartDetail' }
   ]
 });
