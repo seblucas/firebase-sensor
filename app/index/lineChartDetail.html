@@ -5,6 +5,11 @@
             ng-change="$ctrl.selectCategory()"
             ng-options="v.label for v in $ctrl.readingCategories track by v.$id">
     </select>
+    <select class="form-control"
+            ng-model="$ctrl.chartSize"
+            ng-change="$ctrl.selectSize()"
+            ng-options="v.value for v in $ctrl.chartAllSizes track by v.id">
+    </select>
     <label class="checkbox-inline" ng-repeat="room in $ctrl.filteredRooms">
       <input ng-model="$ctrl.selectedRooms[room.$id]" ng-change="$ctrl.updateStream(room.$id)" type="checkbox"> {{ room.label }}
     </label>
