@@ -1,4 +1,4 @@
-﻿    <div class="container">
+﻿    <div ng-class="vm.fluid ? 'container-fluid' : 'container'">
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -12,6 +12,7 @@
           </div>
           <div class="collapse navbar-collapse" id="menu-1">
             <ul class="nav navbar-nav navbar-right">
+              <li><a href="#" ng-click="vm.toggleHZoom()"><span class="glyphicon glyphicon-resize-horizontal"></span></a></li>
               <li><a ng-link="['LineChartPage']"><span class="glyphicon glyphicon-signal"></span></a></li>
               <li><a ng-link="['ErrorListPage']"><span class="badge progress-bar-danger">{{ vm.errors.length }}</span></a></li>
               <li class="dropdown">

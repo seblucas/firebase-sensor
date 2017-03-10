@@ -6,6 +6,7 @@ function AppCtrl(firebaseHelperService) {
   ctrl.rooms = false;
   ctrl.readingCategories = false;
   ctrl.errors = false;
+  ctrl.fluid = false;
 
 
   var showData = function() {
@@ -34,6 +35,10 @@ function AppCtrl(firebaseHelperService) {
     }).catch(function(error) {
        console.error('Authentication failed:', error);
     });
+  };
+
+  ctrl.toggleHZoom = function() {
+    ctrl.fluid = !ctrl.fluid;
   };
 
   authRef.$onAuthStateChanged(function(authData) {
