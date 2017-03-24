@@ -22,4 +22,4 @@ deploy:
   on:
     tags: true
     repo: seblucas/firebase-sensor
-    node: '5.1'
+    node: '6'
