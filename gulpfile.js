@@ -10,6 +10,7 @@ var templateCache = require('gulp-angular-templatecache');
 var replace = require('gulp-replace');
 var debug = require('gulp-debug');
 var zip = require('gulp-zip');
+var Server = require('karma').Server;
 
 var source = 'app/';
 var depSource = 'node_modules/';
@@ -49,6 +50,20 @@ fonts: publishdir + '/fonts/',
 lang: publishdir + '/lang/'
 };
 // Define tasks
+
+gulp.task('test', ['default'], function(done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, function(result){
+        if(result === 0){
+            done();
+        } else {
+            return done(new Error('Karma exited with status code ${result}'));
+        }
+    }).start();
+});
+
 
 // Lint Task
 gulp.task('bootlint', function () {
@@ -129,7 +144,7 @@ gulp.task('watch', ['default'], function() {
   gulp.watch(htmlSources, ['html']);
 }); // development
 
-gulp.task('ci', ['lint', 'bootlint']);
+gulp.task('ci', ['lint', 'bootlint', 'test']);
 
 gulp.task('zip', ['default'], function() {
   return gulp.src('public/**')

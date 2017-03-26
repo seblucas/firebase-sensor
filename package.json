@@ -12,7 +12,11 @@
     "gulp-jshint": "2.0.4",
     "gulp-replace": "0.5.4",
     "gulp-zip": "4.0.0",
-    "jshint": "2.9.4"
+    "jasmine": "2.5.X",
+    "jshint": "2.9.4",
+    "karma": "1.5.x",
+    "karma-jasmine": "1.1.x",
+    "karma-phantomjs-launcher": "1.0.x"
   },
   "dependencies": {
     "@angular/router": "^0.2.0",
