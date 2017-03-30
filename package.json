@@ -4,6 +4,7 @@
   "description": "Web page to follow temperature / humidity sensors",
   "main": "gulpfile.js",
   "devDependencies": {
+    "angular-mocks": "1.6.2",
     "gulp": "3.9.1",
     "gulp-angular-templatecache": "2.0.0",
     "gulp-bootlint": "0.8.1",
