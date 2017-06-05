@@ -12,6 +12,4 @@ var config = {
 
 firebase.initializeApp(config);
 
-angular.module('sensorReadingApp').constant('firebaseConfig', {
-  'url': 'https://<YOUR OWN APP URL>.firebaseio.com'
 });
