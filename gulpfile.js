@@ -42,6 +42,9 @@ var fontDeps = [depSource + 'bootstrap/dist/fonts/glyphicons*'];
 var htmlSources = [source + '**/*.html',
                    '!' + source + 'index*.html'];
 
+var assetsSources = [source + 'assets/**']
+
+
 var publishdir = 'public';
 var dist = {
 css: publishdir + '/css/',
@@ -123,6 +126,11 @@ gulp.task('index', function() {
         .pipe(gulp.dest(publishdir));
 });
 
+gulp.task('assets', function() {
+    return gulp.src(assetsSources)
+        .pipe(gulp.dest(publishdir));
+});
+
 gulp.task('config', function() {
     return gulp.src(['app.config.js.example'])
         .pipe(gulp.dest(publishdir));
@@ -134,7 +142,7 @@ gulp.task('html', function() {
         .pipe(gulp.dest(dist.js));
 });
 
-gulp.task('other', ['index', 'html', 'config']);
+gulp.task('other', ['index', 'html', 'config', 'assets']);
 
 gulp.task('default', ['bower', 'css', 'js', 'other']);
 
