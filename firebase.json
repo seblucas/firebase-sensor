@@ -1,4 +1,4 @@
-{
+﻿{
   "hosting": {
     "public": "public",
     "rewrites": [
@@ -6,6 +6,13 @@
         "source": "**",
         "destination": "/index.html"
       }
-    ]
+    ],
+    "headers": [ {
+      "source" : "**/*.@(png|js|css|eot|otf|ttf|ttc|woff|woff2)",
+      "headers" : [ {
+      "key" : "Cache-Control",
+      "value" : "max-age=604800"
+      } ]
+    } ]
   }
 }
