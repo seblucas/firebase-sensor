@@ -25,6 +25,6 @@ exports.monitor = functions.https.onRequest((req, res) => {
     } else {
       result['status'] = "KO";
     }
-    res.status(200).json(result);
+    return res.status(200).json(result);
   });
 });
