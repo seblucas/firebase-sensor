@@ -14,7 +14,7 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 exports.monitor = functions.https.onRequest((req, res) => {
   // Push the new message into the Realtime Database using the Firebase Admin SDK.
   const tstamp = Date.now();
-  admin.database().ref('/readings/consigne').limitToLast(1).on("child_added", snapshot => {
+  admin.database().ref('/readings/consigne').limitToLast(1).once("child_added", snapshot => {
     res.set('Cache-Control', 'private, max-age=300');
     differenceInMinutes = (tstamp / 1000 - snapshot.val().time) / 60;
     result = {current: tstamp,
