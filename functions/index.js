@@ -37,7 +37,7 @@ exports.monitor = functions.https.onRequest((req, res) => {
     }
     return res.status(200).json(result);
   }).catch(error => {
-    console.log('Error getting message details', error.message);
+    console.error('Error while getting sensors details', error.message);
     res.sendStatus(500);
   });
 });
