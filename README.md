@@ -75,9 +75,7 @@ TODO
 
 I wanted to make sure to be notified if no new data are added to Firebase (because I lost my Internet connection or a crash happenned).
 
-So I created `monitoring.php` to check the time of the last child of one of my reading (in my case `readings/consigne.json`). I simply compare the node's date with the current date and print `Monitoring OK` if the difference between them is lower that 31 minutes.
-
-This PHP script only dependency is php5-curl.
+So I created a Cloud function `monitor` to check the time of the last child of most of my reading . I simply compare the node's date with the current date and output a JSON object with the status.
 
 The only thing left is to add a keyword monitor to [UptimeRobot](http://uptimerobot.com/).
 

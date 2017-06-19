@@ -18,17 +18,17 @@ exports.monitor = functions.https.onRequest((req, res) => {
   var promiseArray = [];
   var result = {};
   for (var i = 0; i < sensors.length; i++) {
-    console.log('Adding promise for ' + sensors[i]);
     promiseArray.push(admin.database().ref('/readings/' + sensors[i]).limitToLast(1).once("value"));
   }
   Promise.all(promiseArray).then(queryResults => {
     console.log('All promises done : ' + queryResults.length);
     res.set('Cache-Control', 'private, max-age=300');
     queryResults.forEach((snapshots, i) => {
-      console.log ("Result %d %d", i, snapshots.numChildren());
+      if (snapshots.numChildren() === 0) {
+        console.log ("No data found for %s", sensors[i]);
+      }
       snapshots.forEach((snapshot) => {
         var currentData = snapshot.val();
-        console.log ("currentData %j", currentData);
         differenceInMinutes = (tstamp - currentData.time) / 60;
         result[sensors[i]] = {current: tstamp,
                               sensor: currentData.time,
