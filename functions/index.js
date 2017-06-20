@@ -4,13 +4,6 @@
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
-// Create and Deploy Your First Cloud Functions
-// https://firebase.google.com/docs/functions/write-firebase-functions
-
-exports.helloWorld = functions.https.onRequest((request, response) => {
- response.send("Hello from Firebase!");
-});
-
 exports.monitor = functions.https.onRequest((req, res) => {
   // Push the new message into the Realtime Database using the Firebase Admin SDK.
   const tstamp = Math.floor(Date.now() / 1000);
