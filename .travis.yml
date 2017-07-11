@@ -14,7 +14,7 @@ cache:
 
 before_deploy:
   - gulp zip
-  - cd functions && npm install && cd
+  - cd functions && npm install && cd ..
 
 deploy:
   - provider: releases
