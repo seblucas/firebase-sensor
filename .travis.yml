@@ -7,11 +7,14 @@ node_js:
 
 script:
   - gulp ci
-  - gulp zip
 
 cache:
   directories:
     - $HOME/.npm
+
+before_deploy:
+  - gulp zip
+  - cd functions && npm install && cd
 
 deploy:
   - provider: releases
