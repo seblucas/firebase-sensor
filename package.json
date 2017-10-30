@@ -14,20 +14,20 @@
     "gulp-replace": "0.5.4",
     "gulp-zip": "4.0.0",
     "jasmine": "2.5.X",
-    "jshint": "2.9.4",
+    "jshint": "2.9.5",
     "karma": "1.5.x",
     "karma-jasmine": "1.1.x",
     "karma-phantomjs-launcher": "1.0.x"
   },
   "dependencies": {
     "@angular/router": "^0.2.0",
-    "angular": "1.6.2",
+    "angular": "1.6.6",
     "angular-nvd3": "1.0.9",
     "angularfire": "2.3.0",
     "bootstrap": "3.3.7",
     "d3": "3.5.17",
-    "jquery": "3.1.1",
-    "nvd3": "1.8.5"
+    "jquery": "3.2.1",
+    "nvd3": "1.8.6"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
