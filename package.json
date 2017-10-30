@@ -4,7 +4,7 @@
   "description": "Web page to follow temperature / humidity sensors",
   "main": "gulpfile.js",
   "devDependencies": {
-    "angular-mocks": "1.6.2",
+    "angular-mocks": "1.6.6",
     "gulp": "3.9.1",
     "gulp-angular-templatecache": "2.0.0",
     "gulp-bootlint": "0.8.1",
@@ -13,9 +13,9 @@
     "gulp-jshint": "2.0.4",
     "gulp-replace": "0.5.4",
     "gulp-zip": "4.0.0",
-    "jasmine": "2.5.X",
+    "jasmine": "2.8.X",
     "jshint": "2.9.5",
-    "karma": "1.5.x",
+    "karma": "1.7.x",
     "karma-jasmine": "1.1.x",
     "karma-phantomjs-launcher": "1.0.x"
   },
