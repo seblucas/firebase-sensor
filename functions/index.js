@@ -7,7 +7,7 @@ admin.initializeApp(functions.config().firebase);
 exports.monitor = functions.https.onRequest((req, res) => {
   // Push the new message into the Realtime Database using the Firebase Admin SDK.
   const tstamp = Math.floor(Date.now() / 1000);
-  var sensors = ["consigne", "grenier", "cuisine", "deulemont", "palier"];
+  var sensors = ["grenier", "cuisine", "deulemont", "palier"];
   var promiseArray = [];
   var result = {};
   for (var i = 0; i < sensors.length; i++) {
