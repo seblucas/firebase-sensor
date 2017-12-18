@@ -6,7 +6,7 @@ node_js:
   - "4"
 
 script:
-  - gulp ci
+  - npm run build
 
 cache:
   directories:
