@@ -2,36 +2,104 @@
   "name": "firebase-sensor",
   "version": "1.0.0",
   "description": "Web page to follow temperature / humidity sensors",
-  "main": "gulpfile.js",
-  "devDependencies": {
-    "angular-mocks": "1.6.6",
-    "gulp": "3.9.1",
-    "gulp-angular-templatecache": "2.0.0",
-    "gulp-bootlint": "0.8.1",
-    "gulp-concat": "2.6.1",
-    "gulp-debug": "3.1.0",
-    "gulp-jshint": "2.0.4",
-    "gulp-replace": "0.5.4",
-    "gulp-zip": "4.0.0",
-    "jasmine": "2.8.X",
-    "jshint": "2.9.5",
-    "karma": "1.7.x",
-    "karma-jasmine": "1.1.x",
-    "karma-phantomjs-launcher": "1.0.x"
+  "author": "Sébastien Lucas <sebastien.lucas@quadra-diffusion.fr>",
+  "scripts": {
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "start": "npm run dev",
+    "unit": "jest test/unit/specs --coverage",
+    "test": "npm run unit",
+    "lint": "eslint --ext .js,.vue src test/unit/specs",
+    "build": "node build/build.js"
   },
   "dependencies": {
-    "@angular/router": "^0.2.0",
-    "angular": "1.6.6",
-    "angular-nvd3": "1.0.9",
-    "angularfire": "2.3.0",
-    "bootstrap": "3.3.7",
     "d3": "3.5.17",
-    "jquery": "3.2.1",
-    "nvd3": "1.8.6"
+    "firebase": "^4.8.0",
+    "nvd3": "1.8.6",
+    "vue": "^2.5.2",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "devDependencies": {
+    "autoprefixer": "^7.1.2",
+    "babel-core": "^6.22.1",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-env": "^1.3.2",
+    "babel-preset-stage-2": "^6.22.0",
+    "babel-register": "^6.22.0",
+    "chalk": "^2.0.1",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.28.0",
+    "eslint": "^3.19.0",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-html": "^3.0.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eventsource-polyfill": "^0.9.6",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^1.1.4",
+    "friendly-errors-webpack-plugin": "^1.6.1",
+    "html-webpack-plugin": "^2.30.1",
+    "webpack-bundle-analyzer": "^2.9.0",
+    "babel-jest": "^21.0.2",
+    "jest": "^21.2.0",
+    "vue-jest": "^1.0.2",
+    "node-notifier": "^5.1.2",
+    "postcss-import": "^11.0.0",
+    "postcss-loader": "^2.0.8",
+    "semver": "^5.3.0",
+    "shelljs": "^0.7.6",
+    "optimize-css-assets-webpack-plugin": "^3.2.0",
+    "ora": "^1.2.0",
+    "rimraf": "^2.6.0",
+    "url-loader": "^0.5.8",
+    "vue-loader": "^13.3.0",
+    "vue-style-loader": "^3.0.1",
+    "vue-template-compiler": "^2.5.2",
+    "portfinder": "^1.0.13",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1",
+    "webpack-merge": "^4.1.0"
   },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    },
+    "setupFiles": [
+      "<rootDir>/test/unit/setup"
+    ],
+    "mapCoverage": true,
+    "coverageDirectory": "<rootDir>/test/unit/coverage",
+    "collectCoverageFrom": [
+      "src/**/*.{js,vue}",
+      "!src/main.js",
+      "!src/router/index.js",
+      "!**/node_modules/**"
+    ]
+  },
+  "engines": {
+    "node": ">= 4.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/seblucas/firebase-sensor.git"

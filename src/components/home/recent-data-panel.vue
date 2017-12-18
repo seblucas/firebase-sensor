@@ -1,0 +1,34 @@
+<template>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h2>
+        <span class="glyphicon" v-bind:class="room.icon" v-bind:style="{ color: room.color }"></span>
+        <span v-for="(category, indexCat) in categories">
+          <span v-if="reading && room.readings[category.id]"><span v-if="indexCat > 0"> / </span>{{ reading[category.id] | formatNumber(category.fractionSize) }}<small>{{ category.unit }}</small></span>
+        </span>
+      </h2>
+    </div>
+    <div class="panel-footer">
+      <p>{{ room.label }}</p>
+      <small v-if="reading">{{ reading.time | formatDate }}  <span v-if='timeLimit > reading.time' class="glyphicon glyphicon-warning-sign text-warning" ></span><br/></small>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'recent-data-panel',
+  props: ['room', 'idRoom', 'categories', 'timeLimit'],
+  data () {
+    return {
+      reading: false
+    }
+  },
+  created () {
+    this.$firebase.database().ref('readings/' + this.idRoom).limitToLast(1).on('child_added', (newValue) => {
+      console.log('trouvé pour :', this.idRoom, newValue.val())
+      this.reading = newValue.val()
+    })
+  }
+}
+</script>
