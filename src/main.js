@@ -9,15 +9,13 @@ import Firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 
-if (typeof Firebase === 'undefined') throw new Error('hosting/init-error: Firebase SDK not detected. You must include it before /__/firebase/init.js')
-Vue.prototype.$firebase = Firebase.initializeApp({
-  'apiKey': 'AIzaSyAit7QVCQ_qq4FvlMgmN7lsgdsFD43Z2uw',
-  'databaseURL': 'https://seblucas-sensors.firebaseio.com',
-  'storageBucket': 'seblucas-sensors.appspot.com',
-  'authDomain': 'seblucas-sensors.firebaseapp.com',
-  'messagingSenderId': '1044663468842',
-  'projectId': 'seblucas-sensors'
-})
+var xmlhttp = new XMLHttpRequest()
+var url = '/__/firebase/init.json'
+
+xmlhttp.open('GET', url, false)
+xmlhttp.send()
+var myArr = JSON.parse(xmlhttp.responseText)
+Vue.prototype.$firebase = Firebase.initializeApp(myArr)
 
 Vue.filter('formatDate', (value) => {
   if (value) {
