@@ -11,6 +11,9 @@ import 'firebase/database'
 
 var xmlhttp = new XMLHttpRequest()
 var url = '/__/firebase/init.json'
+if (process.env.NODE_ENV === 'development') {
+  url = '/static/init.json'
+}
 
 xmlhttp.open('GET', url, false)
 xmlhttp.send()
