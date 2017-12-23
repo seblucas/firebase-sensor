@@ -14,19 +14,19 @@ export default {
   data () {
     return {
       data: [],
-      chart: null,
-      numberOfHours: 48
+      chart: null
     }
   },
-  props: ['rooms', 'category', 'readings'],
-  computed: {
-    lowerTimeLimit () {
-      return ((new Date() / 1000) - 3600 * this.numberOfHours)
-    }
-  },
+  props: ['rooms', 'category', 'readings', 'numberOfHours'],
   watch: {
     category () {
       console.log('chart-detail / Category updated ', this.category.id)
+      this.prepareChart()
+
+      this.loadData()
+    },
+    numberOfHours () {
+      console.log('chart-detail / numberOfHours updated ', this.numberOfHours)
       this.prepareChart()
 
       this.loadData()
@@ -34,14 +34,14 @@ export default {
   },
   methods: {
     loadDataFromFirebase (roomId, currentDatum) {
+      var lowerTimeLimit = (new Date() / 1000) - 3600 * this.numberOfHours
       this.$firebase.database().ref('readings/' + roomId).limitToLast(4 * this.numberOfHours).once('value', (newValue) => {
         var basicArray = this.ObjectToArray(newValue.val())
         // Remove too old readings
         basicArray = basicArray.filter((item) => {
-          return item.time > this.lowerTimeLimit
+          return item.time > lowerTimeLimit
         })
         currentDatum.values = basicArray
-        this.chart.update()
       })
     },
     loadData () {
