@@ -3,9 +3,11 @@ language: node_js
 node_js:
   - "9"
   - "8"
+  - "6"
 
 script:
   - npm run build
+  - zip -r firebase-sensor.zip dist
 
 cache:
   directories:
