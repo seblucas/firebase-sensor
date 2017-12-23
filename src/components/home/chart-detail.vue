@@ -76,7 +76,7 @@ export default {
                       .interpolate('monotone')
                       .x((entry) => { return entry.time })
                       .y((entry) => { return entry[this.category.id] })
-                      .forceY([0, 15])
+                      .forceY([this.category.forceMin, this.category.forceMax])
                       .showYAxis(true)
                       .showXAxis(true)
 
