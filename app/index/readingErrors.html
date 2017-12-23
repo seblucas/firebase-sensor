@@ -1,8 +1,0 @@
-﻿      <div class="row">
-        <div class="col-lg-12" ng-repeat="error in $ctrl.errors" >
-          <div class="alert alert-danger" role="alert">
-            <span class="glyphicon glyphicon-trash" style="cursor: pointer" ng-click="$ctrl.errors.$remove(error)"></span>
-            <b>{{ error.time * 1000 | date:'dd/MM/yyyy HH:mm:ss'}} / </b>{{ error.message }}
-          </div>
-        </div>
-      </div>
