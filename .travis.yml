@@ -7,14 +7,13 @@ node_js:
 
 script:
   - npm run build
-  - zip -r firebase-sensor.zip dist
 
 cache:
   directories:
     - $HOME/.npm
 
 before_deploy:
-  - gulp zip
+  - zip -r firebase-sensor.zip dist
   - cd functions && npm install && cd ..
 
 deploy:
