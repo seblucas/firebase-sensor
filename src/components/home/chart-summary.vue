@@ -7,7 +7,7 @@
     </div>
     <div class="row" v-for="category in categories">
       <div class="col-lg-12">
-        <chart-detail v-if="isReadyChart" :rooms="rooms" :category="category" :readings="data"></chart-detail>
+        <chart-detail v-if="isReadyChart" :rooms="rooms" :category="category" :readings="data" :numberOfHours="numberOfHours"></chart-detail>
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@ export default {
     return {
       data: {},
       chartReadyCount: 0,
-      numberOfHours: 48
+      numberOfHours: 24
     }
   },
   props: ['rooms', 'categories'],
