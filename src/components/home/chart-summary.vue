@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="row">
+        <div class="col-lg-12">
+          <button class="btn btn-default pull-right" v-on:click="loadData()"><span class="glyphicon glyphicon-refresh"></span></button>
+        </div>
+    </div>
     <div class="row" v-for="category in categories">
       <div class="col-lg-12">
         <chart-detail v-if="isReadyChart" :rooms="rooms" :category="category" :readings="data"></chart-detail>
