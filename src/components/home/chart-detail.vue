@@ -18,7 +18,7 @@ export default {
       numberOfHours: 48
     }
   },
-  props: ['rooms', 'category'],
+  props: ['rooms', 'category', 'readings'],
   computed: {
     lowerTimeLimit () {
       return ((new Date() / 1000) - 3600 * this.numberOfHours)
@@ -26,17 +26,27 @@ export default {
   },
   watch: {
     category () {
-      console.log('Category updated ', this.category.id)
+      console.log('chart-detail / Category updated ', this.category.id)
       this.prepareChart()
 
       this.loadData()
     }
   },
   methods: {
+    loadDataFromFirebase (roomId, currentDatum) {
+      this.$firebase.database().ref('readings/' + roomId).limitToLast(4 * this.numberOfHours).once('value', (newValue) => {
+        var basicArray = this.ObjectToArray(newValue.val())
+        // Remove too old readings
+        basicArray = basicArray.filter((item) => {
+          return item.time > this.lowerTimeLimit
+        })
+        currentDatum.values = basicArray
+        this.chart.update()
+      })
+    },
     loadData () {
       this.data = []
       Object.keys(this.rooms).forEach((roomId) => {
-        console.log('load chart data for room:', roomId)
         var room = this.rooms[roomId]
         if (!room['readings'][this.category.id]) return
         var currentDatum = {
@@ -46,17 +56,13 @@ export default {
           disabled: false
         }
         this.data.push(currentDatum)
-        this.$firebase.database().ref('readings/' + roomId).limitToLast(4 * this.numberOfHours).once('value', (newValue) => {
-          console.log(`found chart of ${this.category.id} data for ${roomId}`)
-
-          var basicArray = this.ObjectToArray(newValue.val())
-          // Remove too old readings
-          basicArray = basicArray.filter((item) => {
-            return item.time > this.lowerTimeLimit
-          })
-          currentDatum.values = basicArray
-          this.chart.update()
-        })
+        if (this.readings && this.readings.hasOwnProperty(roomId)) {
+          console.log(`chart-detail / Using cached element for ${this.category.id} data for ${roomId}`)
+          currentDatum.values = this.readings[roomId]
+        } else {
+          console.log(`chart-detail / Loading element from database for ${this.category.id} data for ${roomId}`)
+          this.loadDataFromFirebase(roomId, currentDatum)
+        }
       })
     },
     prepareChart () {
