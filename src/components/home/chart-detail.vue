@@ -20,7 +20,7 @@ export default {
   props: ['rooms', 'category', 'readings', 'numberOfHours'],
   watch: {
     category () {
-      console.log('chart-detail / Category updated ', this.category.id)
+      this.DevLog('chart-detail / Category updated ', this.category.id)
       this.prepareChart()
 
       this.loadData()
@@ -57,10 +57,10 @@ export default {
         }
         this.data.push(currentDatum)
         if (this.readings && this.readings.hasOwnProperty(roomId)) {
-          console.log(`chart-detail / Using cached element for ${this.category.id} data for ${roomId}`)
+          this.DevLog(`chart-detail / Using cached element for ${this.category.id} data for ${roomId}`)
           currentDatum.values = this.readings[roomId]
         } else {
-          console.log(`chart-detail / Loading element from database for ${this.category.id} data for ${roomId}`)
+          this.DevLog(`chart-detail / Loading element from database for ${this.category.id} data for ${roomId}`)
           this.loadDataFromFirebase(roomId, currentDatum)
         }
       })

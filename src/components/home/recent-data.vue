@@ -19,14 +19,11 @@ export default {
   props: ['rooms', 'categories'],
   components: {RecentDataPanel: RecentDataPanel},
   mounted () {
-    console.log('Enable autoload')
     this.interval = setInterval(() => {
-      console.log('update time inside')
       this.currentTimeLimit = Math.floor(Date.now() / 1000) - (31 * 60)
     }, 1 * 60 * 1000)
   },
   beforeDestroy () {
-    console.log('Disable autoload')
     clearInterval(this.interval)
   }
 }

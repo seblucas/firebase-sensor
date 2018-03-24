@@ -26,7 +26,6 @@ export default {
   },
   created () {
     this.$firebase.database().ref('readings/' + this.idRoom).limitToLast(1).on('child_added', (newValue) => {
-      console.log('trouvé pour :', this.idRoom, newValue.val())
       this.reading = newValue.val()
     })
   }

@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import { store } from './store'
 import ObjectToArray from './helper/object2array'
+import DevLog from './helper/devLog'
 import router from './router'
 import Firebase from 'firebase/app'
 import 'firebase/auth'
@@ -22,21 +23,20 @@ Vue.prototype.$firebase = Firebase.initializeApp(myArr)
 
 Vue.filter('formatDate', (value) => {
   if (value) {
-    console.log('FormatDate called ', value)
     return new Date(value * 1000).toLocaleString()
   }
 })
 
 Vue.filter('formatNumber', (value, fractionSize) => {
   if (value) {
-    console.log('FormatNumber called ', value)
     return value.toLocaleString(undefined, { minimumFractionDigits: fractionSize, maximumFractionDigits: fractionSize })
   }
 })
 
 Vue.mixin({
   methods: {
-    ObjectToArray
+    ObjectToArray,
+    DevLog
   }
 })
 
