@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-4" v-for="(room, idRoom) in rooms">
+    <div class="col-xs-12 col-sm-6 col-md-4" v-for="(room, idRoom) in rooms" :key="idRoom">
       <recent-data-panel :room="room" :id-room="idRoom" :categories="categories" :time-limit="currentTimeLimit"></recent-data-panel>
     </div>
   </div>
