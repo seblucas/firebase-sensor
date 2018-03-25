@@ -37,9 +37,9 @@ export default {
       this.chartReadyCount = 0
       var lowerTimeLimit = (new Date() / 1000) - 3600 * this.numberOfHours
       Object.keys(this.rooms).forEach((roomId) => {
-        console.log('load readings data for room:', roomId)
+        this.DevLog('load readings data for room:', roomId)
         this.$firebase.database().ref('readings/' + roomId).limitToLast(4 * this.numberOfHours).once('value', (newValue) => {
-          console.log(`found readings for ${roomId}`)
+          this.DevLog(`found readings for ${roomId}`)
 
           var basicArray = this.ObjectToArray(newValue.val())
           // Remove too old readings
