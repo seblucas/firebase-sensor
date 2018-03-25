@@ -43,6 +43,7 @@ export default {
           return item.time > lowerTimeLimit
         })
         currentDatum.values = basicArray
+        this.chart.update()
       })
     },
     loadData () {
