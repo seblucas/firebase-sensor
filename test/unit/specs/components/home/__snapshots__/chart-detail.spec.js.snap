@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChartDetail.vue shows a graph 1`] = `
+<div>
+    <svg style="height: 500px;">
+        <g>
+            <g>
+                <g>
+                    <g>
+                        <g>
+                            <g>
+                                <circle style="stroke-width: 2; fill: #FFCCBC; fill-opacity: 1; stroke: #FFCCBC;" r="5"></circle>
+                                <text text-anchor="start" dy=".32em" dx="8"></text>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+                <g>
+                    <g>
+                        <rect></rect>
+                    </g>
+                    <g></g>
+                    <g></g>
+                    <g>
+                        <g>
+                            <defs>
+                                <clipPath>
+                                    <rect width="870" height="420"></rect>
+                                </clipPath>
+                            </defs>
+                            <g>
+                                <g>
+                                    <g style="stroke-opacity: 1; stroke-width: 1.5; fill-opacity: 0.5; fill: #FFCCBC; stroke: #FFCCBC;">
+                                        <path></path>
+                                    </g>
+                                </g>
+                                <g>
+                                    <g>
+                                        <defs>
+                                            <clipPath>
+                                                <rect width="890" height="440"></rect>
+                                            </clipPath>
+                                        </defs>
+                                        <g>
+                                            <g>
+                                                <g style="stroke-opacity: 1; fill-opacity: 0.5; fill: #FFCCBC; stroke: #FFCCBC;">
+                                                    <path></path>
+                                                    <path></path>
+                                                </g>
+                                            </g>
+                                            <g></g>
+                                        </g>
+                                        <g></g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                    <g>
+                        <g>
+                            <g></g>
+                        </g>
+                    </g>
+                </g>
+                <g></g>
+            </g>
+        </g>
+    </svg>
+</div>
+`;
