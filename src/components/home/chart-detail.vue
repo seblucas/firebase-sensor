@@ -7,7 +7,6 @@
 <script>
 import * as d3 from 'd3'
 import nv from 'nvd3'
-import 'nvd3/build/nv.d3.css'
 
 export default {
   name: 'chart-detail',
