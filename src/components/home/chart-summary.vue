@@ -39,9 +39,8 @@ export default {
       Object.keys(this.rooms).forEach((roomId) => {
         this.DevLog('load readings data for room:', roomId)
         this.$firebase.database().ref('readings/' + roomId).limitToLast(4 * this.numberOfHours).once('value', (newValue) => {
-          this.DevLog(`found readings for ${roomId}`)
-
           var basicArray = this.ObjectToArray(newValue.val())
+
           // Remove too old readings
           basicArray = basicArray.filter((item) => {
             return item.time > lowerTimeLimit
