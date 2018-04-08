@@ -36,3 +36,8 @@ export const FakeReadings = [
   { id: 'L00', time: 1514764800, temp: 12.1, hum: 52, lum: 17 },
   { id: 'L01', time: 1514764860, temp: 12.4, hum: 72 }
 ]
+
+export const FakeRawReadings = {
+  'L00': { time: 1514764800, temp: 12.1, hum: 52, lum: 17 },
+  'L01': { time: 1514764860, temp: 12.4, hum: 72 }
+}

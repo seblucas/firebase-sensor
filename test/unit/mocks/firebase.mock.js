@@ -18,6 +18,14 @@ export const $firebase = {
           }
         }
         callback(res)
+      },
+      once (action, callback) {
+        const res = {
+          val () {
+            return firebaseResult()
+          }
+        }
+        callback(res)
       }
     }
     return mock
