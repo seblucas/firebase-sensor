@@ -1,34 +1,16 @@
 import { shallow } from '@vue/test-utils'
 import ChartDetail from '@/components/home/chart-detail'
 import DevLog from '../../../mocks/devLog.mock'
+import { FakeRooms, FakeCategories, FakeReadings } from '../../../data/fake-data'
 
 const propsData = {
   rooms: {
-    room1: {
-      color: '#FFCCBC',
-      icon: 'glyphicon-bed',
-      label: 'Room One',
-      readings: {
-        other: 0,
-        temp: 1
-      }
-    }
+    room1: FakeRooms[0]
   },
-  category: {
-    id: 'temp',
-    forceMax: 15,
-    forceMin: 0,
-    fractionSize: 1,
-    label: 'Temperature',
-    order: 1,
-    unit: '°C'
-  },
+  category: FakeCategories[0],
   numberOfHours: 24,
   readings: {
-    room1: [
-      { id: 'L00', time: 1514764800, temp: 12.1 },
-      { id: 'L01', time: 1514764860, temp: 12.4 }
-    ]
+    room1: FakeReadings
   }
 }
 

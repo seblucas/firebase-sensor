@@ -1,46 +1,19 @@
 import { shallow, createLocalVue } from '@vue/test-utils'
 import RecentDataPanel from '@/components/home/recent-data-panel'
 import { $firebase, firebaseResult } from '../../../mocks/firebase.mock'
+import { FakeRooms, FakeCategories, FakeReadings } from '../../../data/fake-data'
 
 const propsData = {
-  room: {
-    color: '#FFCCBC',
-    icon: 'glyphicon-bed',
-    label: 'Room One',
-    readings: {
-      other: 0,
-      temp: 1,
-      hum: 1
-    }
-  },
+  room: FakeRooms[0],
   idRoom: 'room1',
-  categories: [
-    {
-      id: 'temp',
-      forceMax: 15,
-      forceMin: 0,
-      fractionSize: 1,
-      label: 'Temperature',
-      order: 1,
-      unit: '°C'
-    },
-    {
-      id: 'hum',
-      forceMax: 80,
-      forceMin: 40,
-      fractionSize: 0,
-      label: 'Humidity',
-      order: 2,
-      unit: '%'
-    }
-  ],
+  categories: FakeCategories,
   timeLimit: 1514764800
 }
 
 describe('RecentDataPanel.vue', () => {
   it('shows a panel with many values', () => {
     firebaseResult.mockReset()
-    firebaseResult.mockReturnValue({ id: 'L00', time: 1514764800, temp: 12.1, hum: 52, lum: 17 })
+    firebaseResult.mockReturnValue(FakeReadings[0])
 
     const localVue = createLocalVue()
     localVue.filter('formatDate', (value) => {
