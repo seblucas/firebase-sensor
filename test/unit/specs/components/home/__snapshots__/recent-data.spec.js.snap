@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecentData.vue shows a graph 1`] = `
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4">
+        <!---->
+    </div>
+</div>
+`;
