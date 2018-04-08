@@ -4,7 +4,11 @@
       <h2>
         <span class="glyphicon" v-bind:class="room.icon" v-bind:style="{ color: room.color }"></span>
         <span v-for="(category, indexCat) in categories" :key="category.id">
-          <span v-if="reading && room.readings[category.id]"><span v-if="indexCat > 0"> / </span>{{ reading[category.id] | formatNumber(category.fractionSize) }}<small>{{ category.unit }}</small></span>
+          <span v-if="reading && room.readings[category.id]">
+            <span v-if="indexCat > 0"> / </span>
+            {{ reading[category.id] | formatNumber(category.fractionSize) }}
+            <small>{{ category.unit }}</small>
+          </span>
         </span>
       </h2>
     </div>
