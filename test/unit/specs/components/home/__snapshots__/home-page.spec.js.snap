@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomePage.vue shows a page 1`] = `
+<div>
+    <recent-data rooms="[object Object]" categories="[object Object],[object Object]"></recent-data>
+    <chart-summary rooms="[object Object]" categories="[object Object],[object Object]"></chart-summary>
+</div>
+`;
