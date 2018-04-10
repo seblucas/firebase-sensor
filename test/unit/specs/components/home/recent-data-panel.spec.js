@@ -48,8 +48,8 @@ describe('RecentDataPanel.vue', () => {
     firebaseResult.mockReturnValue(false)
 
     const wrapper = genWrapper(genPropsData())
-    const h2 = wrapper.find('.panel-footer > p')
-    expect(h2.text()).toBe('Room One')
+    const p = wrapper.find('.panel-footer > p')
+    expect(p.text()).toBe('Room One')
   })
   it('does not show a warning icon if the reading is recent', () => {
     firebaseResult.mockReset()
