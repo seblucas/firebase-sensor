@@ -10,7 +10,7 @@ const propsData = {
 }
 
 describe('RecentData.vue', () => {
-  it('shows a graph', () => {
+  it('shows a page', () => {
     const wrapper = shallow(RecentData, {
       propsData
     })

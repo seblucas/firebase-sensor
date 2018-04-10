@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ChartSummary.vue shows a graph 1`] = `
+exports[`ChartSummary.vue shows a page 1`] = `
 <div>
     <div class="row">
         <div class="col-lg-12">

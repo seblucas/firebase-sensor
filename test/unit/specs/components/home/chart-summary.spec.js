@@ -13,7 +13,7 @@ const propsData = {
 }
 
 describe('ChartSummary.vue', () => {
-  it('shows a graph', () => {
+  it('shows a page', () => {
     firebaseResult.mockReset()
     firebaseResult.mockReturnValue(FakeRawReadings)
 
