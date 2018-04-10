@@ -12,38 +12,42 @@ function genPropsData () {
   }
 }
 
-const localVue = createLocalVue()
-localVue.filter('formatDate', (value) => {
-  if (value) {
-    return new Date(value * 1000).toLocaleString()
-  }
-})
-localVue.filter('formatNumber', (value, fractionSize) => {
-  if (value) {
-    return value.toLocaleString(undefined, { minimumFractionDigits: fractionSize, maximumFractionDigits: fractionSize })
-  }
-})
+function genlocalVue () {
+  const localVue = createLocalVue()
+  localVue.filter('formatDate', (value) => {
+    if (value) {
+      return new Date(value * 1000).toLocaleString()
+    }
+  })
+  localVue.filter('formatNumber', (value, fractionSize) => {
+    if (value) {
+      return value.toLocaleString(undefined, { minimumFractionDigits: fractionSize, maximumFractionDigits: fractionSize })
+    }
+  })
+  return localVue
+}
+
+function genWrapper (propsData) {
+  return shallow(RecentDataPanel, {
+    localVue: genlocalVue(),
+    propsData,
+    mocks: { $firebase }
+  })
+}
 
 describe('RecentDataPanel.vue', () => {
   it('shows a panel with many values', () => {
     firebaseResult.mockReset()
     firebaseResult.mockReturnValue(FakeReadings[0])
 
-    const wrapper = shallow(RecentDataPanel, {
-      localVue,
-      propsData: genPropsData(),
-      mocks: { $firebase }
-    })
+    const wrapper = genWrapper(genPropsData())
     expect(wrapper.html()).toMatchSnapshot()
   })
   it('shows the room label passed in props', () => {
     firebaseResult.mockReset()
     firebaseResult.mockReturnValue(false)
 
-    const wrapper = shallow(RecentDataPanel, {
-      propsData: genPropsData(),
-      mocks: { $firebase }
-    })
+    const wrapper = genWrapper(genPropsData())
     const h2 = wrapper.find('.panel-footer > p')
     expect(h2.text()).toBe('Room One')
   })
@@ -53,11 +57,7 @@ describe('RecentDataPanel.vue', () => {
     const data = genPropsData()
     data.timeLimit = FakeFirstDate - 1
 
-    const wrapper = shallow(RecentDataPanel, {
-      localVue,
-      propsData: data,
-      mocks: { $firebase }
-    })
+    const wrapper = genWrapper(data)
 
     const icon = wrapper.find('.glyphicon-warning-sign')
     expect(icon.exists()).toBe(false)
@@ -68,11 +68,7 @@ describe('RecentDataPanel.vue', () => {
     const data = genPropsData()
     data.timeLimit = FakeFirstDate + 1
 
-    const wrapper = shallow(RecentDataPanel, {
-      localVue,
-      propsData: data,
-      mocks: { $firebase }
-    })
+    const wrapper = genWrapper(data)
 
     const icon = wrapper.find('.glyphicon-warning-sign')
     expect(icon.exists()).toBe(true)
