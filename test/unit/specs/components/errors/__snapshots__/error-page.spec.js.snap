@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorPage.vue shows a page 1`] = `
+<div class="row">
+    <div class="col-lg-12">
+        <div role="alert" class="alert alert-danger"><span class="glyphicon glyphicon-trash" style="cursor: pointer;"></span>
+            <b>2018-2-13 11:47:51 / </b>Error 1
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div role="alert" class="alert alert-danger"><span class="glyphicon glyphicon-trash" style="cursor: pointer;"></span>
+            <b>2018-2-13 11:48:51 / </b>Error 2
+        </div>
+    </div>
+</div>
+`;

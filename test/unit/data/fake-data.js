@@ -43,3 +43,8 @@ export const FakeRawReadings = {
   'L00': { time: FakeFirstDate, temp: 12.1, hum: 52, lum: 17 },
   'L01': { time: FakeFirstDate + 60, temp: 12.4, hum: 72 }
 }
+
+export const FakeErrors = [
+  { time: FakeFirstDate, message: 'Error 1' },
+  { time: FakeFirstDate + 60, message: 'Error 2' }
+]
