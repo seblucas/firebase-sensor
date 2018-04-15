@@ -20,15 +20,11 @@ export default {
   watch: {
     category () {
       this.DevLog('chart-detail / Category updated ', this.category.id)
-      this.prepareChart()
-
-      this.loadData()
+      this.loadDataAndGraph()
     },
     numberOfHours () {
-      console.log('chart-detail / numberOfHours updated ', this.numberOfHours)
-      this.prepareChart()
-
-      this.loadData()
+      this.DevLog('chart-detail / numberOfHours updated ', this.numberOfHours)
+      this.loadDataAndGraph()
     }
   },
   methods: {
@@ -42,7 +38,9 @@ export default {
           return item.time > lowerTimeLimit
         })
         currentDatum.values = basicArray
-        this.chart.update()
+        if (this.chart) {
+          this.chart.update()
+        }
       })
     },
     loadData () {
@@ -106,11 +104,14 @@ export default {
       nv.addGraph(() => {
         return this.generateChart()
       })
+    },
+    loadDataAndGraph() {
+      this.loadData()
+      this.generateChart()
     }
   },
   mounted () {
-    this.loadData()
-    this.generateChart()
+    this.loadDataAndGraph()
   }
 }
 </script>
