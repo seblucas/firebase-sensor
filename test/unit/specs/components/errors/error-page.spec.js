@@ -16,6 +16,7 @@ function genlocalVue () {
 
 describe('ErrorPage.vue', () => {
   let getters
+  let actions
   let store
   let localVue
 
@@ -24,9 +25,13 @@ describe('ErrorPage.vue', () => {
     getters = {
       errors: () => FakeErrors
     }
+    actions = {
+      removeError: jest.fn()
+    }
 
     store = new Vuex.Store({
-      getters
+      getters,
+      actions
     })
   })
 
@@ -36,5 +41,15 @@ describe('ErrorPage.vue', () => {
       localVue
     })
     expect(wrapper.html()).toMatchSnapshot()
+  })
+  it('should call the remove action when the bin icon is clicked on', () => {
+    const wrapper = shallow(ErrorPage, {
+      store,
+      localVue
+    })
+    const deleteIcon = wrapper.find('.col-lg-12:first-child .glyphicon-trash')
+    deleteIcon.trigger('click')
+
+    expect(actions.removeError).toHaveBeenCalled()
   })
 })
