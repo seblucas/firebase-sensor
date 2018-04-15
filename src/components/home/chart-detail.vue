@@ -105,7 +105,7 @@ export default {
         return this.generateChart()
       })
     },
-    loadDataAndGraph() {
+    loadDataAndGraph () {
       this.loadData()
       this.generateChart()
     }
