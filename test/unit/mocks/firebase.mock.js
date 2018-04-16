@@ -2,6 +2,10 @@ export const firebaseResult = jest.fn(() => {
   return false
 })
 
+export const firebaseAuthResult = jest.fn(() => {
+  return false
+})
+
 export const $firebase = {
   database () {
     const mock = {
@@ -29,5 +33,12 @@ export const $firebase = {
       }
     }
     return mock
+  },
+  auth () {
+    return {
+      onAuthStateChanged (callback) {
+        callback(firebaseAuthResult())
+      }
+    }
   }
 }
