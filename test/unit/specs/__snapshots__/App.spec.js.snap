@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App.vue shows a page 1`] = `
+<div id="app" class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" data-toggle="collapse" data-target="#menu-1" aria-expanded="false" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+                <!---->
+            </div>
+            <div id="menu-1" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" target="_self"><span class="glyphicon glyphicon-resize-horizontal"></span></a>
+                    </li>
+                    <li>
+                        <!---->
+                    </li>
+                    <li>
+                        <!---->
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" target="_self" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#" target="_self">Log In</a>
+                            </li>
+                            <!---->
+                            <!---->
+                            <!---->
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col-xs-12">
+            <div role="alert" class="alert alert-warning">
+                Please Log in to use this page
+            </div>
+        </div>
+    </div>
+    <!---->
+    <div class="visible-xs hidden-sm hidden-md hidden-lg">xs</div>
+    <div class="hidden-xs visible-sm hidden-md hidden-lg">sm</div>
+    <div class="hidden-xs hidden-sm visible-md hidden-lg">md</div>
+    <div class="hidden-xs hidden-sm hidden-md visible-lg">lg</div>
+</div>
+`;
