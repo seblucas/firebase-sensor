@@ -36,7 +36,8 @@ export const FakeCategories = [
 
 export const FakeReadings = [
   { id: 'L00', time: FakeFirstDate, temp: 12.1, hum: 52, lum: 17 },
-  { id: 'L01', time: FakeFirstDate + 60, temp: 12.4, hum: 72 }
+  { id: 'L01', time: FakeFirstDate + 60, temp: 12.4, hum: 72 },
+  { id: 'L02', time: FakeFirstDate + 120, temp: 12.6, hum: 73 }
 ]
 
 export const FakeRawReadings = {

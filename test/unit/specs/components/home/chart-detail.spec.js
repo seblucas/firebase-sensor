@@ -29,7 +29,7 @@ describe('ChartDetail.vue', () => {
       .replace(/nv-chart-[\d]*/g, '')
       .replace(/id="[^"]*"/g, '')
       .replace(/clip-path="[^"]*"/g, '')
-      .replace(/d="[^"]*"/g, '')
+      // .replace(/d="[^"]*"/g, '')
       .replace(/class="[^"]*"/g, '')
       .replace(/transform="[^"]*"/g, '')).toMatchSnapshot()
   })
