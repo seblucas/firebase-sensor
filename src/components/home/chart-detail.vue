@@ -106,8 +106,13 @@ export default {
       })
     },
     loadDataAndGraph () {
+      this.chart = null
       this.loadData()
-      this.generateChart()
+      if (navigator.userAgent.includes('jsdom')) {
+        this.generateChart()
+      } else {
+        this.prepareChart()
+      }
     }
   },
   mounted () {
