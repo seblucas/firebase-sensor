@@ -6,7 +6,8 @@ node_js:
 
 script:
   - npm run lint
-  - npm run test
+  - npm run unit -- --ci
+  - cat test/unit/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
   - npm run build
 
 cache:
