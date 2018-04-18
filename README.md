@@ -1,5 +1,7 @@
 ﻿# Firebase based temperature / humidity logger
 
+[![Build Status](https://www.travis-ci.org/seblucas/firebase-sensor.svg?branch=master)](https://www.travis-ci.org/seblucas/firebase-sensor) [![Coverage Status](https://coveralls.io/repos/github/seblucas/firebase-sensor/badge.svg?branch=master)](https://coveralls.io/github/seblucas/firebase-sensor?branch=master)
+
 ## The idea
 
 The idea came from [Tim Hodson](https://github.com/timhodson/rpi-sensor-station) who [blogged about it](http://timhodson.com/2014/04/rpi-sensor-network-collecting-the-data/) some time ago. So huge thanks to him.
