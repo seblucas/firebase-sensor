@@ -1,4 +1,4 @@
-import { shallow } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import ChartDetail from '@/components/home/chart-detail'
 import DevLog from '../../../mocks/devLog.mock'
 import ObjectToArray from '@/helper/object2array'
@@ -20,7 +20,7 @@ function genPropsData () {
 
 describe('ChartDetail.vue', () => {
   it('shows a graph', () => {
-    const wrapper = shallow(ChartDetail, {
+    const wrapper = shallowMount(ChartDetail, {
       propsData: genPropsData(),
       mocks: { DevLog },
       attachToDocument: true
@@ -39,7 +39,7 @@ describe('ChartDetail.vue', () => {
 
     const propsData = genPropsData()
     propsData.readings = null
-    const wrapper = shallow(ChartDetail, {
+    const wrapper = shallowMount(ChartDetail, {
       propsData,
       mocks: { DevLog, $firebase, ObjectToArray },
       attachToDocument: true
@@ -47,7 +47,7 @@ describe('ChartDetail.vue', () => {
     expect(wrapper.vm.data).toHaveLength(1)
   })
   it('should reload the graph if the category is changed', () => {
-    const wrapper = shallow(ChartDetail, {
+    const wrapper = shallowMount(ChartDetail, {
       propsData: genPropsData(),
       mocks: { DevLog },
       attachToDocument: true
@@ -58,7 +58,7 @@ describe('ChartDetail.vue', () => {
     expect(loadDataAndGraph).toHaveBeenCalled()
   })
   it('should reload the graph if the number of hours is changed', () => {
-    const wrapper = shallow(ChartDetail, {
+    const wrapper = shallowMount(ChartDetail, {
       propsData: genPropsData(),
       mocks: { DevLog },
       attachToDocument: true

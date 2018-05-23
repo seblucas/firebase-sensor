@@ -1,4 +1,4 @@
-import { shallow, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Router from 'vue-router'
 import App from '@/App'
@@ -40,7 +40,7 @@ describe('App.vue', () => {
   })
 
   it('shows a page', () => {
-    const wrapper = shallow(App, {
+    const wrapper = shallowMount(App, {
       store,
       localVue
     })
@@ -49,7 +49,7 @@ describe('App.vue', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
   it('switch to full width mode if icon is clicked', () => {
-    const wrapper = shallow(App, {
+    const wrapper = shallowMount(App, {
       store,
       localVue
     })

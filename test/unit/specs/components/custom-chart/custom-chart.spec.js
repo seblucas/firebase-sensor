@@ -1,4 +1,4 @@
-import { shallow, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import CustomChartPage from '@/components/custom-chart/custom-chart-page'
 import { FakeRooms, FakeCategories } from '../../../data/fake-data'
@@ -23,7 +23,7 @@ describe('CustomChartPage.vue', () => {
   })
 
   it('shows a page', () => {
-    const wrapper = shallow(CustomChartPage, {
+    const wrapper = shallowMount(CustomChartPage, {
       store,
       localVue
     })

@@ -1,21 +1,7 @@
-import { shallow, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import HomePage from '@/components/home/home-page'
 import { FakeRooms, FakeCategories } from '../../../data/fake-data'
-
-function generateStubs (cmp) {
-  return Object.values(cmp.components).reduce((stubs, stubCmp) => {
-    const dashName = stubCmp.name
-      .replace(/([a-z])([A-Z])/g, '$1-$2')
-      .toLowerCase()
-    stubs[dashName] = {
-      render (createElement) {
-        return createElement(dashName, this.$slots.default)
-      }
-    }
-    return stubs
-  }, {})
-}
 
 const localVue = createLocalVue()
 
@@ -37,10 +23,9 @@ describe('HomePage.vue', () => {
   })
 
   it('shows a page', () => {
-    const wrapper = shallow(HomePage, {
+    const wrapper = shallowMount(HomePage, {
       store,
-      localVue,
-      stubs: generateStubs(HomePage)
+      localVue
     })
     expect(wrapper.html()).toMatchSnapshot()
   })

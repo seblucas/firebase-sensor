@@ -1,4 +1,4 @@
-import { shallow, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import RecentDataPanel from '@/components/home/recent-data-panel'
 import { $firebase, firebaseResult } from '../../../mocks/firebase.mock'
 import { FakeRooms, FakeCategories, FakeReadings, FakeFirstDate } from '../../../data/fake-data'
@@ -28,7 +28,7 @@ function genlocalVue () {
 }
 
 function genWrapper (propsData) {
-  return shallow(RecentDataPanel, {
+  return shallowMount(RecentDataPanel, {
     localVue: genlocalVue(),
     propsData,
     mocks: { $firebase }

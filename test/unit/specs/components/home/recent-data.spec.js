@@ -1,4 +1,4 @@
-import { shallow } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import RecentData from '@/components/home/recent-data'
 import { FakeRooms, FakeCategories } from '../../../data/fake-data'
 
@@ -11,7 +11,7 @@ const propsData = {
 
 describe('RecentData.vue', () => {
   it('shows a page', () => {
-    const wrapper = shallow(RecentData, {
+    const wrapper = shallowMount(RecentData, {
       propsData
     })
     expect(wrapper.html()).toMatchSnapshot()

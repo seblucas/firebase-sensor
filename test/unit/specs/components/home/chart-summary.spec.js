@@ -1,4 +1,4 @@
-import { shallow } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import ChartSummary from '@/components/home/chart-summary'
 import ObjectToArray from '@/helper/object2array'
 import DevLog from '../../../mocks/devLog.mock'
@@ -17,7 +17,7 @@ describe('ChartSummary.vue', () => {
     firebaseResult.mockReset()
     firebaseResult.mockReturnValue(FakeRawReadings)
 
-    const wrapper = shallow(ChartSummary, {
+    const wrapper = shallowMount(ChartSummary, {
       propsData,
       mocks: {
         DevLog,

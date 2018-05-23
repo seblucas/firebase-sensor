@@ -1,4 +1,4 @@
-import { shallow, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import ErrorPage from '@/components/errors/error-page'
 import { FakeErrors } from '../../../data/fake-data'
@@ -36,14 +36,14 @@ describe('ErrorPage.vue', () => {
   })
 
   it('shows a page', () => {
-    const wrapper = shallow(ErrorPage, {
+    const wrapper = shallowMount(ErrorPage, {
       store,
       localVue
     })
     expect(wrapper.html()).toMatchSnapshot()
   })
   it('should call the remove action when the bin icon is clicked on', () => {
-    const wrapper = shallow(ErrorPage, {
+    const wrapper = shallowMount(ErrorPage, {
       store,
       localVue
     })
