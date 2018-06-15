@@ -2,70 +2,106 @@
 
 exports[`ChartDetail.vue shows a graph 1`] = `
 <div>
-    <svg style="height: 500px;">
+  <svg style="height: 500px;">
+    <g>
+      <g>
         <g>
+          <g>
             <g>
-                <g>
-                    <g>
-                        <g>
-                            <g>
-                                <circle style="stroke-width: 2; fill: #FFCCBC; fill-opacity: 1; stroke: #FFCCBC;" r="5"></circle>
-                                <text text-anchor="start" dy=".32em" dx="8"></text>
-                            </g>
-                        </g>
-                    </g>
-                </g>
-                <g>
-                    <g>
-                        <rect></rect>
-                    </g>
-                    <g></g>
-                    <g></g>
-                    <g>
-                        <g>
-                            <defs>
-                                <clipPath>
-                                    <rect width="870" height="420"></rect>
-                                </clipPath>
-                            </defs>
-                            <g>
-                                <g>
-                                    <g style="stroke-opacity: 1; stroke-width: 1.5; fill-opacity: 0.5; fill: #FFCCBC; stroke: #FFCCBC;">
-                                        <path d="M0,81.20000000000002C72.47297559435626,79.80052185059175,290.0375381721737,75.13272927079261,435,72.8S797.512013334717,68.1331786789094,870,67.20000000000002"></path>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <defs>
-                                            <clipPath>
-                                                <rect width="890" height="440"></rect>
-                                            </clipPath>
-                                        </defs>
-                                        <g>
-                                            <g>
-                                                <g style="stroke-opacity: 1; fill-opacity: 0.5; fill: #FFCCBC; stroke: #FFCCBC;">
-                                                    <path d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path>
-                                                    <path d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path>
-                                                    <path d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path>
-                                                </g>
-                                            </g>
-                                            <g></g>
-                                        </g>
-                                        <g></g>
-                                    </g>
-                                </g>
-                            </g>
-                        </g>
-                    </g>
-                    <g>
-                        <g>
-                            <g></g>
-                        </g>
-                    </g>
-                </g>
-                <g></g>
+              <g>
+                <circle style="stroke-width: 2; fill: #FFCCBC; fill-opacity: 1; stroke: #FFCCBC;" r="5"></circle>
+                <text text-anchor="start" dy=".32em" dx="8" fill="#000">Room One</text>
+              </g>
             </g>
+          </g>
         </g>
-    </svg>
+        <g>
+          <g>
+            <rect width="870" height="420"></rect>
+          </g>
+          <g>
+            <g>
+              <g>
+                <g style="opacity: 0.000001;">
+                  <line y2="-420"></line>
+                  <text dy=".71em" style="text-anchor: middle;" y="7">11:48</text>
+                </g>
+                <g style="opacity: 0.000001;">
+                  <line y2="-420"></line>
+                  <text dy=".71em" style="text-anchor: middle;" y="7">11:49</text>
+                </g>
+                <path></path>
+                <text text-anchor="middle" y="36" x="435"></text>
+              </g>
+            </g>
+          </g>
+          <g>
+            <g>
+              <g>
+                <g style="opacity: 0.000001;">
+                  <line x2="870"></line>
+                  <text dy=".32em" style="text-anchor: end;" x="-3" opacity="0">0.00</text>
+                </g>
+                <g style="opacity: 0.000001;">
+                  <line x2="870"></line>
+                  <text dy=".32em" style="text-anchor: end;" x="-3" opacity="1">10.00</text>
+                </g>
+                <path></path>
+                <text style="text-anchor: middle;" y="-50" x="-210">Temperature (°C)</text>
+              </g>
+              <g>
+                <text style="opacity: 0;" dy=".32em" y="0" x="-3" text-anchor="end">0.00</text>
+              </g>
+              <g>
+                <text style="opacity: 0;" dy=".32em" y="0" x="-3" text-anchor="end">15.00</text>
+              </g>
+            </g>
+          </g>
+          <g>
+            <g>
+              <defs>
+                <clipPath>
+                  <rect width="870" height="420"></rect>
+                </clipPath>
+              </defs>
+              <g>
+                <g>
+                  <g style="stroke-opacity: 1; stroke-width: 1.5; fill-opacity: 0.5; fill: #FFCCBC; stroke: #FFCCBC;">
+                    <path d="M0,81.20000000000002C72.47297559435626,79.80052185059175,290.0375381721737,75.13272927079261,435,72.8S797.512013334717,68.1331786789094,870,67.20000000000002"></path>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <defs>
+                      <clipPath>
+                        <rect width="890" height="440"></rect>
+                      </clipPath>
+                    </defs>
+                    <g>
+                      <g>
+                        <g style="stroke-opacity: 1; fill-opacity: 0.5; fill: #FFCCBC; stroke: #FFCCBC;">
+                          <path d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path>
+                          <path d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path>
+                          <path d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path>
+                        </g>
+                      </g>
+                      <g></g>
+                    </g>
+                    <g></g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+          <g>
+            <g>
+              <g></g>
+            </g>
+          </g>
+        </g>
+        <g></g>
+      </g>
+    </g>
+  </svg>
 </div>
 `;

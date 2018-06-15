@@ -68,6 +68,7 @@ describe('ChartDetail.vue', () => {
     wrapper.setProps({ numberOfHours: 48 })
     expect(loadDataAndGraph).toHaveBeenCalled()
   })
-  it('should filter the data coming from Firebase to avoid having too old data')
-  it('should generate correct nvd3 parameter')
+  it.skip('should filter the data coming from Firebase to avoid having too old data',
+    () => {})
+  it.skip('should generate correct nvd3 parameter', () => {})
 })
