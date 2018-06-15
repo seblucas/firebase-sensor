@@ -2,7 +2,7 @@
 
 exports[`HomePage.vue shows a page 1`] = `
 <div>
-    <!---->
-    <!---->
+    <recent-data-stub></recent-data-stub>
+    <chart-summary-stub></chart-summary-stub>
 </div>
 `;

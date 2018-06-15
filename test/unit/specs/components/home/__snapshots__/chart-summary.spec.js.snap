@@ -9,12 +9,12 @@ exports[`ChartSummary.vue shows a page 1`] = `
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <!---->
+            <chart-detail-stub></chart-detail-stub>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <!---->
+            <chart-detail-stub></chart-detail-stub>
         </div>
     </div>
 </div>

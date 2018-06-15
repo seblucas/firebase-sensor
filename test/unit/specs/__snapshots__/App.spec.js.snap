@@ -6,7 +6,7 @@ exports[`App.vue shows a page 1`] = `
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" data-toggle="collapse" data-target="#menu-1" aria-expanded="false" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
-                <!---->
+                <vuecomponent-stub to="[object Object]" class="navbar-brand"></vuecomponent-stub>
             </div>
             <div id="menu-1" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -14,10 +14,10 @@ exports[`App.vue shows a page 1`] = `
                         <a href="#" target="_self"><span class="glyphicon glyphicon-resize-horizontal"></span></a>
                     </li>
                     <li>
-                        <!---->
+                        <vuecomponent-stub to="[object Object]"></vuecomponent-stub>
                     </li>
                     <li>
-                        <!---->
+                        <vuecomponent-stub to="[object Object]"></vuecomponent-stub>
                     </li>
                     <li class="dropdown">
                         <a href="#" target="_self" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
