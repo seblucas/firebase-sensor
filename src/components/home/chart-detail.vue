@@ -1,17 +1,18 @@
 <template>
   <div v-bind:id="category.id">
-    <svg style='height:500px'> </svg>
   </div>
 </template>
 
 <script>
-import * as d3 from 'd3'
-import nv from 'nvd3'
+import c3 from 'c3'
 
 export default {
   name: 'chart-detail',
   data () {
     return {
+      dataXs: {},
+      dataColors: {},
+      dataNames: {},
       data: [],
       chart: null
     }
@@ -45,74 +46,106 @@ export default {
     },
     loadData () {
       this.data = []
+      this.dataXs = {}
+      this.dataColors = {}
+      this.dataNames = {}
       Object.keys(this.rooms).forEach((roomId) => {
         var room = this.rooms[roomId]
         if (!room['readings'][this.category.id]) return
-        var currentDatum = {
-          values: [],
-          key: room.label,
-          color: room.color,
-          disabled: false
-        }
-        this.data.push(currentDatum)
         if (this.readings && this.readings.hasOwnProperty(roomId)) {
           this.DevLog(`chart-detail / Using cached element for ${this.category.id} data for ${roomId}`)
-          currentDatum.values = this.readings[roomId]
-        } else {
-          this.DevLog(`chart-detail / Loading element from database for ${this.category.id} data for ${roomId}`)
-          this.loadDataFromFirebase(roomId, currentDatum)
+          const dataX = []
+          dataX.push(roomId + 'X')
+          const dataY = []
+          dataY.push(roomId)
+          this.dataXs[dataY[0]] = dataX[0]
+          this.dataColors[dataY[0]] = room.color
+          this.dataNames[dataY[0]] = room.label
+          this.readings[roomId].forEach((reading) => {
+            dataX.push(reading.time * 1000)
+            dataY.push(reading[this.category.id])
+          })
+          this.data.push(dataX, dataY)
         }
+        // TODO
+        // else {
+        //   this.DevLog(`chart-detail / Loading element from database for ${this.category.id} data for ${roomId}`)
+        //   this.loadDataFromFirebase(roomId, currentDatum)
+        // }
       })
     },
     generateChart () {
-      this.chart = nv.models.lineChart()
-        .margin({left: 70})
-        .useInteractiveGuideline(true)
-        // .transitionDuration(350)  //how fast do you want the lines to transition?
-        .showLegend(true)
-        .xScale(d3.time.scale())
-        .interpolate('monotone')
-        .x((entry) => { return entry.time })
-        .y((entry) => { return entry[this.category.id] })
-        .forceY([this.category.forceMin, this.category.forceMax])
-        .showYAxis(true)
-        .showXAxis(true)
-
-      var tickMultiFormat = d3.time.format.multi([
-        ['%H:%M', function (d) { return d.getMinutes() }], // not the beginning of the hour
-        ['%a %H:00', function (d) { return d.getHours() }], // not midnight
-        ['%b %-d', function (d) { return d.getDate() !== 1 }], // not the first of the month
-        ['%b %-d', function (d) { return d.getMonth() }], // not Jan 1st
-        ['%Y', function () { return true }]
-      ])
-      this.chart.xAxis
-        .showMaxMin(false)
-        .tickFormat(function (d) { return tickMultiFormat(new Date(d * 1000)) })
-
-      this.chart.yAxis
-        .axisLabel(`${this.category.label} (${this.category.unit})`)
-        .tickFormat(d3.format('.02f'))
-
-      d3.select('#' + this.category.id + ' svg')
-        .datum(this.data)
-        .call(this.chart)
-
-      nv.utils.windowResize(() => { this.chart.update() })
-      return this.chart
-    },
-    prepareChart () {
-      nv.addGraph(() => {
-        return this.generateChart()
+      this.chart = c3.generate({
+        bindto: '#' + this.category.id,
+        axis: {
+          x: {
+            type: 'timeseries',
+            tick: {
+              count: 24,
+              fit: true,
+              format: '%a %H:%M',
+              rotate: 45
+            }
+          },
+          y: {
+            label: {
+              text: `${this.category.label} (${this.category.unit})`,
+              position: 'outer-middle'
+            },
+            default: [this.category.forceMin, this.category.forceMax]
+          }
+        },
+        data: {
+          xs: {
+            'cuisine': 'x1',
+            'palier': 'x2'
+          },
+          columns: [
+            ['x1', 1530385092 * 1000, 1530386092 * 1000, 1530387092 * 1000, 1530388092 * 1000, 1530389092 * 1000, 1530390092 * 1000],
+            ['x2', 1530381600 * 1000, 1530382600 * 1000, 1530383600 * 1000, 1530384600 * 1000, 1530385600 * 1000],
+            ['cuisine', 18.2, 19.3, 20.6, 22.8, 23.9, 24.9],
+            ['palier', 22, 23.7, 24.8, 29, 31.3]
+          ],
+          type: 'spline'
+        },
+        point: {
+          show: false,
+          r: 1000,
+          expand: {
+            enabled: false,
+            r: 3
+          },
+          sensitivity: 1000
+        },
+        size: {
+          height: 500
+        },
+        grid: {
+          x: {
+            show: true
+          },
+          y: {
+            show: true
+          }
+        },
+        tooltip: {
+          grouped: true
+        }
       })
+      return this.chart
     },
     loadDataAndGraph () {
       this.chart = null
       this.loadData()
-      if (navigator.userAgent.includes('jsdom')) {
-        this.generateChart()
-      } else {
-        this.prepareChart()
-      }
+      // if (navigator.userAgent.includes('jsdom')) {
+      this.generateChart()
+      this.chart.load({
+        xs: this.dataXs,
+        colors: this.dataColors,
+        columns: this.data,
+        names: this.dataNames,
+        unload: true
+      })
     }
   },
   mounted () {

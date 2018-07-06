@@ -81,5 +81,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'nvd3/build/nv.d3.css';
+@import 'c3/c3.min.css';
+
+.c3-line {
+  stroke-width: 2px;
+}
 </style>

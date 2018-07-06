@@ -11,9 +11,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "d3": "3.5.17",
+    "c3": "^0.6.2",
+    "d3": "^5.5.0",
     "firebase": "^5.0.4",
-    "nvd3": "1.8.6",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
