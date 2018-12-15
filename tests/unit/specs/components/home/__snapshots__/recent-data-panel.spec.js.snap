@@ -5,18 +5,13 @@ exports[`RecentDataPanel.vue shows a panel with many values 1`] = `
   <div class="panel-body">
     <h2><span class="glyphicon glyphicon-bed" style="color: rgb(255, 204, 188);"></span> <span><span><!---->
           12.1
-          <small>°C</small></span></span><span><span><span> / </span> 52
-      <small>%</small>
-      </span>
-      </span>
-    </h2>
+          <small>°C</small></span></span><span><span><span> / </span>
+      52
+      <small>%</small></span></span></h2>
   </div>
   <div class="panel-footer">
-    <p>Room One</p>
-    <small>2018-2-13 11:47:51
-      <!---->
-      <br>
-    </small>
+    <p>Room One</p> <small>2018-2-13 11:47:51
+      <!----><br></small>
   </div>
 </div>
 `;
