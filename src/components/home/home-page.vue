@@ -19,6 +19,6 @@ export default {
       return this.$store.getters.categoriesSorted
     }
   },
-  components: {RecentData: RecentData, ChartSummary: ChartSummary}
+  components: { RecentData: RecentData, ChartSummary: ChartSummary }
 }
 </script>

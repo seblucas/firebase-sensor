@@ -26,7 +26,7 @@ export const mutations = {
 }
 
 export const actions = {
-  listenForAuthentication ({dispatch, commit}) {
+  listenForAuthentication ({ dispatch, commit }) {
     Firebase.auth().onAuthStateChanged((authData) => {
       if (authData) {
         console.log('Logged in as:', authData.uid)
@@ -58,22 +58,22 @@ export const actions = {
       console.error('Unauthentication failed:', error)
     })
   },
-  loadRooms ({commit}) {
+  loadRooms ({ commit }) {
     Firebase.database().ref('rooms').once('value', (newValue) => {
       commit('setRooms', newValue.val())
     })
   },
-  loadCategories ({commit}) {
+  loadCategories ({ commit }) {
     Firebase.database().ref('readingCategories').orderByChild('order').once('value', (newValue) => {
       commit('setCategories', newValue.val())
     })
   },
-  loadErrors ({commit}) {
+  loadErrors ({ commit }) {
     Firebase.database().ref('errors').once('value', (newValue) => {
       commit('setErrors', ObjectToArray(newValue.val()))
     })
   },
-  removeError ({commit, getters}, item) {
+  removeError ({ commit, getters }, item) {
     const filteredArray = getters.errors.filter(error => error.id !== item.id)
     commit('setErrors', filteredArray)
   }

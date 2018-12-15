@@ -54,6 +54,6 @@ export default {
   created () {
     this.loadData()
   },
-  components: {ChartDetail: ChartDetail}
+  components: { ChartDetail: ChartDetail }
 }
 </script>

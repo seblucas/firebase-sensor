@@ -17,7 +17,7 @@ export default {
     }
   },
   props: ['rooms', 'categories'],
-  components: {RecentDataPanel: RecentDataPanel},
+  components: { RecentDataPanel: RecentDataPanel },
   mounted () {
     this.interval = setInterval(() => {
       this.currentTimeLimit = Math.floor(Date.now() / 1000) - (31 * 60)

@@ -66,7 +66,7 @@ export default {
     },
     generateChart () {
       this.chart = nv.models.lineChart()
-        .margin({left: 70})
+        .margin({ left: 70 })
         .useInteractiveGuideline(true)
         // .transitionDuration(350)  //how fast do you want the lines to transition?
         .showLegend(true)

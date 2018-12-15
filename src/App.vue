@@ -81,5 +81,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'nvd3/build/nv.d3.css';
+// @import 'nvd3/build/nv.d3.css';
 </style>
