@@ -14,6 +14,7 @@ describe('RecentData.vue', () => {
     const wrapper = shallowMount(RecentData, {
       propsData
     })
+    wrapper.vm.currentTimeLimit = 1514764800
     expect(wrapper.html()).toMatchSnapshot()
   })
 })

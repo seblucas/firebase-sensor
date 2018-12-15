@@ -3,7 +3,7 @@
 exports[`RecentData.vue shows a page 1`] = `
 <div class="row">
   <div class="col-xs-12 col-sm-6 col-md-4">
-    <recent-data-panel-stub timelimit="1544895431" categories="[object Object],[object Object]" idroom="room1" room="[object Object]"></recent-data-panel-stub>
+    <recent-data-panel-stub timelimit="1514764800" categories="[object Object],[object Object]" idroom="room1" room="[object Object]"></recent-data-panel-stub>
   </div>
 </div>
 `;
