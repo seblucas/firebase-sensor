@@ -9,7 +9,34 @@
     ],
     "headers": [
       {
-        "source": "**/*.@(png|js|css|eot|otf|ttf|ttc|woff|woff2)",
+        "source": "css/*.@(png|js|css|eot|otf|ttf|ttc|woff|woff2)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=604800"
+          }
+        ]
+      },
+      {
+        "source": "js/*.@(png|js|css|eot|otf|ttf|ttc|woff|woff2)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=604800"
+          }
+        ]
+      },
+      {
+        "source": "icon/*.@(png|js|css|eot|otf|ttf|ttc|woff|woff2)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=604800"
+          }
+        ]
+      },
+      {
+        "source": "favicon.ico",
         "headers": [
           {
             "key": "Cache-Control",
