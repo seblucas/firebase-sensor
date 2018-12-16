@@ -1,6 +1,6 @@
 {
   "name": "firebase-sensor",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Web page to follow temperature / humidity sensors",
   "private": true,
   "scripts": {
