@@ -66,7 +66,7 @@ I'll probably add the battery level of some sensors, that will mean changing the
 
 Easy :
  * Get latest [release](https://github.com/seblucas/firebase-sensor/releases) and decompress it on your webserver
- * Copy `app.config.js.example` into `app.config.js` and adapt the content
+ * Deploy it to you firebase hosting.
  * Access it.
 
 ## Sending values to Firebase
