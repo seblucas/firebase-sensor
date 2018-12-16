@@ -16,7 +16,7 @@ function genlocalVue () {
   const localVue = createLocalVue()
   localVue.filter('formatDate', (value) => {
     if (value) {
-      return new Date(value * 1000).toLocaleString()
+      return new Date(value * 1000).toLocaleString('en-US')
     }
   })
   localVue.filter('formatNumber', (value, fractionSize) => {

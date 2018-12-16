@@ -8,7 +8,7 @@ function genlocalVue () {
   localVue.use(Vuex)
   localVue.filter('formatDate', (value) => {
     if (value) {
-      return new Date(value * 1000).toLocaleString()
+      return new Date(value * 1000).toLocaleString('en-US')
     }
   })
   return localVue

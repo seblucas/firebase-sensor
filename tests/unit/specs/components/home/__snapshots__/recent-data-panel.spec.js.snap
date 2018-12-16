@@ -10,7 +10,7 @@ exports[`RecentDataPanel.vue shows a panel with many values 1`] = `
       <small>%</small></span></span></h2>
   </div>
   <div class="panel-footer">
-    <p>Room One</p> <small>2018-2-13 11:47:51
+    <p>Room One</p> <small>2/13/2018, 11:47:51 AM
       <!----><br></small>
   </div>
 </div>
