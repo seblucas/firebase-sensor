@@ -4,15 +4,16 @@ node_js:
   - "10"
   - "11"
 
+before_install:
+  - npm install -g yarn@1.12.3
+
 script:
   - yarn lint
   - yarn test:unit --coverage --ci
   - cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
   - yarn build
 
-cache:
-  directories:
-    - $HOME/.npm
+cache: yarn
 
 before_deploy:
   - zip -r firebase-sensor.zip dist
