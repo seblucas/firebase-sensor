@@ -2,6 +2,7 @@ import Firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 import ObjectToArray from '@/helper/object2array'
+import devLog from '@/helper/devLog'
 
 export const state = {
   user: null,
@@ -29,13 +30,13 @@ export const actions = {
   listenForAuthentication ({ dispatch, commit }) {
     Firebase.auth().onAuthStateChanged((authData) => {
       if (authData) {
-        console.log('Logged in as:', authData.uid)
+        devLog('Logged in as:', authData.uid)
         commit('setUser', authData)
         dispatch('loadRooms')
         dispatch('loadCategories')
         dispatch('loadErrors')
       } else {
-        console.log('Logged out')
+        devLog('Logged out')
         commit('setUser', null)
         commit('setRooms', null)
         commit('setCategories', null)
@@ -53,7 +54,7 @@ export const actions = {
   },
   logout () {
     Firebase.auth().signOut().then(() => {
-      console.log('Unauthentication completed')
+      devLog('Unauthentication completed')
     }).catch((error) => {
       console.error('Unauthentication failed:', error)
     })
@@ -69,7 +70,7 @@ export const actions = {
     })
   },
   loadErrors ({ commit }) {
-    Firebase.database().ref('errors').once('value', (newValue) => {
+    Firebase.database().ref('errors').on('value', (newValue) => {
       commit('setErrors', ObjectToArray(newValue.val()))
     })
   },
