@@ -10,16 +10,10 @@ import 'firebase/database'
 import './registerServiceWorker'
 import 'nvd3/build/nv.d3.css'
 
-var xmlhttp = new XMLHttpRequest()
 var url = '/__/firebase/init.json'
 if (process.env.NODE_ENV === 'development') {
   url = '/init.json'
 }
-
-xmlhttp.open('GET', url, false)
-xmlhttp.send()
-var myArr = JSON.parse(xmlhttp.responseText)
-Vue.prototype.$firebase = Firebase.initializeApp(myArr)
 
 Vue.filter('formatDate', (value) => {
   if (value) {
@@ -42,8 +36,14 @@ Vue.mixin({
 
 Vue.config.productionTip = false
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+fetch(url).then(response => {
+  response.json().then(auth => {
+    Vue.prototype.$firebase = Firebase.initializeApp(auth)
+
+    new Vue({
+      router,
+      store,
+      render: h => h(App)
+    }).$mount('#app')
+  })
+})
