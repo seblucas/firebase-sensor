@@ -43,35 +43,3 @@ exports.monitor = functions.https.onRequest((req, res) => {
     res.sendStatus(500);
   });
 });
-
-exports.pushError = functions.https.onRequest((req, res) => {
-  if (!req.headers.authorization) {
-    console.error('No authorization token provided');
-    res.status(403).send('Unauthorized');
-    return;
-  }
-  if (req.method !== 'POST') {
-    res.status(400).send('Only POST is allowed');
-    return;
-  }
-
-  let idToken = req.headers.authorization;
-  admin.database().ref('/users/').orderByChild('key').equalTo(idToken).once('value')
-    .then(newValue => {
-      if (!newValue.val()) {
-        console.error('Authorization token not found :');
-        res.status(403).send('Unauthorized');
-      }
-      if (!req.body.hasOwnProperty('time') || !req.body.hasOwnProperty('message')) {
-        console.error('Bad data in payload :', req.body);
-        res.status(422).send('Bad data');
-      }
-      console.log('Authentication OK', req.body);
-      var newPostRef = admin.database().ref('/errors/').push(req.body);
-      res.status(200).json(newPostRef.key);
-    })
-    .catch(error => {
-      console.error('Error while verifying authorization token :', error);
-      res.status(403).send('Unauthorized');
-    });
-});
