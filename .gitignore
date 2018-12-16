@@ -3,7 +3,7 @@ node_modules
 functions/node_modules
 /dist
 firebase-sensor.zip
-/tests/unit/coverage/
+/coverage
 /public/init.json
 
 # local env files

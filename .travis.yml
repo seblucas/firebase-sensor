@@ -1,14 +1,14 @@
 language: node_js
 
 node_js:
-  - "9"
-  - "8"
+  - "10"
+  - "11"
 
 script:
-  - npm run lint
-  - npm run unit -- --ci
-  - cat test/unit/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-  - npm run build
+  - yarn lint
+  - yarn test:unit --coverage --ci
+  - cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - yarn build
 
 cache:
   directories:
@@ -27,12 +27,12 @@ deploy:
     on:
       tags: true
       repo: seblucas/firebase-sensor
-      node: '8'
+      node: '10'
   - provider: firebase
     skip_cleanup: true
     on:
       branch: master
       tags: true
-      node: '8'
+      node: '10'
     token:
       secure: gJda4V1tUfESMX1Lqh6qzpFCvoL0Y9WAy7IshiaA5bLejr5YiYqC7ulEzFbBaTX+fe/vnmLd1H6M2PWyFUzVnEaNZ+VOZpq5b+4R+33YGq2JYfvFkWHOBelfE/U57g5iKb5McygQFFZk9d87niLMQaKqp0G8V0E94OMzGeN4Y5Zv/pl2K+lF3rHNQkQStmqJH3/Dc8pfnkROAuC3ngs7v8nUc2gJxnsEdsYXKRxsIio+zS2wwsOsur4vlEiD/lARMFIBTjmM/s+w4KMZp5BtovUGyyk52szmNz/JTjWqYav4covUI/XxB91q1fcUNQYHPi8hsUkQjgqeR4PSL9p0iEyYkwMFk3w5QDRVU2YTNVbArYQntg3sgddM9LSW8fBXWyMFktL+rMBMNMcJKCN19s5vMgwJm6tyifzvThK1z8zoK7yc58SywzX87VgroY9zDHNTiVe1EkeF3+5c7cuilxyN1AkcaCMr22xpklyuqgB9Xqt1dQmHLsfMOov8kF70c8o0KDTrECDCjVhCGdqg6DGwG8t/Ta4zv0K+cAIhi+UmV6raDk1JljoCiXuAX16v/yzz263YV9LyX9/OveDN7Y74eCNRFYUmpFcAhPxkjMNyM8nHAOi3cIMwv9u1ZSzjV1ydfFeDXIcOqSRriX5oJvk0f33v2UHidJ24UfRMPkc=
