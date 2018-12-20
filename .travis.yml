@@ -17,7 +17,7 @@ cache: yarn
 
 before_deploy:
   - zip -r firebase-sensor.zip dist
-  - cd functions && yarn install && cd ..
+  - cd functions && npm install && cd ..
 
 deploy:
   - provider: releases
