@@ -19,8 +19,8 @@ export default {
     }
   },
   methods: {
-    remove (item) {
-      this.$store.dispatch('removeError', item)
+    async remove (item) {
+      await this.$store.dispatch('removeError', item)
     }
   }
 }

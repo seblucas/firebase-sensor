@@ -74,9 +74,8 @@ export const actions = {
       commit('setErrors', ObjectToArray(newValue.val()))
     })
   },
-  removeError ({ commit, getters }, item) {
-    const filteredArray = getters.errors.filter(error => error.id !== item.id)
-    commit('setErrors', filteredArray)
+  async removeError (item) {
+    await Firebase.database().ref('errors').child(item.id).remove()
   }
 }
 
