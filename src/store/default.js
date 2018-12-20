@@ -74,7 +74,7 @@ export const actions = {
       commit('setErrors', ObjectToArray(newValue.val()))
     })
   },
-  async removeError (item) {
+  async removeError (context, item) {
     await Firebase.database().ref('errors').child(item.id).remove()
   }
 }
