@@ -26,6 +26,20 @@ export default {
   data () {
     return {
       year: 2016,
+      months: [
+        '01',
+        '02',
+        '03',
+        '04',
+        '05',
+        '06',
+        '07',
+        '08',
+        '09',
+        '10',
+        '11',
+        '12'
+      ],
       start: 0,
       max: 31,
       elapsed: 0,
@@ -52,6 +66,62 @@ export default {
       }
       return maybeString
     },
+    appendValue (dataObject, key, value) {
+      if (!dataObject.hasOwnProperty(key)) {
+        dataObject[key] = []
+      }
+      dataObject[key].push(value)
+    },
+    async processMonthlyStats () {
+      for (let room of this.rooms) {
+        const yearlyData = {
+          time: new Date(this.year, 0, 1, 0, 0, 0).getTime() / 1000 + 43200
+        }
+        for (let month of this.months) {
+          const data = this.hashStats[room.id][month]
+          if (data.length === 0) {
+            continue
+          }
+          const dataObject = {
+            time: new Date(this.year, month - 1, 1, 0, 0, 0).getTime() / 1000 + 43200
+          }
+          this.categories.forEach(category => {
+            const cat = category.id
+            if (!room.readings.hasOwnProperty(cat) ||
+              room.readings[cat] === 0) {
+              return
+            }
+            const dataAvg = data.filter(i => i.hasOwnProperty(cat)).map(i => this.normalizeFloat(i[cat]))
+            const dataMin = data.filter(i => i.hasOwnProperty(cat + '_min')).map(i => this.normalizeFloat(i[cat + '_min']))
+            const dataMax = data.filter(i => i.hasOwnProperty(cat + '_max')).map(i => this.normalizeFloat(i[cat + '_max']))
+            if (dataAvg.length < 15) {
+              return
+            }
+
+            dataObject[cat] = dataAvg.reduce((s, i) => s + i, 0) / dataAvg.length
+            this.appendValue(yearlyData, cat, dataObject[cat])
+
+            dataObject[cat + '_min'] = Math.min(...dataMin)
+            this.appendValue(yearlyData, cat + '_min', dataObject[cat + '_min'])
+            dataObject[cat + '_max'] = Math.max(...dataMax)
+            this.appendValue(yearlyData, cat + '_max', dataObject[cat + '_max'])
+          })
+          const newItem = await this.$firebase.database().ref('stats_monthly/' + this.year.toString() + '/' + room.id).push(dataObject)
+          console.log('New monthly item added ', newItem.key)
+        }
+        this.categories.forEach(cat => {
+          if (!yearlyData.hasOwnProperty(cat)) {
+            return
+          }
+          const itemNumber = yearlyData[cat].length
+          yearlyData[cat] = yearlyData[cat].reduce((s, i) => s + i, 0) / itemNumber
+          yearlyData[cat + '_min'] = Math.min(...yearlyData[cat + '_min'])
+          yearlyData[cat + '_max'] = Math.min(...yearlyData[cat + '_max'])
+        })
+        const newItem = await this.$firebase.database().ref('stats_yearly/' + this.year.toString() + '/' + room.id).push(yearlyData)
+        console.log('New yearly item added ', newItem.key)
+      }
+    },
     calcDailyStats (room, basicArray, dataObject) {
       this.categories.forEach(category => {
         const cat = category.id
@@ -66,12 +136,9 @@ export default {
 
         dataObject[cat] = dataCat.reduce((s, i) => s + i, 0) / dataCat.length
         dataObject[cat + '_min'] = Math.min(...dataCat)
-        dataObject[cat + '_max_'] = Math.max(...dataCat)
+        dataObject[cat + '_max'] = Math.max(...dataCat)
         dataObject[cat + '_count'] = dataCat.length
       })
-    },
-    processMonthlyStats () {
-
     },
     async calc3 () {
       this.hashStats = {}
@@ -117,7 +184,7 @@ export default {
             this.hashStats[keyElements[0]][keyElements[2]].push(dataObject)
             if (basicArray.length > 64) {
               const newItem = await this.$firebase.database().ref('stats_daily/' + this.year.toString() + '/' + room.id).push(dataObject)
-              console.log('New item added ', newItem.key)
+              console.log('New daily item added ', newItem.key)
             }
           } else {
             console.log('nothing found for ', key)
@@ -127,6 +194,7 @@ export default {
         timeStart += 86400
         this.start++
       }
+      await this.processMonthlyStats()
       this.elapsed = performance.now() - t0
     }
   }
