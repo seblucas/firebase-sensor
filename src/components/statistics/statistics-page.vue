@@ -172,7 +172,8 @@ export default {
       this.start = 0
       this.elapsed = 0
       const t0 = performance.now()
-      while (this.start < this.max) {
+      let currentYear = this.year
+      while (currentYear === this.year) {
         const timeEnd = timeStart + 86399
         for (let room of this.rooms) {
           if (room.id === 'consigne') {
@@ -202,6 +203,7 @@ export default {
         }
         this.elapsed = performance.now() - t0
         timeStart += 86400
+        currentYear = new Date((timeStart + 43200) * 1000).getFullYear()
         this.start++
       }
       await this.processMonthlyStats()
