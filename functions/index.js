@@ -43,3 +43,19 @@ exports.monitor = functions.https.onRequest((req, res) => {
     res.sendStatus(500);
   });
 });
+
+exports.lastupdated = functions.https.onRequest((req, res) => {
+  console.log(req.query.r);
+  admin.database().ref('/readings/' + req.query.r).limitToLast(1).once('value').then(snapshots => {
+    res.set('Cache-Control', 'private, max-age=300');
+    let time = 0;
+    snapshots.forEach(snapshot => {
+      var currentData = snapshot.val();
+      time = currentData.time;
+    });
+    return res.status(200).send(time.toString());
+  }).catch(error => {
+    console.error('Error while getting sensor detail', error.message);
+    res.sendStatus(500);
+  });
+});
