@@ -25,7 +25,7 @@ export default {
   name: 'statistics-page',
   data () {
     return {
-      year: 2016,
+      year: 2018,
       months: [
         '01',
         '02',
