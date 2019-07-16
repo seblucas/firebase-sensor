@@ -33,11 +33,12 @@ export default {
       this.$firebase.database().ref('readings/' + roomId).limitToLast(4 * this.numberOfHours).once('value', (newValue) => {
         this.DevLog(`chart-detail / Loaded from database for ${roomId}`)
         var basicArray = this.ObjectToArray(newValue.val())
-        // Remove too old readings
-        basicArray = basicArray.filter((item) => {
-          return item.time > lowerTimeLimit
+
+        currentDatum.values = basicArray.filter((item) => {
+          // Remove too old readings and readings with the category
+          return item.time > lowerTimeLimit &&
+            item.hasOwnProperty(this.category.id)
         })
-        currentDatum.values = basicArray
         if (this.chart) {
           this.chart.update()
         }
@@ -57,7 +58,10 @@ export default {
         this.data.push(currentDatum)
         if (this.readings && this.readings.hasOwnProperty(roomId)) {
           this.DevLog(`chart-detail / Using cached element for ${this.category.id} data for ${roomId}`)
-          currentDatum.values = this.readings[roomId]
+          currentDatum.values = this.readings[roomId].filter(item => item.hasOwnProperty(this.category.id))
+          if (currentDatum.values.length === 0) {
+            currentDatum.disabled = true
+          }
         } else {
           this.DevLog(`chart-detail / Loading element from database for ${this.category.id} data for ${roomId}`)
           this.loadDataFromFirebase(roomId, currentDatum)
