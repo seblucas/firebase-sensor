@@ -48,7 +48,7 @@ describe('App.vue', () => {
     expect(wrapper.vm.categories).toBeFalsy()
     expect(wrapper.html()).toMatchSnapshot()
   })
-  it('switch to full width mode if icon is clicked', () => {
+  it('switch to full width mode if icon is clicked', async () => {
     const wrapper = shallowMount(App, {
       store,
       localVue
@@ -57,6 +57,7 @@ describe('App.vue', () => {
     expect(mainContainer.classes()).toContain('container')
     const zoomIcon = wrapper.find('.glyphicon-resize-horizontal')
     zoomIcon.trigger('click')
+    await wrapper.vm.$nextTick()
     expect(mainContainer.classes()).toContain('container-fluid')
   })
 })

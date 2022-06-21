@@ -37,7 +37,7 @@ export default {
         currentDatum.values = basicArray.filter((item) => {
           // Remove too old readings and readings with the category
           return item.time > lowerTimeLimit &&
-            item.hasOwnProperty(this.category.id)
+            Object.prototype.hasOwnProperty.call(item, this.category.id)
         })
         if (this.chart) {
           this.chart.update()
@@ -48,7 +48,7 @@ export default {
       this.data = []
       Object.keys(this.rooms).forEach((roomId) => {
         var room = this.rooms[roomId]
-        if (!room['readings'][this.category.id]) return
+        if (!room.readings[this.category.id]) return
         var currentDatum = {
           values: [],
           key: room.label,
@@ -56,9 +56,9 @@ export default {
           disabled: false
         }
         this.data.push(currentDatum)
-        if (this.readings && this.readings.hasOwnProperty(roomId)) {
+        if (this.readings && Object.prototype.hasOwnProperty.call(this.readings, roomId)) {
           this.DevLog(`chart-detail / Using cached element for ${this.category.id} data for ${roomId}`)
-          currentDatum.values = this.readings[roomId].filter(item => item.hasOwnProperty(this.category.id))
+          currentDatum.values = this.readings[roomId].filter(item => Object.prototype.hasOwnProperty.call(item, this.category.id))
           if (currentDatum.values.length === 0) {
             currentDatum.disabled = true
           }
