@@ -23,7 +23,7 @@ describe('ChartDetail.vue', () => {
     const wrapper = shallowMount(ChartDetail, {
       propsData: genPropsData(),
       mocks: { DevLog },
-      attachToDocument: true
+      attachTo: document.body
     })
     expect(wrapper.html().replace(/nv-edge-clip-[\d]*/g, '')
       .replace(/nv-chart-[\d]*/g, '')
@@ -42,31 +42,33 @@ describe('ChartDetail.vue', () => {
     const wrapper = shallowMount(ChartDetail, {
       propsData,
       mocks: { DevLog, $firebase, ObjectToArray },
-      attachToDocument: true
+      attachTo: document.body
     })
     expect(wrapper.vm.data).toHaveLength(1)
   })
-  it('should reload the graph if the category is changed', () => {
+  it('should reload the graph if the category is changed', async () => {
     const wrapper = shallowMount(ChartDetail, {
       propsData: genPropsData(),
       mocks: { DevLog },
-      attachToDocument: true
+      attachTo: document.body
     })
-    const loadDataAndGraph = jest.fn()
-    wrapper.setMethods({ loadDataAndGraph })
+    const spy = jest.spyOn(wrapper.vm, 'loadDataAndGraph')
     wrapper.setProps({ category: FakeCategories[1] })
-    expect(loadDataAndGraph).toHaveBeenCalled()
+    await wrapper.vm.$nextTick()
+    expect(spy).toHaveBeenCalled()
+    jest.restoreAllMocks()
   })
-  it('should reload the graph if the number of hours is changed', () => {
+  it('should reload the graph if the number of hours is changed', async () => {
     const wrapper = shallowMount(ChartDetail, {
       propsData: genPropsData(),
       mocks: { DevLog },
-      attachToDocument: true
+      attachTo: document.body
     })
-    const loadDataAndGraph = jest.fn()
-    wrapper.setMethods({ loadDataAndGraph })
+    const spy = jest.spyOn(wrapper.vm, 'loadDataAndGraph')
     wrapper.setProps({ numberOfHours: 48 })
-    expect(loadDataAndGraph).toHaveBeenCalled()
+    await wrapper.vm.$nextTick()
+    expect(spy).toHaveBeenCalled()
+    jest.restoreAllMocks()
   })
   it.skip('should filter the data coming from Firebase to avoid having too old data',
     () => {})

@@ -67,7 +67,7 @@ export default {
       return maybeString
     },
     appendValue (dataObject, key, value) {
-      if (!dataObject.hasOwnProperty(key)) {
+      if (!Object.prototype.hasOwnProperty.call(dataObject, key)) {
         dataObject[key] = []
       }
       dataObject[key].push(value)
@@ -75,12 +75,12 @@ export default {
     async processMonthlyStats () {
       await this.$firebase.database().ref('stats_monthly/' + this.year.toString()).remove()
       await this.$firebase.database().ref('stats_yearly/' + this.year.toString()).remove()
-      for (let room of this.rooms) {
+      for (const room of this.rooms) {
         const yearlyData = {
           time: new Date(this.year, 0, 1, 0, 0, 0).getTime() / 1000 + 43200
         }
         const tempYearlyData = {}
-        for (let month of this.months) {
+        for (const month of this.months) {
           const data = this.hashStats[room.id][month]
           if (data.length === 0) {
             continue
@@ -90,13 +90,13 @@ export default {
           }
           this.categories.forEach(category => {
             const cat = category.id
-            if (!room.readings.hasOwnProperty(cat) ||
+            if (!Object.prototype.hasOwnProperty.call(room.readings, cat) ||
               room.readings[cat] === 0) {
               return
             }
-            const dataAvg = data.filter(i => i.hasOwnProperty(cat)).map(i => this.normalizeFloat(i[cat]))
-            const dataMin = data.filter(i => i.hasOwnProperty(cat + '_min')).map(i => this.normalizeFloat(i[cat + '_min']))
-            const dataMax = data.filter(i => i.hasOwnProperty(cat + '_max')).map(i => this.normalizeFloat(i[cat + '_max']))
+            const dataAvg = data.filter(i => Object.prototype.hasOwnProperty.call(i, cat)).map(i => this.normalizeFloat(i[cat]))
+            const dataMin = data.filter(i => Object.prototype.hasOwnProperty.call(i, cat + '_min')).map(i => this.normalizeFloat(i[cat + '_min']))
+            const dataMax = data.filter(i => Object.prototype.hasOwnProperty.call(i, cat + '_max')).map(i => this.normalizeFloat(i[cat + '_max']))
             if (dataAvg.length < 15) {
               return
             }
@@ -117,7 +117,7 @@ export default {
         }
         this.categories.forEach(category => {
           const cat = category.id
-          if (!tempYearlyData.hasOwnProperty(cat)) {
+          if (!Object.prototype.hasOwnProperty.call(tempYearlyData, cat)) {
             return
           }
           const itemNumber = tempYearlyData[cat].length
@@ -134,11 +134,11 @@ export default {
     calcDailyStats (room, basicArray, dataObject) {
       this.categories.forEach(category => {
         const cat = category.id
-        if (!room.readings.hasOwnProperty(cat) ||
+        if (!Object.prototype.hasOwnProperty.call(room.readings, cat) ||
           room.readings[cat] === 0) {
           return
         }
-        const dataCat = basicArray.filter(i => i.hasOwnProperty(cat)).map(i => this.normalizeFloat(i[cat]))
+        const dataCat = basicArray.filter(i => Object.prototype.hasOwnProperty.call(i, cat)).map(i => this.normalizeFloat(i[cat]))
         if (dataCat.length < 65) {
           return
         }
@@ -152,7 +152,7 @@ export default {
     async calc3 () {
       this.hashStats = {}
       await this.$firebase.database().ref('stats_daily/' + this.year.toString()).remove()
-      for (let room of this.rooms) {
+      for (const room of this.rooms) {
         this.hashStats[room.id] = {
           '01': [],
           '02': [],
@@ -163,9 +163,9 @@ export default {
           '07': [],
           '08': [],
           '09': [],
-          '10': [],
-          '11': [],
-          '12': []
+          10: [],
+          11: [],
+          12: []
         }
       }
       let timeStart = new Date(this.year, 0, 1, 0, 0, 0).getTime() / 1000
@@ -175,7 +175,7 @@ export default {
       let currentYear = this.year
       while (currentYear === this.year) {
         const timeEnd = timeStart + 86399
-        for (let room of this.rooms) {
+        for (const room of this.rooms) {
           if (room.id === 'consigne') {
             continue
           }
