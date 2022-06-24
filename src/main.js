@@ -10,7 +10,7 @@ import 'firebase/database'
 import './registerServiceWorker'
 import 'nvd3/build/nv.d3.css'
 
-var url = '/__/firebase/init.json'
+let url = '/__/firebase/init.json'
 if (process.env.NODE_ENV === 'development') {
   url = '/init.json'
 }

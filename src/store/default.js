@@ -45,7 +45,7 @@ export const actions = {
     })
   },
   login () {
-    var provider = new Firebase.auth.GoogleAuthProvider()
+    const provider = new Firebase.auth.GoogleAuthProvider()
     Firebase.auth().signInWithPopup(provider).then(() => {
       // No need to do anything here it's handled by $onAuthStateChanged
     }).catch((error) => {
@@ -93,7 +93,7 @@ export const getters = {
     return state.errors
   },
   categoriesSorted (state) {
-    var basicArray = ObjectToArray(state.categories)
+    const basicArray = ObjectToArray(state.categories)
     return basicArray.sort((a, b) => a.order - b.order)
   }
 }
