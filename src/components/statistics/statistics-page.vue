@@ -185,8 +185,8 @@ export default {
           const data = await ref.once('value')
           const key = room.id + '-' + new Date((timeStart + 43200) * 1000).toISOString().substring(0, 10)
           if (data.exists()) {
-            var basicArray = this.ObjectToArray(data.val())
-            var keyElements = key.split('-')
+            const basicArray = this.ObjectToArray(data.val())
+            const keyElements = key.split('-')
             console.log('elem', keyElements)
             const dataObject = {
               time: timeStart + 43200

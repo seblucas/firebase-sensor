@@ -29,10 +29,10 @@ export default {
   },
   methods: {
     loadDataFromFirebase (roomId, currentDatum) {
-      var lowerTimeLimit = (new Date() / 1000) - 3600 * this.numberOfHours
+      const lowerTimeLimit = (new Date() / 1000) - 3600 * this.numberOfHours
       this.$firebase.database().ref('readings/' + roomId).limitToLast(4 * this.numberOfHours).once('value', (newValue) => {
         this.DevLog(`chart-detail / Loaded from database for ${roomId}`)
-        var basicArray = this.ObjectToArray(newValue.val())
+        const basicArray = this.ObjectToArray(newValue.val())
 
         currentDatum.values = basicArray.filter((item) => {
           // Remove too old readings and readings with the category
@@ -47,9 +47,9 @@ export default {
     loadData () {
       this.data = []
       Object.keys(this.rooms).forEach((roomId) => {
-        var room = this.rooms[roomId]
+        const room = this.rooms[roomId]
         if (!room.readings[this.category.id]) return
-        var currentDatum = {
+        const currentDatum = {
           values: [],
           key: room.label,
           color: room.color,
@@ -82,7 +82,7 @@ export default {
         .showYAxis(true)
         .showXAxis(true)
 
-      var tickMultiFormat = d3.time.format.multi([
+      const tickMultiFormat = d3.time.format.multi([
         ['%H:%M', function (d) { return d.getMinutes() }], // not the beginning of the hour
         ['%a %H:00', function (d) { return d.getHours() }], // not midnight
         ['%b %-d', function (d) { return d.getDate() !== 1 }], // not the first of the month

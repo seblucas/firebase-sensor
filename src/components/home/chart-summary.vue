@@ -35,11 +35,11 @@ export default {
     loadData () {
       this.data = {}
       this.chartReadyCount = 0
-      var lowerTimeLimit = (new Date() / 1000) - 3600 * this.numberOfHours
+      const lowerTimeLimit = (new Date() / 1000) - 3600 * this.numberOfHours
       Object.keys(this.rooms).forEach((roomId) => {
         this.DevLog('load readings data for room:', roomId)
         this.$firebase.database().ref('readings/' + roomId).limitToLast(4 * this.numberOfHours).once('value', (newValue) => {
-          var basicArray = this.ObjectToArray(newValue.val())
+          let basicArray = this.ObjectToArray(newValue.val())
 
           // Remove too old readings
           basicArray = basicArray.filter((item) => {
