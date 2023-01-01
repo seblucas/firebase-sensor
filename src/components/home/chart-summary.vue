@@ -15,6 +15,7 @@
 
 <script>
 import ChartDetail from '@/components/home/chart-detail'
+import { limitToLast, query, ref, get } from 'firebase/database'
 
 export default {
   name: 'chart-summary',
@@ -27,6 +28,9 @@ export default {
   },
   props: ['rooms', 'categories'],
   computed: {
+    firebaseDatabase () {
+      return this.$store.getters.firebaseDatabase
+    },
     isReadyChart () {
       return this.chartReadyCount === Object.keys(this.rooms).length
     }
@@ -38,7 +42,8 @@ export default {
       const lowerTimeLimit = (new Date() / 1000) - 3600 * this.numberOfHours
       Object.keys(this.rooms).forEach((roomId) => {
         this.DevLog('load readings data for room:', roomId)
-        this.$firebase.database().ref('readings/' + roomId).limitToLast(4 * this.numberOfHours).once('value', (newValue) => {
+        const lastReadings = query(ref(this.firebaseDatabase, 'readings/' + roomId), limitToLast(4 * this.numberOfHours))
+        get(lastReadings).then((newValue) => {
           let basicArray = this.ObjectToArray(newValue.val())
 
           // Remove too old readings

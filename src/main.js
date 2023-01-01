@@ -4,7 +4,7 @@ import { store } from './store'
 import ObjectToArray from './helper/object2array'
 import DevLog from './helper/devLog'
 import router from './router'
-import Firebase from 'firebase/app'
+import { initializeApp } from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 import './registerServiceWorker'
@@ -38,8 +38,7 @@ Vue.config.productionTip = false
 
 fetch(url).then(response => {
   response.json().then(auth => {
-    Vue.prototype.$firebase = Firebase.initializeApp(auth)
-
+    Vue.prototype.$firebase = initializeApp(auth)
     new Vue({
       router,
       store,
