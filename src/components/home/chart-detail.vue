@@ -7,6 +7,7 @@
 <script>
 import * as d3 from 'd3'
 import nv from 'nvd3'
+import { ref, query, get, limitToLast } from 'firebase/database'
 
 export default {
   name: 'chart-detail',
@@ -17,6 +18,11 @@ export default {
     }
   },
   props: ['rooms', 'category', 'readings', 'numberOfHours'],
+  computed: {
+    firebaseDatabase () {
+      return this.$store.getters.firebaseDatabase
+    }
+  },
   watch: {
     category () {
       this.DevLog('chart-detail / Category updated ', this.category.id)
@@ -30,7 +36,8 @@ export default {
   methods: {
     loadDataFromFirebase (roomId, currentDatum) {
       const lowerTimeLimit = (new Date() / 1000) - 3600 * this.numberOfHours
-      this.$firebase.database().ref('readings/' + roomId).limitToLast(4 * this.numberOfHours).once('value', (newValue) => {
+      const queryReadings = query(ref(this.firebaseDatabase, 'readings/' + roomId), limitToLast(4 * this.numberOfHours))
+      get(queryReadings).then((newValue) => {
         this.DevLog(`chart-detail / Loaded from database for ${roomId}`)
         const basicArray = this.ObjectToArray(newValue.val())
 

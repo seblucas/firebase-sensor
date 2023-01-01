@@ -75,6 +75,7 @@ export default {
     }
   },
   beforeCreate () {
+    this.$store.commit('setFirebaseApp', this.$firebase)
     this.$store.dispatch('listenForAuthentication')
   }
 }

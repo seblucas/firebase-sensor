@@ -20,16 +20,24 @@
 </template>
 
 <script>
+import { limitToLast, query, ref, onChildAdded } from 'firebase/database'
+
 export default {
   name: 'recent-data-panel',
   props: ['room', 'idRoom', 'categories', 'timeLimit'],
+  computed: {
+    firebaseDatabase () {
+      return this.$store.getters.firebaseDatabase
+    }
+  },
   data () {
     return {
       reading: false
     }
   },
   created () {
-    this.$firebase.database().ref('readings/' + this.idRoom).limitToLast(1).on('child_added', (newValue) => {
+    const lastReadings = query(ref(this.firebaseDatabase, 'readings/' + this.idRoom), limitToLast(1))
+    onChildAdded(lastReadings, (newValue) => {
       this.reading = newValue.val()
     })
   }

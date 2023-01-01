@@ -1,10 +1,13 @@
-import Firebase from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/database'
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
+import { getDatabase, ref, get, onValue } from 'firebase/database'
+
 import ObjectToArray from '@/helper/object2array'
 import devLog from '@/helper/devLog'
 
 export const state = {
+  firebaseApp: false,
+  firebaseAuth: false,
+  firebaseDatabase: false,
   user: null,
   rooms: false,
   categories: false,
@@ -23,12 +26,17 @@ export const mutations = {
   },
   setErrors (state, payload) {
     state.errors = payload
+  },
+  setFirebaseApp (state, payload) {
+    state.firebaseApp = payload
+    state.firebaseAuth = getAuth()
+    state.firebaseDatabase = getDatabase(state.firebaseApp)
   }
 }
 
 export const actions = {
-  listenForAuthentication ({ dispatch, commit }) {
-    Firebase.auth().onAuthStateChanged((authData) => {
+  listenForAuthentication ({ dispatch, commit, getters }) {
+    onAuthStateChanged(getters.firebaseAuth, (authData) => {
       if (authData) {
         devLog('Logged in as:', authData.uid)
         commit('setUser', authData)
@@ -44,42 +52,56 @@ export const actions = {
       }
     })
   },
-  login () {
-    const provider = new Firebase.auth.GoogleAuthProvider()
-    Firebase.auth().signInWithPopup(provider).then(() => {
+  login ({ getters }) {
+    const provider = new GoogleAuthProvider()
+    signInWithPopup(getters.firebaseAuth, provider).then(() => {
       // No need to do anything here it's handled by $onAuthStateChanged
     }).catch((error) => {
       console.error('Authentication failed:', error)
     })
   },
-  logout () {
-    Firebase.auth().signOut().then(() => {
+  logout ({ getters }) {
+    signOut(getters.firebaseAuth).then(() => {
       devLog('Unauthentication completed')
     }).catch((error) => {
       console.error('Unauthentication failed:', error)
     })
   },
-  loadRooms ({ commit }) {
-    Firebase.database().ref('rooms').once('value', (newValue) => {
+  loadRooms ({ commit, getters }) {
+    get(ref(getters.firebaseDatabase, 'rooms')).then((newValue) => {
       commit('setRooms', newValue.val())
+    }).catch((error) => {
+      console.error(error)
     })
   },
-  loadCategories ({ commit }) {
-    Firebase.database().ref('readingCategories').orderByChild('order').once('value', (newValue) => {
+  loadCategories ({ commit, getters }) {
+    get(ref(getters.firebaseDatabase, 'readingCategories')).then((newValue) => {
       commit('setCategories', newValue.val())
+    }).catch((error) => {
+      console.error(error)
     })
   },
-  loadErrors ({ commit }) {
-    Firebase.database().ref('errors').on('value', (newValue) => {
+  loadErrors ({ commit, getters }) {
+    const errors = ref(getters.firebaseDatabase, 'errors')
+    onValue(errors, (newValue) => {
       commit('setErrors', ObjectToArray(newValue.val()))
     })
   },
   async removeError (context, item) {
-    await Firebase.database().ref('errors').child(item.id).remove()
+    await ref(getters.firebaseDatabase, 'errors').child(item.id).remove()
   }
 }
 
 export const getters = {
+  firebaseAuth (state) {
+    return state.firebaseAuth
+  },
+  firebaseApp (state) {
+    return state.firebaseApp
+  },
+  firebaseDatabase (state) {
+    return state.firebaseDatabase
+  },
   user (state) {
     return state.user
   },
