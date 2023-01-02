@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
-import { getDatabase, ref, get, onValue } from 'firebase/database'
+import { getDatabase, ref, get, onValue, remove } from 'firebase/database'
 
 import ObjectToArray from '@/helper/object2array'
 import devLog from '@/helper/devLog'
@@ -87,8 +87,8 @@ export const actions = {
       commit('setErrors', ObjectToArray(newValue.val()))
     })
   },
-  async removeError (context, item) {
-    await ref(getters.firebaseDatabase, 'errors').child(item.id).remove()
+  async removeError ({ getters }, item) {
+    await remove(ref(getters.firebaseDatabase, 'errors/' + item.id))
   }
 }
 
