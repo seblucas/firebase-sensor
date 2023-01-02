@@ -2,41 +2,19 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Router from 'vue-router'
 import App from '@/App'
+import { mockStore } from '../mocks/store.mock'
 
 describe('App.vue', () => {
-  let getters
-  let actions
-  let store
   let localVue
+  let store
 
   beforeEach(() => {
     localVue = createLocalVue()
 
     localVue.use(Vuex)
     localVue.use(Router)
-    getters = {
-      rooms: () => false,
-      errors: () => false,
-      categories: () => false,
-      authData: () => {
-        return {
-          uid: 'xxxxxAAAA',
-          providerData: [
-            { displayName: 'John Doe' }
-          ]
-        }
-      }
-    }
-    actions = {
-      login: jest.fn(),
-      logout: jest.fn(),
-      listenForAuthentication: jest.fn()
-    }
 
-    store = new Vuex.Store({
-      getters,
-      actions
-    })
+    store = new Vuex.Store(mockStore)
   })
 
   it('shows a page', () => {

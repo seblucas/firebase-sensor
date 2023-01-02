@@ -1,10 +1,7 @@
 import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
+import { mockFirebaseAuthResult } from '../../mocks/firebase.mock'
 import { actions, getters } from '@/store/default'
-import { $firebase, firebaseAuthResult } from '../../mocks/firebase.mock'
-import Firebase from 'firebase/app'
-
-Firebase.auth = $firebase.auth
 
 describe('default store', () => {
   let store
@@ -20,7 +17,8 @@ describe('default store', () => {
       setUser: jest.fn(),
       setRooms: jest.fn(),
       setCategories: jest.fn(),
-      setErrors: jest.fn()
+      setErrors: jest.fn(),
+      setFirebaseApp: jest.fn()
     }
     actions.loadRooms = jest.fn()
     actions.loadCategories = jest.fn()
@@ -42,8 +40,8 @@ describe('default store', () => {
     expect(mutations.setErrors).toHaveBeenCalled()
   })
   it('load all data when connected', () => {
-    firebaseAuthResult.mockReset()
-    firebaseAuthResult.mockReturnValue({
+    mockFirebaseAuthResult.mockReset()
+    mockFirebaseAuthResult.mockReturnValue({
       uid: 'user'
     })
     store.dispatch('listenForAuthentication')

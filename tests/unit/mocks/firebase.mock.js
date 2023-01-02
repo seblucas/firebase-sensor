@@ -1,44 +1,27 @@
-export const firebaseResult = jest.fn(() => {
+export const mockFirebaseResult = jest.fn(() => {
   return false
 })
 
-export const firebaseAuthResult = jest.fn(() => {
+export const mockFirebaseAuthResult = jest.fn(() => {
   return false
 })
 
-export const $firebase = {
-  database () {
-    const mock = {
-      limitToLast () {
-        return mock
-      },
-      ref () {
-        return mock
-      },
-      on (action, callback) {
-        const res = {
-          val () {
-            return firebaseResult()
-          }
-        }
-        callback(res)
-      },
-      once (action, callback) {
-        const res = {
-          val () {
-            return firebaseResult()
-          }
-        }
-        callback(res)
-      }
-    }
-    return mock
-  },
-  auth () {
-    return {
-      onAuthStateChanged (callback) {
-        callback(firebaseAuthResult())
-      }
+jest.mock('firebase/auth', () => {
+  return {
+    onAuthStateChanged (auth, callback) {
+      callback(mockFirebaseAuthResult())
     }
   }
-}
+})
+
+jest.mock('firebase/database', () => {
+  return {
+    onChildAdded (ref, callback) {
+      callback(mockFirebaseResult())
+    },
+    query: jest.fn(),
+    ref: jest.fn(),
+    limitToLast: jest.fn(),
+    get: mockFirebaseResult
+  }
+})

@@ -1,7 +1,9 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import RecentDataPanel from '@/components/home/recent-data-panel'
-import { $firebase, firebaseResult } from '../../../mocks/firebase.mock'
+import Vuex from 'vuex'
+import { mockFirebaseResult } from '../../../mocks/firebase.mock'
+import { mockStore } from '../../../mocks/store.mock'
 import { FakeRooms, FakeCategories, FakeReadings, FakeFirstDate } from '../../../data/fake-data'
+import RecentDataPanel from '@/components/home/recent-data-panel'
 
 function genPropsData () {
   return {
@@ -14,6 +16,7 @@ function genPropsData () {
 
 function genlocalVue () {
   const localVue = createLocalVue()
+  localVue.use(Vuex)
   localVue.filter('formatDate', (value) => {
     if (value) {
       return new Date(value * 1000).toLocaleString('en-US')
@@ -28,32 +31,46 @@ function genlocalVue () {
 }
 
 function genWrapper (propsData) {
+  const localVue = genlocalVue()
+  const store = new Vuex.Store(mockStore)
   return shallowMount(RecentDataPanel, {
-    localVue: genlocalVue(),
-    propsData,
-    mocks: { $firebase }
+    localVue,
+    store,
+    propsData
   })
 }
 
 describe('RecentDataPanel.vue', () => {
   it('shows a panel with many values', () => {
-    firebaseResult.mockReset()
-    firebaseResult.mockReturnValue(FakeReadings[0])
+    mockFirebaseResult.mockReset()
+    mockFirebaseResult.mockReturnValue({
+      val () {
+        return FakeReadings[0]
+      }
+    })
 
     const wrapper = genWrapper(genPropsData())
     expect(wrapper.html()).toMatchSnapshot()
   })
   it('shows the room label passed in props', () => {
-    firebaseResult.mockReset()
-    firebaseResult.mockReturnValue(false)
+    mockFirebaseResult.mockReset()
+    mockFirebaseResult.mockReturnValue({
+      val () {
+        return FakeReadings[0]
+      }
+    })
 
     const wrapper = genWrapper(genPropsData())
     const p = wrapper.find('.panel-footer > p')
     expect(p.text()).toBe('Room One')
   })
   it('does not show a warning icon if the reading is recent', () => {
-    firebaseResult.mockReset()
-    firebaseResult.mockReturnValue(FakeReadings[0])
+    mockFirebaseResult.mockReset()
+    mockFirebaseResult.mockReturnValue({
+      val () {
+        return FakeReadings[0]
+      }
+    })
     const data = genPropsData()
     data.timeLimit = FakeFirstDate - 1
 
@@ -63,8 +80,12 @@ describe('RecentDataPanel.vue', () => {
     expect(icon.exists()).toBe(false)
   })
   it('shows a warning icon if the reading is too old', () => {
-    firebaseResult.mockReset()
-    firebaseResult.mockReturnValue(FakeReadings[0])
+    mockFirebaseResult.mockReset()
+    mockFirebaseResult.mockReturnValue({
+      val () {
+        return FakeReadings[0]
+      }
+    })
     const data = genPropsData()
     data.timeLimit = FakeFirstDate + 1
 
