@@ -1,4 +1,5 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
+import genlocalVue from '../localVue'
 import Vuex from 'vuex'
 import { mockFirebaseResult } from '../../../mocks/firebase.mock'
 import { mockStore } from '../../../mocks/store.mock'
@@ -13,23 +14,6 @@ function genPropsData () {
     timeLimit: FakeFirstDate
   }
 }
-
-function genlocalVue () {
-  const localVue = createLocalVue()
-  localVue.use(Vuex)
-  localVue.filter('formatDate', (value) => {
-    if (value) {
-      return new Date(value * 1000).toLocaleString('en-US')
-    }
-  })
-  localVue.filter('formatNumber', (value, fractionSize) => {
-    if (value) {
-      return value.toLocaleString(undefined, { minimumFractionDigits: fractionSize, maximumFractionDigits: fractionSize })
-    }
-  })
-  return localVue
-}
-
 function genWrapper (propsData) {
   const localVue = genlocalVue()
   const store = new Vuex.Store(mockStore)
