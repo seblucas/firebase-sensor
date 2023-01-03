@@ -1,11 +1,10 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
+import genlocalVue from '../localVue'
 import Vuex from 'vuex'
 import HomePage from '@/components/home/home-page'
 import { FakeRooms, FakeCategories } from '../../../data/fake-data'
 
-const localVue = createLocalVue()
-
-localVue.use(Vuex)
+const localVue = genlocalVue()
 
 describe('HomePage.vue', () => {
   let getters

@@ -1,4 +1,5 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
+import genlocalVue from './components/localVue'
 import Vuex from 'vuex'
 import Router from 'vue-router'
 import App from '@/App'
@@ -9,11 +10,8 @@ describe('App.vue', () => {
   let store
 
   beforeEach(() => {
-    localVue = createLocalVue()
-
-    localVue.use(Vuex)
+    localVue = genlocalVue()
     localVue.use(Router)
-
     store = new Vuex.Store(mockStore)
   })
 

@@ -1,18 +1,8 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
+import genlocalVue from '../localVue'
 import Vuex from 'vuex'
 import ErrorPage from '@/components/errors/error-page'
 import { FakeErrors } from '../../../data/fake-data'
-
-function genlocalVue () {
-  const localVue = createLocalVue()
-  localVue.use(Vuex)
-  localVue.filter('formatDate', (value) => {
-    if (value) {
-      return new Date(value * 1000).toLocaleString('en-US')
-    }
-  })
-  return localVue
-}
 
 describe('ErrorPage.vue', () => {
   let getters

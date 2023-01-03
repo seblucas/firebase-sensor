@@ -1,11 +1,10 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
+import genlocalVue from '../localVue'
 import Vuex from 'vuex'
 import CustomChartPage from '@/components/custom-chart/custom-chart-page'
 import { FakeRooms, FakeCategories } from '../../../data/fake-data'
 
-const localVue = createLocalVue()
-
-localVue.use(Vuex)
+const localVue = genlocalVue()
 
 describe('CustomChartPage.vue', () => {
   let getters
