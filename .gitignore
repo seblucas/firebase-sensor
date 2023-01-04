@@ -5,6 +5,7 @@ functions/node_modules
 firebase-sensor.zip
 /coverage
 /public/init.json
+.firebase
 
 # local env files
 .env.local
