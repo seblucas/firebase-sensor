@@ -32,7 +32,7 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="alert alert-warning" role="alert" v-if="!authData">
-            Please Log in to use this page
+            Please Log in to use this page. <span v-if="statusLoaded">Status : {{ status }}</span>
           </div>
         </div>
       </div>
@@ -47,12 +47,21 @@
 </template>
 
 <script>
+import { ref, get, query, limitToLast } from 'firebase/database'
 
 export default {
   name: 'app',
   data () {
     return {
-      fluid: false
+      fluid: false,
+      tstamp: 0,
+      statusLoaded: false,
+      statusData: {
+        grenier: 0,
+        palier: 0,
+        deulemont: 0,
+        cuisine: 0
+      }
     }
   },
   computed: {
@@ -67,16 +76,43 @@ export default {
     },
     categories () {
       return this.$store.getters.categories
+    },
+    firebaseDatabase () {
+      return this.$store.getters.firebaseDatabase
+    },
+    status () {
+      if (this.authData) return 'Connected'
+      let error = 0
+      Object.keys(this.statusData).forEach((roomId) => {
+        if (this.tstamp - this.statusData[roomId] > 31 * 60) error = error + 1
+      })
+      if (error > 0) return error + ' sensor failed'
+      return 'Everything is up'
     }
   },
   methods: {
     toggleHZoom () {
       this.fluid = !this.fluid
+    },
+    async initData () {
+      Object.keys(this.statusData).forEach(async (roomId) => {
+        const lastReadings = query(ref(this.firebaseDatabase, 'readings/' + roomId), limitToLast(1))
+        const newValue = await get(lastReadings)
+        const myArray = this.ObjectToArray(newValue.val())
+        this.statusData[roomId] = myArray[0].time
+      })
+      console.log(this.statusData)
     }
+
   },
   beforeCreate () {
     this.$store.commit('setFirebaseApp', this.$firebase)
     this.$store.dispatch('listenForAuthentication')
+  },
+  async mounted () {
+    this.tstamp = Math.floor(Date.now() / 1000)
+    await this.initData()
+    this.statusLoaded = true
   }
 }
 </script>
