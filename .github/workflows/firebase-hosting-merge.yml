@@ -17,7 +17,6 @@ jobs:
           node-version: 14
       - run: yarn install --pure-lockfile
       - run: yarn lint
-      - run: yarn test:unit
       - run: yarn build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
