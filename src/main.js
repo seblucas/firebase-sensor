@@ -8,7 +8,6 @@ import { initializeApp } from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 import './registerServiceWorker'
-import 'nvd3/build/nv.d3.css'
 
 let url = '/__/firebase/init.json'
 if (process.env.NODE_ENV === 'development') {

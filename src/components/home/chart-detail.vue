@@ -1,12 +1,11 @@
 <template>
-  <div v-bind:id="category.id">
-    <svg style='height:500px'> </svg>
+  <div v-bind:id='category.id'>
+    <canvas id='planet-chart'></canvas>
   </div>
 </template>
 
 <script>
-import * as d3 from 'd3'
-import nv from 'nvd3'
+import Chart from 'chart.js/auto'
 import { ref, query, get, limitToLast } from 'firebase/database'
 
 export default {
@@ -14,7 +13,37 @@ export default {
   data () {
     return {
       data: [],
-      chart: null
+      chart: null,
+      planetChartData: {
+        type: 'line',
+        data: {
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          datasets: [{
+            label: 'consigne',
+            data: [12, 19, 3, 5, 2, 3],
+            borderColor: '#F44336',
+            borderWidth: 1
+          },
+          {
+            label: 'grenier',
+            data: [13, 18, 2, 17, 1, 8],
+            borderColor: '#CCCCCC',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top'
+            },
+            title: {
+              display: true,
+              text: 'Chart.js Line Chart'
+            }
+          }
+        }
+      }
     }
   },
   props: ['rooms', 'category', 'readings', 'numberOfHours'],
@@ -76,45 +105,12 @@ export default {
       })
     },
     generateChart () {
-      this.chart = nv.models.lineChart()
-        .margin({ left: 70 })
-        .useInteractiveGuideline(true)
-        // .transitionDuration(350)  //how fast do you want the lines to transition?
-        .showLegend(true)
-        .xScale(d3.time.scale())
-        .interpolate('monotone')
-        .x((entry) => { return entry.time })
-        .y((entry) => { return entry[this.category.id] })
-        .forceY([this.category.forceMin, this.category.forceMax])
-        .showYAxis(true)
-        .showXAxis(true)
-
-      const tickMultiFormat = d3.time.format.multi([
-        ['%H:%M', function (d) { return d.getMinutes() }], // not the beginning of the hour
-        ['%a %H:00', function (d) { return d.getHours() }], // not midnight
-        ['%b %-d', function (d) { return d.getDate() !== 1 }], // not the first of the month
-        ['%b %-d', function (d) { return d.getMonth() }], // not Jan 1st
-        ['%Y', function () { return true }]
-      ])
-      this.chart.xAxis
-        .showMaxMin(false)
-        .tickFormat(function (d) { return tickMultiFormat(new Date(d * 1000)) })
-
-      this.chart.yAxis
-        .axisLabel(`${this.category.label} (${this.category.unit})`)
-        .tickFormat(d3.format('.02f'))
-
-      d3.select('#' + this.category.id + ' svg')
-        .datum(this.data)
-        .call(this.chart)
-
-      nv.utils.windowResize(() => { this.chart.update() })
+      this.chart = this.planetChartData
       return this.chart
     },
     prepareChart () {
-      nv.addGraph(() => {
-        return this.generateChart()
-      })
+      const ctx = document.getElementById('planet-chart')
+      this.chart = new Chart(ctx, this.planetChartData)
     },
     loadDataAndGraph () {
       this.chart = null
