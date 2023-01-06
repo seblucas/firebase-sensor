@@ -14,6 +14,7 @@ export default {
     return {
       data: [],
       chart: null,
+      startTimestamp: 0,
       planetChartData: {
         type: 'line',
         data: {
@@ -37,13 +38,33 @@ export default {
             intersect: false,
             mode: 'index'
           },
+          scales: {
+            y: {
+              title: {
+                display: true,
+                text: ''
+              }
+            },
+            x: {
+              ticks: {
+                // Include a dollar sign in the ticks
+                callback: function (value, index, ticks) {
+                  return index % 4 === 0 ? new Date(this.getLabelForValue(value) * 1000).toLocaleTimeString() : ''
+                }
+              }
+            }
+          },
           plugins: {
+            tooltip: {
+              callbacks: {
+                title: function (context) {
+                  const label = new Date(context[0].label * 1000)
+                  return label.toLocaleDateString() + ' ' + label.toLocaleTimeString()
+                }
+              }
+            },
             legend: {
               position: 'top'
-            },
-            title: {
-              display: true,
-              text: 'Chart.js Line Chart'
             }
           }
         }
@@ -68,21 +89,19 @@ export default {
   },
   methods: {
     async loadDataFromFirebase (roomId, currentDatum) {
-      const lowerTimeLimit = (new Date() / 1000) - 3600 * this.numberOfHours
-      const queryReadings = query(ref(this.firebaseDatabase, 'readings/' + roomId), limitToLast(4 * this.numberOfHours))
+      const queryReadings = query(ref(this.firebaseDatabase, 'readings/' + roomId), limitToLast(4 * (this.numberOfHours + 1)))
       const newValue = await get(queryReadings)
       this.DevLog(`chart-detail / Loaded from database for ${roomId}`)
       let basicArray = this.ObjectToArray(newValue.val())
 
       basicArray = basicArray.filter((item) => {
         // Remove too old readings and readings with the category
-        return item.time > lowerTimeLimit &&
+        return item.time > this.startTimestamp &&
           Object.prototype.hasOwnProperty.call(item, this.category.id)
       })
       basicArray.forEach(data => {
         currentDatum.values.push(data)
       })
-      console.log(roomId, 'Fini', currentDatum.values.length)
 
       // if (this.chart) {
       //   this.chart.update()
@@ -118,7 +137,6 @@ export default {
     updateData () {
       const labels = []
       const datasets = []
-      const lowerTimeLimit = Math.floor(new Date() / 1000) - 3600 * this.numberOfHours
       this.data.forEach((dataset) => {
         datasets.push({
           data: [],
@@ -129,16 +147,14 @@ export default {
           hidden: dataset.hidden
         })
       })
-      for (let i = 0; i < this.numberOfHours * 4; i++) {
-        const time = lowerTimeLimit + (i * 15 * 60)
+      for (let i = 0; i < ((this.numberOfHours + 1) * 4) + 1; i++) {
+        const time = this.startTimestamp + (i * 15 * 60)
         const bottomLimit = time - 15 * 60
         const topLimit = time + 15 * 60
         labels.push(time)
         for (let j = 0; j < this.data.length; j++) {
           const currentDatum = this.data[j]
-          // console.log(currentDatum.label, currentDatum.values, currentDatum.values.length)
           const closest = currentDatum.values.filter(i => i.time >= bottomLimit && i.time <= topLimit)
-          console.log(currentDatum, bottomLimit, topLimit)
           if (closest.length === 0) {
             datasets[j].data.push(null)
           } else {
@@ -146,6 +162,7 @@ export default {
           }
         }
       }
+      this.planetChartData.options.scales.y.title.text = `${this.category.label} (${this.category.unit})`
       this.planetChartData.data.labels = labels
       this.planetChartData.data.datasets = datasets
     },
@@ -154,11 +171,16 @@ export default {
       return this.chart
     },
     prepareChart () {
+      if (this.chart) return
       const ctx = document.getElementById('planet-chart')
       this.chart = new Chart(ctx, this.planetChartData)
     },
     async loadDataAndGraph () {
-      this.chart = null
+      const minutes = 60
+      const ms = 1000 * 60 * minutes
+      this.startTimestamp = (Math.ceil(new Date() / ms) * ms) / 1000 - 3600 * (this.numberOfHours + 1)
+      const dateDebut = new Date(this.startTimestamp * 1000)
+      console.log(dateDebut.toLocaleDateString(), dateDebut.toLocaleTimeString())
       await this.loadData()
       if (navigator.userAgent.includes('jsdom')) {
         this.generateChart()
