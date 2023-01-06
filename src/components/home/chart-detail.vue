@@ -1,6 +1,6 @@
 <template>
-  <div v-bind:id='category.id'>
-    <canvas id='planet-chart'></canvas>
+  <div >
+    <canvas v-bind:id='category.id'></canvas>
   </div>
 </template>
 
@@ -15,22 +15,11 @@ export default {
       data: [],
       chart: null,
       startTimestamp: 0,
-      planetChartData: {
+      chartData: {
         type: 'line',
         data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [{
-            label: 'consigne',
-            data: [12, 19, 3, 5, 2, 3],
-            borderColor: '#F44336',
-            borderWidth: 1
-          },
-          {
-            label: 'grenier',
-            data: [13, 18, 2, 17, 1, 8],
-            borderColor: '#CCCCCC',
-            borderWidth: 1
-          }]
+          labels: [],
+          datasets: []
         },
         options: {
           responsive: true,
@@ -47,7 +36,6 @@ export default {
             },
             x: {
               ticks: {
-                // Include a dollar sign in the ticks
                 callback: function (value, index, ticks) {
                   return index % 4 === 0 ? new Date(this.getLabelForValue(value) * 1000).toLocaleTimeString() : ''
                 }
@@ -162,25 +150,23 @@ export default {
           }
         }
       }
-      this.planetChartData.options.scales.y.title.text = `${this.category.label} (${this.category.unit})`
-      this.planetChartData.data.labels = labels
-      this.planetChartData.data.datasets = datasets
+      this.chartData.options.scales.y.title.text = `${this.category.label} (${this.category.unit})`
+      this.chartData.data.labels = labels
+      this.chartData.data.datasets = datasets
     },
     generateChart () {
-      this.chart = this.planetChartData
+      this.chart = this.chartData
       return this.chart
     },
     prepareChart () {
       if (this.chart) return
-      const ctx = document.getElementById('planet-chart')
-      this.chart = new Chart(ctx, this.planetChartData)
+      const ctx = document.getElementById(this.category.id)
+      this.chart = new Chart(ctx, this.chartData)
     },
     async loadDataAndGraph () {
       const minutes = 60
       const ms = 1000 * 60 * minutes
       this.startTimestamp = (Math.ceil(new Date() / ms) * ms) / 1000 - 3600 * (this.numberOfHours + 1)
-      const dateDebut = new Date(this.startTimestamp * 1000)
-      console.log(dateDebut.toLocaleDateString(), dateDebut.toLocaleTimeString())
       await this.loadData()
       if (navigator.userAgent.includes('jsdom')) {
         this.generateChart()
