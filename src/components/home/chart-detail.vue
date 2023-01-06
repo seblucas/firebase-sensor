@@ -33,6 +33,10 @@ export default {
         },
         options: {
           responsive: true,
+          interaction: {
+            intersect: false,
+            mode: 'index'
+          },
           plugins: {
             legend: {
               position: 'top'
@@ -63,46 +67,87 @@ export default {
     }
   },
   methods: {
-    loadDataFromFirebase (roomId, currentDatum) {
+    async loadDataFromFirebase (roomId, currentDatum) {
       const lowerTimeLimit = (new Date() / 1000) - 3600 * this.numberOfHours
       const queryReadings = query(ref(this.firebaseDatabase, 'readings/' + roomId), limitToLast(4 * this.numberOfHours))
-      get(queryReadings).then((newValue) => {
-        this.DevLog(`chart-detail / Loaded from database for ${roomId}`)
-        const basicArray = this.ObjectToArray(newValue.val())
+      const newValue = await get(queryReadings)
+      this.DevLog(`chart-detail / Loaded from database for ${roomId}`)
+      let basicArray = this.ObjectToArray(newValue.val())
 
-        currentDatum.values = basicArray.filter((item) => {
-          // Remove too old readings and readings with the category
-          return item.time > lowerTimeLimit &&
-            Object.prototype.hasOwnProperty.call(item, this.category.id)
-        })
-        if (this.chart) {
-          this.chart.update()
-        }
+      basicArray = basicArray.filter((item) => {
+        // Remove too old readings and readings with the category
+        return item.time > lowerTimeLimit &&
+          Object.prototype.hasOwnProperty.call(item, this.category.id)
       })
+      basicArray.forEach(data => {
+        currentDatum.values.push(data)
+      })
+      console.log(roomId, 'Fini', currentDatum.values.length)
+
+      // if (this.chart) {
+      //   this.chart.update()
+      // }
     },
-    loadData () {
+    async loadData () {
       this.data = []
-      Object.keys(this.rooms).forEach((roomId) => {
+      const roomKeys = Object.keys(this.rooms)
+      for (let i = 0; i < roomKeys.length; i++) {
+        const roomId = roomKeys[i]
         const room = this.rooms[roomId]
-        if (!room.readings[this.category.id]) return
+        if (!room.readings[this.category.id]) continue
         const currentDatum = {
           values: [],
-          key: room.label,
-          color: room.color,
-          disabled: false
+          label: room.label,
+          borderColor: room.color,
+          hidden: false
         }
         this.data.push(currentDatum)
         if (this.readings && Object.prototype.hasOwnProperty.call(this.readings, roomId)) {
           this.DevLog(`chart-detail / Using cached element for ${this.category.id} data for ${roomId}`)
           currentDatum.values = this.readings[roomId].filter(item => Object.prototype.hasOwnProperty.call(item, this.category.id))
           if (currentDatum.values.length === 0) {
-            currentDatum.disabled = true
+            currentDatum.hidden = true
           }
         } else {
           this.DevLog(`chart-detail / Loading element from database for ${this.category.id} data for ${roomId}`)
-          this.loadDataFromFirebase(roomId, currentDatum)
+          await this.loadDataFromFirebase(roomId, currentDatum)
         }
+      }
+      this.updateData()
+    },
+    updateData () {
+      const labels = []
+      const datasets = []
+      const lowerTimeLimit = Math.floor(new Date() / 1000) - 3600 * this.numberOfHours
+      this.data.forEach((dataset) => {
+        datasets.push({
+          data: [],
+          label: dataset.label,
+          borderColor: dataset.borderColor,
+          borderWidth: 1,
+          pointStyle: false,
+          hidden: dataset.hidden
+        })
       })
+      for (let i = 0; i < this.numberOfHours * 4; i++) {
+        const time = lowerTimeLimit + (i * 15 * 60)
+        const bottomLimit = time - 15 * 60
+        const topLimit = time + 15 * 60
+        labels.push(time)
+        for (let j = 0; j < this.data.length; j++) {
+          const currentDatum = this.data[j]
+          // console.log(currentDatum.label, currentDatum.values, currentDatum.values.length)
+          const closest = currentDatum.values.filter(i => i.time >= bottomLimit && i.time <= topLimit)
+          console.log(currentDatum, bottomLimit, topLimit)
+          if (closest.length === 0) {
+            datasets[j].data.push(null)
+          } else {
+            datasets[j].data.push(closest[0][this.category.id])
+          }
+        }
+      }
+      this.planetChartData.data.labels = labels
+      this.planetChartData.data.datasets = datasets
     },
     generateChart () {
       this.chart = this.planetChartData
@@ -112,9 +157,9 @@ export default {
       const ctx = document.getElementById('planet-chart')
       this.chart = new Chart(ctx, this.planetChartData)
     },
-    loadDataAndGraph () {
+    async loadDataAndGraph () {
       this.chart = null
-      this.loadData()
+      await this.loadData()
       if (navigator.userAgent.includes('jsdom')) {
         this.generateChart()
       } else {
@@ -122,8 +167,9 @@ export default {
       }
     }
   },
-  mounted () {
-    this.loadDataAndGraph()
+  async mounted () {
+    Chart.overrides.line.spanGaps = true
+    await this.loadDataAndGraph()
   }
 }
 </script>
