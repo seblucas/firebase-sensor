@@ -30,9 +30,9 @@ export default {
       selectedCategory: null,
       selectedSize: 24,
       chartAllSizes: [
-        { id: '24', value: '24 hours' },
-        { id: '48', value: '48 hours' },
-        { id: '168', value: '1 week' }]
+        { id: 24, value: '24 hours' },
+        { id: 48, value: '48 hours' },
+        { id: 168, value: '1 week' }]
     }
   },
   computed: {
