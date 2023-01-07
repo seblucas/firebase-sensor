@@ -94,10 +94,6 @@ export default {
       basicArray.forEach(data => {
         currentDatum.values.push(data)
       })
-
-      // if (this.chart) {
-      //   this.chart.update()
-      // }
     },
     async loadData () {
       this.data = []
@@ -156,16 +152,11 @@ export default {
       }
       const start = new Date(labels[0] * 1000)
       const end = new Date(labels[labels.length - 1] * 1000)
-      this.chartData.options.scales.x.title.text = start.toLocaleString() + ' - ' + end.toLocaleString()
-      this.chartData.options.scales.y.title.text = `${this.category.label} (${this.category.unit})`
-      this.chartData.data.labels.splice(0, this.chartData.data.labels.length)
-      this.chartData.data.labels.push(...labels)
-      this.chartData.data.datasets.splice(0, this.chartData.data.datasets)
-      this.chartData.data.datasets.push(...datasets)
-    },
-    generateChart () {
-      this.chart = this.chartData
-      return this.chart
+      this.chart.options.scales.x.title.text = start.toLocaleString() + ' - ' + end.toLocaleString()
+      this.chart.options.scales.y.title.text = `${this.category.label} (${this.category.unit})`
+      this.chart.data.labels = labels
+      this.chart.data.datasets = datasets
+      this.chart.update()
     },
     prepareChart () {
       if (this.chart) return
@@ -176,12 +167,8 @@ export default {
       const minutes = 60
       const ms = 1000 * 60 * minutes
       this.startTimestamp = (Math.ceil(new Date() / ms) * ms) / 1000 - 3600 * (this.numberOfHours + 1)
+      this.prepareChart()
       await this.loadData()
-      if (navigator.userAgent.includes('jsdom')) {
-        this.generateChart()
-      } else {
-        this.prepareChart()
-      }
     }
   },
   async mounted () {
