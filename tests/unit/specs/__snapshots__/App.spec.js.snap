@@ -31,7 +31,8 @@ exports[`App.vue shows a page 1`] = `
   <div class="row">
     <div class="col-xs-12">
       <div role="alert" class="alert alert-warning">
-        Please Log in to use this page
+        Please Log in to use this page.
+        <!---->
       </div>
     </div>
   </div>
