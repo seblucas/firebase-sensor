@@ -32,6 +32,7 @@ describe('ChartSummary.vue', () => {
       }
     })
     await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
     expect(wrapper.vm.chartReadyCount).toBe(1)
     expect(wrapper.html()).toMatchSnapshot()
   })
