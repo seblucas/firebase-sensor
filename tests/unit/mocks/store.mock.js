@@ -18,6 +18,7 @@ export const mockStore = {
   actions: {
     login: jest.fn(),
     logout: jest.fn(),
-    listenForAuthentication: jest.fn()
+    listenForAuthentication: jest.fn(),
+    loadDataFromFirebase: () => { return [] }
   }
 }
