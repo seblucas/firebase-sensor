@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
-import { getDatabase, ref, get, onValue, remove } from 'firebase/database'
+import { getDatabase, ref, get, onValue, remove, query, limitToLast } from 'firebase/database'
 
 import ObjectToArray from '@/helper/object2array'
 import devLog from '@/helper/devLog'
@@ -86,6 +86,19 @@ export const actions = {
     onValue(errors, (newValue) => {
       commit('setErrors', ObjectToArray(newValue.val()))
     })
+  },
+  async loadDataFromFirebase ({ getters }, { roomId, startTimestamp, numberOfHours, categoryId }) {
+    const queryReadings = query(ref(getters.firebaseDatabase, 'readings/' + roomId), limitToLast(4 * (numberOfHours + 1)))
+    const newValue = await get(queryReadings)
+    devLog(`Loaded from database for ${roomId}`)
+    let basicArray = ObjectToArray(newValue.val())
+
+    basicArray = basicArray.filter((item) => {
+      // Remove too old readings and readings without the category
+      return item.time > startTimestamp &&
+        (!categoryId || Object.prototype.hasOwnProperty.call(item, categoryId))
+    })
+    return basicArray
   },
   async removeError ({ getters }, item) {
     await remove(ref(getters.firebaseDatabase, 'errors/' + item.id))

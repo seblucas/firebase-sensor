@@ -6,7 +6,6 @@
 
 <script>
 import Chart from 'chart.js/auto'
-import { ref, query, get, limitToLast } from 'firebase/database'
 
 export default {
   name: 'chart-detail',
@@ -41,7 +40,7 @@ export default {
               },
               ticks: {
                 callback: function (value, index, ticks) {
-                  return index % 4 === 0 ? new Date(this.getLabelForValue(value) * 1000).toLocaleTimeString() : ''
+                  return index % 2 === 0 ? new Date(this.getLabelForValue(value) * 1000).toLocaleTimeString() : ''
                 }
               }
             }
@@ -64,11 +63,6 @@ export default {
     }
   },
   props: ['rooms', 'category', 'readings', 'numberOfHours'],
-  computed: {
-    firebaseDatabase () {
-      return this.$store.getters.firebaseDatabase
-    }
-  },
   watch: {
     category () {
       this.DevLog('chart-detail / Category updated ', this.category.id)
@@ -80,20 +74,8 @@ export default {
     }
   },
   methods: {
-    async loadDataFromFirebase (roomId, currentDatum) {
-      const queryReadings = query(ref(this.firebaseDatabase, 'readings/' + roomId), limitToLast(4 * (this.numberOfHours + 1)))
-      const newValue = await get(queryReadings)
-      this.DevLog(`chart-detail / Loaded from database for ${roomId}`)
-      let basicArray = this.ObjectToArray(newValue.val())
-
-      basicArray = basicArray.filter((item) => {
-        // Remove too old readings and readings with the category
-        return item.time > this.startTimestamp &&
-          Object.prototype.hasOwnProperty.call(item, this.category.id)
-      })
-      basicArray.forEach(data => {
-        currentDatum.values.push(data)
-      })
+    async loadDataFromFirebase (roomId, startTimestamp, numberOfHours, categoryId) {
+      return await this.$store.dispatch('loadDataFromFirebase', { roomId, startTimestamp, numberOfHours, categoryId })
     },
     async loadData () {
       this.data = []
@@ -117,7 +99,15 @@ export default {
           }
         } else {
           this.DevLog(`chart-detail / Loading element from database for ${this.category.id} data for ${roomId}`)
-          await this.loadDataFromFirebase(roomId, currentDatum)
+          const allData = await this.loadDataFromFirebase(
+            roomId,
+            this.startTimestamp,
+            this.numberOfHours,
+            this.category.id
+          )
+          allData.forEach(data => {
+            currentDatum.values.push(data)
+          })
         }
       }
       this.updateData()
