@@ -101,7 +101,6 @@ export default {
         const myArray = this.ObjectToArray(newValue.val())
         this.statusData[roomId] = myArray[0].time
       })
-      console.log(this.statusData)
     }
 
   },

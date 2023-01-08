@@ -150,6 +150,14 @@ export default {
     },
     prepareChart () {
       if (this.chart) return
+      if (navigator.userAgent.includes('jsdom')) {
+        this.chart = {
+          options: this.chartData.options,
+          data: this.chartData.data,
+          update () {}
+        }
+        return
+      }
       const ctx = document.getElementById(this.category.id)
       this.chart = new Chart(ctx, this.chartData)
     },
