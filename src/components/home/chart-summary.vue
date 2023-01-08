@@ -15,7 +15,6 @@
 
 <script>
 import ChartDetail from '@/components/home/chart-detail'
-import { limitToLast, query, ref, get } from 'firebase/database'
 
 export default {
   name: 'chart-summary',
@@ -28,31 +27,28 @@ export default {
   },
   props: ['rooms', 'categories'],
   computed: {
-    firebaseDatabase () {
-      return this.$store.getters.firebaseDatabase
-    },
     isReadyChart () {
       return this.chartReadyCount === Object.keys(this.rooms).length
     }
   },
   methods: {
-    loadData () {
+    async loadDataFromFirebase (roomId, startTimestamp, numberOfHours, categoryId) {
+      return await this.$store.dispatch('loadDataFromFirebase', { roomId, startTimestamp, numberOfHours, categoryId })
+    },
+    async loadData () {
       this.data = {}
       this.chartReadyCount = 0
-      const lowerTimeLimit = (new Date() / 1000) - 3600 * this.numberOfHours
-      Object.keys(this.rooms).forEach((roomId) => {
-        this.DevLog('load readings data for room:', roomId)
-        const lastReadings = query(ref(this.firebaseDatabase, 'readings/' + roomId), limitToLast(4 * this.numberOfHours))
-        get(lastReadings).then((newValue) => {
-          let basicArray = this.ObjectToArray(newValue.val())
-
-          // Remove too old readings
-          basicArray = basicArray.filter((item) => {
-            return item.time > lowerTimeLimit
-          })
-          this.data[roomId] = basicArray
-          this.chartReadyCount++
-        })
+      const minutes = 60
+      const ms = 1000 * 60 * minutes
+      const startTimestamp = (Math.ceil(new Date() / ms) * ms) / 1000 - 3600 * (this.numberOfHours + 1)
+      Object.keys(this.rooms).forEach(async (roomId) => {
+        this.data[roomId] = await this.loadDataFromFirebase(
+          roomId,
+          startTimestamp,
+          this.numberOfHours,
+          false
+        )
+        this.chartReadyCount++
       })
     }
   },
