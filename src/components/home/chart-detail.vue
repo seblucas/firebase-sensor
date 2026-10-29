@@ -40,7 +40,7 @@ export default {
                 text: ''
               },
               ticks: {
-                callback: function (value, index, ticks) {
+                callback: function (value, index) {
                   return index % 2 === 0 ? new Date(this.getLabelForValue(value) * 1000).toLocaleTimeString() : ''
                 }
               }
