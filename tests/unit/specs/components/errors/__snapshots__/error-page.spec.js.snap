@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ErrorPage.vue shows a page 1`] = `
-<div class="row">
+exports[`ErrorPage.vue > shows a page 1`] = `
+"<div class="row">
   <div class="col-lg-12">
     <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-trash" style="cursor: pointer;"></span><b>2/13/2018, 11:47:51 AM / </b>Error 1</div>
   </div>
   <div class="col-lg-12">
     <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-trash" style="cursor: pointer;"></span><b>2/13/2018, 11:48:51 AM / </b>Error 2</div>
   </div>
-</div>
+</div>"
 `;

@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`RecentData.vue shows a page 1`] = `
-<div class="row">
+exports[`RecentData.vue > shows a page 1`] = `
+"<div class="row">
   <div class="col-xs-12 col-sm-6 col-md-4">
     <recent-data-panel-stub room="[object Object]" idroom="room1" categories="[object Object],[object Object]" timelimit="1514764800"></recent-data-panel-stub>
   </div>
-</div>
+</div>"
 `;

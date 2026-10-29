@@ -60,6 +60,11 @@ I'll probably add the battery level of some sensors, that will mean changing the
 
 The interface is built with Vue 3, Vue Router 4 and Vuex 4.
 
+The project uses Vite for development/builds and Vitest for unit tests. Run
+`yarn serve` to start the development server, `yarn test:unit` to run tests,
+`yarn lint` to check the source, and `yarn build` to create the deployable
+files in `dist/`.
+
 ### How does it look ?
 
 ![Image](firebase-sensor.png)

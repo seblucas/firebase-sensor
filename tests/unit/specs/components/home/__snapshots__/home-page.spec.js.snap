@@ -1,8 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`HomePage.vue shows a page 1`] = `
-<div>
+exports[`HomePage.vue > shows a page 1`] = `
+"<div>
   <recent-data-stub rooms="[object Object]" categories="[object Object],[object Object]"></recent-data-stub>
   <chart-summary-stub rooms="[object Object]" categories="[object Object],[object Object]"></chart-summary-stub>
-</div>
+</div>"
 `;

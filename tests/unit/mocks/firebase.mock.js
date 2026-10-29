@@ -1,12 +1,13 @@
-export const mockFirebaseResult = jest.fn(() => {
-  return false
-})
+import { vi } from 'vitest'
 
-export const mockFirebaseAuthResult = jest.fn(() => {
-  return false
-})
+const { mockFirebaseResult, mockFirebaseAuthResult } = vi.hoisted(() => ({
+  mockFirebaseResult: vi.fn(() => false),
+  mockFirebaseAuthResult: vi.fn(() => false)
+}))
 
-jest.mock('firebase/auth', () => {
+export { mockFirebaseResult, mockFirebaseAuthResult }
+
+vi.mock('firebase/auth', () => {
   return {
     getAuth () {
       return {}
@@ -17,14 +18,14 @@ jest.mock('firebase/auth', () => {
   }
 })
 
-jest.mock('firebase/database', () => {
+vi.mock('firebase/database', () => {
   return {
     onChildAdded (ref, callback) {
       callback(mockFirebaseResult())
     },
-    query: jest.fn(),
-    ref: jest.fn(),
-    limitToLast: jest.fn(),
+    query: vi.fn(),
+    ref: vi.fn(),
+    limitToLast: vi.fn(),
     get: mockFirebaseResult,
     getDatabase () {
       return {}

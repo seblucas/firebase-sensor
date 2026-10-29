@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import { createStore } from 'vuex'
 import testGlobalOptions from '../testOptions'
@@ -13,7 +14,7 @@ describe('ErrorPage.vue', () => {
       errors: () => FakeErrors
     }
     actions = {
-      removeError: jest.fn()
+      removeError: vi.fn()
     }
 
     store = createStore({
