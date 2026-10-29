@@ -25,4 +25,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SEBLUCAS_SENSORS }}'
           channelId: live
           projectId: seblucas-sensors
-          firebaseToolsVersion: 11.13.0
+          firebaseToolsVersion: 15.34.2
