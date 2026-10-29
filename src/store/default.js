@@ -1,3 +1,4 @@
+import { markRaw } from 'vue'
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
 import { getDatabase, ref, get, onValue, remove, query, limitToLast } from 'firebase/database'
 
@@ -28,9 +29,9 @@ export const mutations = {
     state.errors = payload
   },
   setFirebaseApp (state, payload) {
-    state.firebaseApp = payload
-    state.firebaseAuth = getAuth()
-    state.firebaseDatabase = getDatabase(state.firebaseApp)
+    state.firebaseApp = markRaw(payload)
+    state.firebaseAuth = markRaw(getAuth(state.firebaseApp))
+    state.firebaseDatabase = markRaw(getDatabase(state.firebaseApp))
   }
 }
 

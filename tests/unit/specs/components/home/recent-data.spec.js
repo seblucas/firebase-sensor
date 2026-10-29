@@ -12,7 +12,7 @@ const propsData = {
 describe('RecentData.vue', () => {
   it('shows a page', async () => {
     const wrapper = shallowMount(RecentData, {
-      propsData
+      props: propsData
     })
     wrapper.vm.currentTimeLimit = 1514764800
     await wrapper.vm.$nextTick()

@@ -1,10 +1,8 @@
 import { shallowMount } from '@vue/test-utils'
-import genlocalVue from '../localVue'
-import Vuex from 'vuex'
+import { createStore } from 'vuex'
+import testGlobalOptions from '../testOptions'
 import HomePage from '@/components/home/home-page'
 import { FakeRooms, FakeCategories } from '../../../data/fake-data'
-
-const localVue = genlocalVue()
 
 describe('HomePage.vue', () => {
   let getters
@@ -16,15 +14,14 @@ describe('HomePage.vue', () => {
       categoriesSorted: () => FakeCategories
     }
 
-    store = new Vuex.Store({
+    store = createStore({
       getters
     })
   })
 
   it('shows a page', () => {
     const wrapper = shallowMount(HomePage, {
-      store,
-      localVue
+      global: testGlobalOptions(store)
     })
     expect(wrapper.html()).toMatchSnapshot()
   })

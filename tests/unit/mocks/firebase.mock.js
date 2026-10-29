@@ -8,6 +8,9 @@ export const mockFirebaseAuthResult = jest.fn(() => {
 
 jest.mock('firebase/auth', () => {
   return {
+    getAuth () {
+      return {}
+    },
     onAuthStateChanged (auth, callback) {
       callback(mockFirebaseAuthResult())
     }
@@ -22,6 +25,9 @@ jest.mock('firebase/database', () => {
     query: jest.fn(),
     ref: jest.fn(),
     limitToLast: jest.fn(),
-    get: mockFirebaseResult
+    get: mockFirebaseResult,
+    getDatabase () {
+      return {}
+    }
   }
 })

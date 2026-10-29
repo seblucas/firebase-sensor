@@ -3,12 +3,10 @@
 exports[`ErrorPage.vue shows a page 1`] = `
 <div class="row">
   <div class="col-lg-12">
-    <div role="alert" class="alert alert-danger"><span class="glyphicon glyphicon-trash" style="cursor: pointer;"></span> <b>2/13/2018, 11:47:51 AM / </b>Error 1
-    </div>
+    <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-trash" style="cursor: pointer;"></span><b>2/13/2018, 11:47:51 AM / </b>Error 1</div>
   </div>
   <div class="col-lg-12">
-    <div role="alert" class="alert alert-danger"><span class="glyphicon glyphicon-trash" style="cursor: pointer;"></span> <b>2/13/2018, 11:48:51 AM / </b>Error 2
-    </div>
+    <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-trash" style="cursor: pointer;"></span><b>2/13/2018, 11:48:51 AM / </b>Error 2</div>
   </div>
 </div>
 `;

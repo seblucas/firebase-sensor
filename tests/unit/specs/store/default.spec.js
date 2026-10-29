@@ -1,18 +1,12 @@
-import { createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { isReactive } from 'vue'
+import { createStore } from 'vuex'
 import { mockFirebaseAuthResult } from '../../mocks/firebase.mock'
-import { actions, getters } from '@/store/default'
+import { actions, getters, mutations as firebaseMutations } from '@/store/default'
 
 describe('default store', () => {
   let store
   let mutations
-  let localVue
-
   beforeEach(() => {
-    localVue = createLocalVue()
-
-    localVue.use(Vuex)
-
     mutations = {
       setUser: jest.fn(),
       setRooms: jest.fn(),
@@ -24,7 +18,7 @@ describe('default store', () => {
     actions.loadCategories = jest.fn()
     actions.loadErrors = jest.fn()
 
-    store = new Vuex.Store({
+    store = createStore({
       getters,
       mutations,
       actions
@@ -50,5 +44,22 @@ describe('default store', () => {
     expect(actions.loadRooms).toHaveBeenCalled()
     expect(actions.loadCategories).toHaveBeenCalled()
     expect(actions.loadErrors).toHaveBeenCalled()
+  })
+  it('keeps Firebase SDK instances outside Vue reactivity', () => {
+    const firebaseApp = {}
+    store = createStore({
+      state: {
+        firebaseApp: false,
+        firebaseAuth: false,
+        firebaseDatabase: false
+      },
+      mutations: firebaseMutations
+    })
+
+    store.commit('setFirebaseApp', firebaseApp)
+
+    expect(isReactive(store.state.firebaseApp)).toBe(false)
+    expect(isReactive(store.state.firebaseAuth)).toBe(false)
+    expect(isReactive(store.state.firebaseDatabase)).toBe(false)
   })
 })

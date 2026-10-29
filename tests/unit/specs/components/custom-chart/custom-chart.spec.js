@@ -1,10 +1,8 @@
 import { shallowMount } from '@vue/test-utils'
-import genlocalVue from '../localVue'
-import Vuex from 'vuex'
+import { createStore } from 'vuex'
+import testGlobalOptions from '../testOptions'
 import CustomChartPage from '@/components/custom-chart/custom-chart-page'
 import { FakeRooms, FakeCategories } from '../../../data/fake-data'
-
-const localVue = genlocalVue()
 
 describe('CustomChartPage.vue', () => {
   let getters
@@ -16,15 +14,14 @@ describe('CustomChartPage.vue', () => {
       categoriesSorted: () => FakeCategories
     }
 
-    store = new Vuex.Store({
+    store = createStore({
       getters
     })
   })
 
   it('shows a page', () => {
     const wrapper = shallowMount(CustomChartPage, {
-      store,
-      localVue
+      global: testGlobalOptions(store)
     })
     expect(wrapper.vm.rooms).toHaveLength(1)
     expect(wrapper.html()).toMatchSnapshot()

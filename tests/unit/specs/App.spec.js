@@ -1,21 +1,16 @@
 import { shallowMount } from '@vue/test-utils'
-import genlocalVue from './components/localVue'
-import Vuex from 'vuex'
-import Router from 'vue-router'
+import { createStore } from 'vuex'
+import testGlobalOptions from './components/testOptions'
 import { mockFirebaseResult } from '../mocks/firebase.mock'
-import ObjectToArray from '@/helper/object2array'
 import App from '@/App'
 import { mockStore } from '../mocks/store.mock'
 import { FakeReadings } from '../data/fake-data'
 
 describe('App.vue', () => {
-  let localVue
   let store
 
   beforeEach(() => {
-    localVue = genlocalVue()
-    localVue.use(Router)
-    store = new Vuex.Store(mockStore)
+    store = createStore(mockStore)
   })
 
   it('shows a page', () => {
@@ -26,11 +21,7 @@ describe('App.vue', () => {
       }
     })
     const wrapper = shallowMount(App, {
-      store,
-      localVue,
-      mocks: {
-        ObjectToArray
-      }
+      global: testGlobalOptions(store)
     })
     // workaround to please coverage check
     expect(wrapper.vm.categories).toBeFalsy()
@@ -44,11 +35,7 @@ describe('App.vue', () => {
       }
     })
     const wrapper = shallowMount(App, {
-      store,
-      localVue,
-      mocks: {
-        ObjectToArray
-      }
+      global: testGlobalOptions(store)
     })
     const mainContainer = wrapper.find('#app')
     expect(mainContainer.classes()).toContain('container')

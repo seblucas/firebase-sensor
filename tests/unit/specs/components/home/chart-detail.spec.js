@@ -1,11 +1,10 @@
 import { mockFirebaseResult } from '../../../mocks/firebase.mock'
 import { shallowMount } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { isReactive } from 'vue'
+import { createStore } from 'vuex'
 import ChartDetail from '@/components/home/chart-detail'
-import genlocalVue from '../localVue'
-import DevLog from '../../../mocks/devLog.mock'
+import testGlobalOptions from '../testOptions'
 import { mockStore } from '../../../mocks/store.mock'
-import ObjectToArray from '@/helper/object2array'
 import { FakeRooms, FakeCategories, FakeReadings, FakeRawReadings } from '../../../data/fake-data'
 
 function genPropsData () {
@@ -22,20 +21,19 @@ function genPropsData () {
 }
 
 function genWrapper (propsData) {
-  const localVue = genlocalVue()
-  const store = new Vuex.Store(mockStore)
+  const store = createStore(mockStore)
   return shallowMount(ChartDetail, {
-    localVue,
-    store,
-    mocks: { DevLog, ObjectToArray },
+    global: testGlobalOptions(store),
     attachTo: document.body,
-    propsData
+    props: propsData
   })
 }
 
 describe('ChartDetail.vue', () => {
   it('shows a graph', () => {
     const wrapper = genWrapper(genPropsData())
+    expect(isReactive(wrapper.vm.chartData)).toBe(false)
+    expect(isReactive(wrapper.vm.chart)).toBe(false)
     expect(wrapper.html().replace(/nv-edge-clip-[\d]*/g, '')
       .replace(/nv-chart-[\d]*/g, '')
       .replace(/id="[^"]*"/g, '')
