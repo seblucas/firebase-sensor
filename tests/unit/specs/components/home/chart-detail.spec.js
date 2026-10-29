@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { mockFirebaseResult } from '../../../mocks/firebase.mock'
 import { shallowMount } from '@vue/test-utils'
 import { isReactive } from 'vue'
@@ -53,19 +54,19 @@ describe('ChartDetail.vue', () => {
   })
   it('should reload the graph if the category is changed', async () => {
     const wrapper = genWrapper(genPropsData())
-    const spy = jest.spyOn(wrapper.vm, 'loadDataAndGraph')
+    const spy = vi.spyOn(wrapper.vm, 'loadDataAndGraph')
     wrapper.setProps({ category: FakeCategories[1] })
     await wrapper.vm.$nextTick()
     expect(spy).toHaveBeenCalled()
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
   it('should reload the graph if the number of hours is changed', async () => {
     const wrapper = genWrapper(genPropsData())
-    const spy = jest.spyOn(wrapper.vm, 'loadDataAndGraph')
+    const spy = vi.spyOn(wrapper.vm, 'loadDataAndGraph')
     wrapper.setProps({ numberOfHours: 48 })
     await wrapper.vm.$nextTick()
     expect(spy).toHaveBeenCalled()
-    jest.restoreAllMocks()
+    vi.restoreAllMocks()
   })
   it.skip('should filter the data coming from Firebase to avoid having too old data',
     () => {})

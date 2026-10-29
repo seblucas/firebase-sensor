@@ -1,3 +1,5 @@
+import { vi } from 'vitest'
+
 export const mockStore = {
   getters: {
     rooms: () => false,
@@ -13,12 +15,12 @@ export const mockStore = {
     }
   },
   mutations: {
-    setFirebaseApp: jest.fn()
+    setFirebaseApp: vi.fn()
   },
   actions: {
-    login: jest.fn(),
-    logout: jest.fn(),
-    listenForAuthentication: jest.fn(),
+    login: vi.fn(),
+    logout: vi.fn(),
+    listenForAuthentication: vi.fn(),
     loadDataFromFirebase: () => { return [] }
   }
 }

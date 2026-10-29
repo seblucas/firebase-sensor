@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ChartSummary.vue shows a page 1`] = `
-<div>
+exports[`ChartSummary.vue > shows a page 1`] = `
+"<div>
   <div class="row">
     <div class="col-lg-12"><button class="btn btn-default pull-right"><span class="glyphicon glyphicon-refresh"></span></button></div>
   </div>
@@ -15,5 +15,5 @@ exports[`ChartSummary.vue shows a page 1`] = `
       <chart-detail-stub rooms="[object Object]" category="[object Object]" readings="[object Object]" numberofhours="24"></chart-detail-stub>
     </div>
   </div>
-</div>
+</div>"
 `;

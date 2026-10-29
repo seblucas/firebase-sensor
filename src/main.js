@@ -10,10 +10,7 @@ import 'firebase/auth'
 import 'firebase/database'
 import './registerServiceWorker'
 
-let url = '/__/firebase/init.json'
-if (process.env.NODE_ENV === 'development') {
-  url = '/init.json'
-}
+const url = import.meta.env.DEV ? '/init.json' : '/__/firebase/init.json'
 
 fetch(url).then(response => {
   response.json().then(auth => {

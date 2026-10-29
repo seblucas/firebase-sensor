@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`RecentDataPanel.vue shows a panel with many values 1`] = `
-<div class="panel panel-default">
+exports[`RecentDataPanel.vue > shows a panel with many values 1`] = `
+"<div class="panel panel-default">
   <div class="panel-body">
     <h2><span class="glyphicon glyphicon-bed" style="color: rgb(255, 204, 188);"></span><span><span><!--v-if--> 12.1 <small>°C</small></span></span><span><span><span> / </span> 52 <small>%</small></span></span></h2>
   </div>
@@ -10,5 +10,5 @@ exports[`RecentDataPanel.vue shows a panel with many values 1`] = `
       <!--v-if--><br>
     </small>
   </div>
-</div>
+</div>"
 `;

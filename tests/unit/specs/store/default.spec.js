@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import { isReactive } from 'vue'
 import { createStore } from 'vuex'
 import { mockFirebaseAuthResult } from '../../mocks/firebase.mock'
@@ -8,15 +9,15 @@ describe('default store', () => {
   let mutations
   beforeEach(() => {
     mutations = {
-      setUser: jest.fn(),
-      setRooms: jest.fn(),
-      setCategories: jest.fn(),
-      setErrors: jest.fn(),
-      setFirebaseApp: jest.fn()
+      setUser: vi.fn(),
+      setRooms: vi.fn(),
+      setCategories: vi.fn(),
+      setErrors: vi.fn(),
+      setFirebaseApp: vi.fn()
     }
-    actions.loadRooms = jest.fn()
-    actions.loadCategories = jest.fn()
-    actions.loadErrors = jest.fn()
+    actions.loadRooms = vi.fn()
+    actions.loadCategories = vi.fn()
+    actions.loadErrors = vi.fn()
 
     store = createStore({
       getters,
