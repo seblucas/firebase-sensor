@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
-import genlocalVue from '../localVue'
-import Vuex from 'vuex'
+import { createStore } from 'vuex'
+import testGlobalOptions from '../testOptions'
 import { mockFirebaseResult } from '../../../mocks/firebase.mock'
 import { mockStore } from '../../../mocks/store.mock'
 import { FakeRooms, FakeCategories, FakeReadings, FakeFirstDate } from '../../../data/fake-data'
@@ -15,12 +15,10 @@ function genPropsData () {
   }
 }
 function genWrapper (propsData) {
-  const localVue = genlocalVue()
-  const store = new Vuex.Store(mockStore)
+  const store = createStore(mockStore)
   return shallowMount(RecentDataPanel, {
-    localVue,
-    store,
-    propsData
+    global: testGlobalOptions(store),
+    props: propsData
   })
 }
 

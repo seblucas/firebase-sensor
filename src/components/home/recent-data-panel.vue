@@ -6,7 +6,7 @@
         <span v-for="(category, indexCat) in categories" :key="category.id">
           <span v-if="reading && room.readings[category.id]">
             <span v-if="indexCat > 0"> / </span>
-            {{ reading[category.id] | formatNumber(category.fractionSize) }}
+            {{ formatNumber(reading[category.id], category.fractionSize) }}
             <small>{{ category.unit }}</small>
           </span>
         </span>
@@ -14,7 +14,7 @@
     </div>
     <div class="panel-footer">
       <p>{{ room.label }}</p>
-      <small v-if="reading">{{ reading.time | formatDate }}  <span v-if='timeLimit > reading.time' class="glyphicon glyphicon-warning-sign text-warning" ></span><br/></small>
+      <small v-if="reading">{{ formatDate(reading.time) }}  <span v-if='timeLimit > reading.time' class="glyphicon glyphicon-warning-sign text-warning" ></span><br/></small>
     </div>
   </div>
 </template>

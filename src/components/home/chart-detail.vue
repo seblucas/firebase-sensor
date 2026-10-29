@@ -6,6 +6,7 @@
 
 <script>
 import Chart from 'chart.js/auto'
+import { markRaw } from 'vue'
 
 export default {
   name: 'chart-detail',
@@ -14,7 +15,7 @@ export default {
       data: [],
       chart: null,
       startTimestamp: 0,
-      chartData: {
+      chartData: markRaw({
         type: 'line',
         data: {
           labels: [],
@@ -59,7 +60,7 @@ export default {
             }
           }
         }
-      }
+      })
     }
   },
   props: ['rooms', 'category', 'readings', 'numberOfHours'],
@@ -151,15 +152,15 @@ export default {
     prepareChart () {
       if (this.chart) return
       if (navigator.userAgent.includes('jsdom')) {
-        this.chart = {
+        this.chart = markRaw({
           options: this.chartData.options,
           data: this.chartData.data,
           update () {}
-        }
+        })
         return
       }
       const ctx = document.getElementById(this.category.id)
-      this.chart = new Chart(ctx, this.chartData)
+      this.chart = markRaw(new Chart(ctx, this.chartData))
     },
     async loadDataAndGraph () {
       const minutes = 60

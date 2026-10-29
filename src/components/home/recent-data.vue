@@ -23,7 +23,7 @@ export default {
       this.currentTimeLimit = Math.floor(Date.now() / 1000) - (31 * 60)
     }, 1 * 60 * 1000)
   },
-  beforeDestroy () {
+  beforeUnmount () {
     clearInterval(this.interval)
   }
 }

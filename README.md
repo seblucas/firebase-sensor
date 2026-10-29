@@ -58,6 +58,8 @@ I'll probably add the battery level of some sensors, that will mean changing the
 
 ## The Web UI
 
+The interface is built with Vue 3, Vue Router 4 and Vuex 4.
+
 ### How does it look ?
 
 ![Image](firebase-sensor.png)
