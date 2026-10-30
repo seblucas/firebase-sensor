@@ -87,6 +87,6 @@ describe('RecentDataPanel.vue', () => {
 
     const wrapper = genWrapper(genPropsData())
 
-    expect(wrapper.find('.bi-house').exists()).toBe(true)
+    expect(wrapper.find('.bi-lamp').exists()).toBe(true)
   })
 })

@@ -1,11 +1,13 @@
 import { vi } from 'vitest'
 
-const { mockFirebaseResult, mockFirebaseAuthResult } = vi.hoisted(() => ({
+const { mockFirebaseResult, mockFirebaseAuthResult, mockFirebaseRef, mockFirebaseUpdate } = vi.hoisted(() => ({
   mockFirebaseResult: vi.fn(() => false),
-  mockFirebaseAuthResult: vi.fn(() => false)
+  mockFirebaseAuthResult: vi.fn(() => false),
+  mockFirebaseRef: vi.fn(),
+  mockFirebaseUpdate: vi.fn()
 }))
 
-export { mockFirebaseResult, mockFirebaseAuthResult }
+export { mockFirebaseResult, mockFirebaseAuthResult, mockFirebaseRef, mockFirebaseUpdate }
 
 vi.mock('firebase/auth', () => {
   return {
@@ -24,9 +26,10 @@ vi.mock('firebase/database', () => {
       callback(mockFirebaseResult())
     },
     query: vi.fn(),
-    ref: vi.fn(),
+    ref: mockFirebaseRef,
     limitToLast: vi.fn(),
     get: mockFirebaseResult,
+    update: mockFirebaseUpdate,
     getDatabase () {
       return {}
     }
