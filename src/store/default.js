@@ -1,6 +1,6 @@
 import { markRaw } from 'vue'
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
-import { getDatabase, ref, get, onValue, remove, query, limitToLast } from 'firebase/database'
+import { getDatabase, ref, get, onValue, remove, update, query, limitToLast } from 'firebase/database'
 
 import ObjectToArray from '@/helper/object2array'
 import devLog from '@/helper/devLog'
@@ -103,6 +103,12 @@ export const actions = {
   },
   async removeError ({ getters }, item) {
     await remove(ref(getters.firebaseDatabase, 'errors/' + item.id))
+  },
+  async removeOldestErrors ({ getters }, errors) {
+    if (!errors.length) return
+
+    const updates = Object.fromEntries(errors.map(({ id }) => [id, null]))
+    await update(ref(getters.firebaseDatabase, 'errors'), updates)
   }
 }
 

@@ -3,7 +3,7 @@
 exports[`RecentDataPanel.vue > shows a panel with many values 1`] = `
 "<div class="card mb-3">
   <div class="card-body">
-    <h2><i class="bi bi-house" style="color: rgb(255, 204, 188);" aria-hidden="true"></i><span><span><!--v-if--> 12.1 <small>°C</small></span></span><span><span><span> / </span> 52 <small>%</small></span></span></h2>
+    <h2><i class="bi bi-lamp" style="color: rgb(255, 204, 188);" aria-hidden="true"></i><span><span><!--v-if--> 12.1 <small>°C</small></span></span><span><span><span> / </span> 52 <small>%</small></span></span></h2>
   </div>
   <div class="card-footer">
     <p>Room One</p><small>2/13/2018, 11:47:51 AM

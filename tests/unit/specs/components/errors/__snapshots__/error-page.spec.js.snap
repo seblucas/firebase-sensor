@@ -1,7 +1,8 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`ErrorPage.vue > shows a page 1`] = `
-"<div class="row">
+"<div class="d-flex justify-content-end mb-3"><button class="btn btn-danger" type="button"><i class="bi bi-trash me-1" aria-hidden="true"></i> Delete the 100 oldest errors </button></div>
+<div class="row">
   <div class="col-12">
     <div class="alert alert-danger" role="alert"><button class="btn btn-link text-danger p-0 me-2" type="button" aria-label="Delete error"><i class="bi bi-trash" aria-hidden="true"></i></button><b>2/13/2018, 11:47:51 AM / </b>Error 1</div>
   </div>
