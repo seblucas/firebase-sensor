@@ -5,8 +5,20 @@
 </template>
 
 <script>
-import Chart from 'chart.js/auto'
+import {
+  Chart,
+  CategoryScale,
+  Legend,
+  LineController,
+  LineElement,
+  LinearScale,
+  PointElement,
+  Tooltip
+} from 'chart.js'
 import { markRaw } from 'vue'
+
+Chart.register(CategoryScale, Legend, LineController, LineElement, LinearScale, PointElement, Tooltip)
+Chart.overrides.line.spanGaps = true
 
 export default {
   name: 'chart-detail',
@@ -171,7 +183,6 @@ export default {
     }
   },
   async mounted () {
-    Chart.overrides.line.spanGaps = true
     await this.loadDataAndGraph()
   }
 }
