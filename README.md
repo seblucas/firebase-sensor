@@ -50,7 +50,12 @@ root
 
 ### Security
 
-TODO
+Firebase Realtime Database access is controlled by Security Rules, not by
+whether a page is visible in the UI. Review the supplied rules and their
+authorization implications in
+[Project Context and Architecture](docs/PROJECT_CONTEXT.md#realtime-database-security-rules).
+Confirm that the documented rules match the currently deployed rules before
+making security assumptions.
 
 ### Todo
 
@@ -64,6 +69,9 @@ The project uses Vite for development/builds and Vitest for unit tests. Run
 `yarn serve` to start the development server, `yarn test:unit` to run tests,
 `yarn lint` to check the source, and `yarn build` to create the deployable
 files in `dist/`.
+
+For contributor and AI-assistant context, see
+[Project Context and Architecture](docs/PROJECT_CONTEXT.md).
 
 ### How does it look ?
 
