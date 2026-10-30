@@ -39,9 +39,27 @@ describe('App.vue', () => {
     })
     const mainContainer = wrapper.find('#app')
     expect(mainContainer.classes()).toContain('container')
-    const zoomIcon = wrapper.find('.glyphicon-resize-horizontal')
-    zoomIcon.trigger('click')
+    const zoomButton = wrapper.find('[aria-label="Toggle full width"]')
+    zoomButton.trigger('click')
     await wrapper.vm.$nextTick()
     expect(mainContainer.classes()).toContain('container-fluid')
+  })
+
+  it('opens the responsive navigation using Vue state', async () => {
+    mockFirebaseResult.mockReset()
+    mockFirebaseResult.mockReturnValue({
+      val () {
+        return FakeReadings[0]
+      }
+    })
+    const wrapper = shallowMount(App, {
+      global: testGlobalOptions(store)
+    })
+    const menu = wrapper.find('#main-menu')
+
+    expect(menu.classes()).not.toContain('show')
+    await wrapper.find('.navbar-toggler').trigger('click')
+    expect(menu.classes()).toContain('show')
+    expect(wrapper.find('.navbar-toggler').attributes('aria-expanded')).toBe('true')
   })
 })

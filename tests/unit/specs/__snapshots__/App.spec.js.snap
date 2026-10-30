@@ -2,23 +2,21 @@
 
 exports[`App.vue > shows a page 1`] = `
 "<div id="app" class="container">
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary rounded">
     <div class="container-fluid">
-      <div class="navbar-header"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-1" aria-expanded="false"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-        <router-link-stub class="navbar-brand" to="[object Object]"></router-link-stub>
-      </div>
-      <div class="collapse navbar-collapse" id="menu-1">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#" target="_self"><span class="glyphicon glyphicon-resize-horizontal"></span></a></li>
-          <li>
-            <router-link-stub to="[object Object]"></router-link-stub>
+      <router-link-stub class="navbar-brand" to="[object Object]"></router-link-stub><button class="navbar-toggler" type="button" aria-controls="main-menu" aria-label="Toggle navigation" aria-expanded="false"><span class="navbar-toggler-icon"></span></button>
+      <div id="main-menu" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+          <li class="nav-item"><button class="nav-link" type="button" aria-label="Toggle full width"><i class="bi bi-arrows-angle-expand" aria-hidden="true"></i></button></li>
+          <li class="nav-item">
+            <router-link-stub class="nav-link" to="[object Object]" aria-label="Charts"></router-link-stub>
           </li>
-          <li>
-            <router-link-stub to="[object Object]"></router-link-stub>
+          <li class="nav-item">
+            <router-link-stub class="nav-link" to="[object Object]" aria-label="Errors"></router-link-stub>
           </li>
-          <li class="dropdown"><a href="#" class="dropdown-toggle" target="_self" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#" target="_self">Log In</a></li>
+          <li class="nav-item dropdown"><button class="nav-link dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false"><i class="bi bi-person" aria-hidden="true"></i></button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><button class="dropdown-item" type="button">Log In</button></li>
               <!--v-if-->
               <!--v-if-->
               <!--v-if-->
@@ -29,16 +27,16 @@ exports[`App.vue > shows a page 1`] = `
     </div>
   </nav>
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-12">
       <div class="alert alert-warning" role="alert"> Please Log in to use this page.
         <!--v-if-->
       </div>
     </div>
   </div>
   <!--v-if-->
-  <div class="visible-xs hidden-sm hidden-md hidden-lg">xs</div>
-  <div class="hidden-xs visible-sm hidden-md hidden-lg">sm</div>
-  <div class="hidden-xs hidden-sm visible-md hidden-lg">md</div>
-  <div class="hidden-xs hidden-sm hidden-md visible-lg">lg</div>
+  <div class="d-block d-md-none">xs</div>
+  <div class="d-none d-md-block d-lg-none">sm</div>
+  <div class="d-none d-lg-block d-xl-none">md</div>
+  <div class="d-none d-xl-block">lg</div>
 </div>"
 `;
