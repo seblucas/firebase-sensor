@@ -1,28 +1,54 @@
 <template>
-    <div id="app" v-bind:class="[fluid ? 'container-fluid' : 'container']">
-      <nav class="navbar navbar-default">
+    <div id="app" :class="fluid ? 'container-fluid' : 'container'">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary rounded">
         <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-1" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <router-link class="navbar-brand" :to="{ name: 'HomePage'}">Capteurs</router-link>
-          </div>
-          <div class="collapse navbar-collapse" id="menu-1">
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="#" target="_self" v-on:click="toggleHZoom()"><span class="glyphicon glyphicon-resize-horizontal"></span></a></li>
-              <li><router-link :to="{ name: 'LineChartPage'}"><span class="glyphicon glyphicon-signal"></span></router-link></li>
-              <li><router-link :to="{ name: 'ErrorListPage'}"><span class="badge progress-bar-danger">{{ errors.length }}</span></router-link></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" target="_self" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li v-if="!authData"><a href="#" target="_self" v-on:click="$store.dispatch('login')">Log In</a></li>
-                  <li v-if="authData"><a href="#" target="_self">Uid {{ authData.uid }}</a></li>
-                  <li v-if="authData"><a href="#" target="_self">Logged as {{ authData.providerData[0].displayName }}</a></li>
-                  <li v-if="authData"><a href="#" target="_self" v-on:click="$store.dispatch('logout')">Log Out</a></li>
+          <router-link class="navbar-brand" :to="{ name: 'HomePage' }" @click="closeNavigation">Capteurs</router-link>
+          <button
+            class="navbar-toggler"
+            type="button"
+            aria-controls="main-menu"
+            aria-label="Toggle navigation"
+            :aria-expanded="navMenuOpen"
+            @click="navMenuOpen = !navMenuOpen"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div id="main-menu" class="collapse navbar-collapse" :class="{ show: navMenuOpen }">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+              <li class="nav-item">
+                <button class="nav-link" type="button" aria-label="Toggle full width" @click="toggleHZoom(); closeNavigation()">
+                  <i class="bi bi-arrows-angle-expand" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link" :to="{ name: 'LineChartPage' }" aria-label="Charts" @click="closeNavigation">
+                  <i class="bi bi-graph-up" aria-hidden="true"></i>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link" :to="{ name: 'ErrorListPage' }" aria-label="Errors" @click="closeNavigation">
+                  <span class="badge text-bg-danger">{{ errors.length }}</span>
+                </router-link>
+              </li>
+              <li class="nav-item dropdown">
+                <button
+                  class="nav-link dropdown-toggle"
+                  type="button"
+                  aria-haspopup="true"
+                  :aria-expanded="accountMenuOpen"
+                  @click="accountMenuOpen = !accountMenuOpen"
+                >
+                  <i class="bi bi-person" aria-hidden="true"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" :class="{ show: accountMenuOpen }">
+                  <li v-if="!authData">
+                    <button class="dropdown-item" type="button" @click="dispatchAccountAction('login')">Log In</button>
+                  </li>
+                  <li v-if="authData"><span class="dropdown-item-text">Uid {{ authData.uid }}</span></li>
+                  <li v-if="authData"><span class="dropdown-item-text">Logged as {{ authData.providerData[0].displayName }}</span></li>
+                  <li v-if="authData">
+                    <button class="dropdown-item" type="button" @click="dispatchAccountAction('logout')">Log Out</button>
+                  </li>
                 </ul>
               </li>
             </ul>
@@ -30,7 +56,7 @@
         </div>
       </nav>
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           <div class="alert alert-warning" role="alert" v-if="!authData">
             Please Log in to use this page. <span v-if="statusLoaded">Status : {{ status }}</span>
           </div>
@@ -39,10 +65,10 @@
       <div v-if="rooms && errors && categories">
         <router-view/>
       </div>
-      <div class="visible-xs hidden-sm hidden-md hidden-lg">xs</div>
-      <div class="hidden-xs visible-sm hidden-md hidden-lg">sm</div>
-      <div class="hidden-xs hidden-sm visible-md hidden-lg">md</div>
-      <div class="hidden-xs hidden-sm hidden-md visible-lg">lg</div>
+      <div class="d-block d-md-none">xs</div>
+      <div class="d-none d-md-block d-lg-none">sm</div>
+      <div class="d-none d-lg-block d-xl-none">md</div>
+      <div class="d-none d-xl-block">lg</div>
     </div>
 </template>
 
@@ -54,6 +80,8 @@ export default {
   data () {
     return {
       fluid: false,
+      navMenuOpen: false,
+      accountMenuOpen: false,
       tstamp: 0,
       statusLoaded: false,
       statusData: {
@@ -93,6 +121,14 @@ export default {
   methods: {
     toggleHZoom () {
       this.fluid = !this.fluid
+    },
+    closeNavigation () {
+      this.navMenuOpen = false
+      this.accountMenuOpen = false
+    },
+    dispatchAccountAction (action) {
+      this.$store.dispatch(action)
+      this.closeNavigation()
     },
     async initData () {
       Object.keys(this.statusData).forEach(async (roomId) => {

@@ -43,7 +43,7 @@ describe('RecentDataPanel.vue', () => {
     })
 
     const wrapper = genWrapper(genPropsData())
-    const p = wrapper.find('.panel-footer > p')
+    const p = wrapper.find('.card-footer > p')
     expect(p.text()).toBe('Room One')
   })
   it('does not show a warning icon if the reading is recent', () => {
@@ -58,7 +58,7 @@ describe('RecentDataPanel.vue', () => {
 
     const wrapper = genWrapper(data)
 
-    const icon = wrapper.find('.glyphicon-warning-sign')
+    const icon = wrapper.find('.bi-exclamation-triangle')
     expect(icon.exists()).toBe(false)
   })
   it('shows a warning icon if the reading is too old', () => {
@@ -73,7 +73,20 @@ describe('RecentDataPanel.vue', () => {
 
     const wrapper = genWrapper(data)
 
-    const icon = wrapper.find('.glyphicon-warning-sign')
+    const icon = wrapper.find('.bi-exclamation-triangle')
     expect(icon.exists()).toBe(true)
+  })
+
+  it('converts the legacy database icon name to a Bootstrap Icon', () => {
+    mockFirebaseResult.mockReset()
+    mockFirebaseResult.mockReturnValue({
+      val () {
+        return FakeReadings[0]
+      }
+    })
+
+    const wrapper = genWrapper(genPropsData())
+
+    expect(wrapper.find('.bi-house').exists()).toBe(true)
   })
 })

@@ -1,8 +1,8 @@
 <template>
-  <div class="panel panel-default">
-    <div class="panel-body">
+  <div class="card mb-3">
+    <div class="card-body">
       <h2>
-        <span class="glyphicon" v-bind:class="room.icon" v-bind:style="{ color: room.color }"></span>
+        <i :class="bootstrapIconClass(room.icon)" :style="{ color: room.color }" aria-hidden="true"></i>
         <span v-for="(category, indexCat) in categories" :key="category.id">
           <span v-if="reading && room.readings[category.id]">
             <span v-if="indexCat > 0"> / </span>
@@ -12,15 +12,16 @@
         </span>
       </h2>
     </div>
-    <div class="panel-footer">
+    <div class="card-footer">
       <p>{{ room.label }}</p>
-      <small v-if="reading">{{ formatDate(reading.time) }}  <span v-if='timeLimit > reading.time' class="glyphicon glyphicon-warning-sign text-warning" ></span><br/></small>
+      <small v-if="reading">{{ formatDate(reading.time) }}  <i v-if="timeLimit > reading.time" class="bi bi-exclamation-triangle text-warning" aria-label="Reading is out of date"></i><br/></small>
     </div>
   </div>
 </template>
 
 <script>
 import { limitToLast, query, ref, onChildAdded } from 'firebase/database'
+import { bootstrapIconClass } from '@/helper/bootstrapIcon'
 
 export default {
   name: 'recent-data-panel',
@@ -34,6 +35,9 @@ export default {
     return {
       reading: false
     }
+  },
+  methods: {
+    bootstrapIconClass
   },
   created () {
     const lastReadings = query(ref(this.firebaseDatabase, 'readings/' + this.idRoom), limitToLast(1))

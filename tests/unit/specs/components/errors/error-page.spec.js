@@ -33,8 +33,8 @@ describe('ErrorPage.vue', () => {
     const wrapper = shallowMount(ErrorPage, {
       global: testGlobalOptions(store)
     })
-    const deleteIcon = wrapper.find('.col-lg-12:first-child .glyphicon-trash')
-    deleteIcon.trigger('click')
+    const deleteButton = wrapper.find('.col-12:first-child button')
+    deleteButton.trigger('click')
 
     expect(actions.removeError).toHaveBeenCalled()
   })

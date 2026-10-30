@@ -21,6 +21,9 @@ The project is a Vue single-page application deployed to Firebase Hosting.
 - `vite-plugin-pwa` and Workbox for service-worker generation and offline
   precaching.
 - Chart.js for charts.
+- Bootstrap 5.3 for CSS layout and components, plus Bootstrap Icons. Navigation
+  collapse and dropdown interactions are managed by Vue; Bootstrap JavaScript
+  and jQuery are not loaded.
 - ESLint flat configuration in `eslint.config.mjs`.
 
 Check `package.json` for the currently installed version ranges.
@@ -73,6 +76,10 @@ The intended Realtime Database structure, described in `README.md`, is:
 
 The UI converts Firebase's keyed objects to arrays using
 `src/helper/object2array.js`. Readings use Unix timestamps in seconds.
+Room icon values may still use legacy Bootstrap 3 Glyphicon names. Their
+Bootstrap Icons aliases and migration behavior are documented in the
+[README](../README.md#room-icons-in-firebase) and implemented in
+`src/helper/bootstrapIcon.js`.
 
 The statistics page also reads and writes `stats_daily` and `stats_monthly`
 paths. It is not part of the documented core data model and should be treated

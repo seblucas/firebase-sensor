@@ -3,11 +3,11 @@
 exports[`CustomChartPage.vue > shows a page 1`] = `
 "<div>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-6"><select class="form-control">
+    <div class="col-12 col-md-6"><select class="form-select mb-2">
         <!-- inline object literal -->
         <option value="[object Object]">Temperature</option>
         <option value="[object Object]">Humidity</option>
-      </select><select class="form-control">
+      </select><select class="form-select mb-2">
         <!-- inline object literal -->
         <option value="24">24 hours</option>
         <option value="48">48 hours</option>
@@ -15,7 +15,7 @@ exports[`CustomChartPage.vue > shows a page 1`] = `
       </select></div>
   </div>
   <div class="row">
-    <div class="col-lg-12">
+    <div class="col-12">
       <!--v-if-->
     </div>
   </div>

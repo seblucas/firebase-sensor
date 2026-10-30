@@ -1,8 +1,10 @@
 <template>
   <div class="row">
-    <div class="col-lg-12" v-for="error in errors" :key="error.id" >
+    <div class="col-12" v-for="error in errors" :key="error.id">
       <div class="alert alert-danger" role="alert">
-        <span class="glyphicon glyphicon-trash" style="cursor: pointer" v-on:click="remove(error)"></span>
+        <button class="btn btn-link text-danger p-0 me-2" type="button" aria-label="Delete error" @click="remove(error)">
+          <i class="bi bi-trash" aria-hidden="true"></i>
+        </button>
         <b>{{ formatDate(error.time) }} / </b>{{ error.message }}
       </div>
     </div>

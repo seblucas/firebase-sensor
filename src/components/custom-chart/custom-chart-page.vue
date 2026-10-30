@@ -1,19 +1,19 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-xs-12 col-sm-6 col-md-6">
-        <select class="form-control" v-model="selectedCategory">
+      <div class="col-12 col-md-6">
+        <select class="form-select mb-2" v-model="selectedCategory">
           <!-- inline object literal -->
           <option v-for="category in categories" v-bind:value="category" :key="category.id">{{ category.label }}</option>
         </select>
-        <select class="form-control" v-model="selectedSize">
+        <select class="form-select mb-2" v-model="selectedSize">
           <!-- inline object literal -->
           <option v-for="size in chartAllSizes" v-bind:value="size.id" :key="size.id">{{ size.value }}</option>
         </select>
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-12">
         <chart-detail v-if="selectedCategory" :rooms="rooms" :category="selectedCategory" :numberOfHours="selectedSize"></chart-detail>
       </div>
     </div>

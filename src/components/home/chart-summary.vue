@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="row">
-        <div class="col-lg-12">
-          <button class="btn btn-default pull-right" v-on:click="loadData()"><span class="glyphicon glyphicon-refresh"></span></button>
+        <div class="col-12">
+          <button class="btn btn-outline-secondary float-end" type="button" aria-label="Refresh charts" v-on:click="loadData()">
+            <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+          </button>
         </div>
     </div>
     <div class="row" v-for="category in categories" :key="category.id">
-      <div class="col-lg-12">
+      <div class="col-12">
         <chart-detail v-if="isReadyChart" :rooms="rooms" :category="category" :readings="data" :numberOfHours="numberOfHours"></chart-detail>
       </div>
     </div>
