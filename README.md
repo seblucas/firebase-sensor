@@ -64,6 +64,37 @@ I'll probably add the battery level of some sensors, that will mean changing the
 ## The Web UI
 
 The interface is built with Vue 3, Vue Router 4 and Vuex 4.
+It uses Bootstrap 5.3 for layout and styling, and Bootstrap Icons for icons.
+Bootstrap's responsive navigation and dropdown are controlled by Vue; jQuery
+and Bootstrap JavaScript are not loaded.
+
+### Room icons in Firebase
+
+The `rooms/{roomId}/icon` value may contain an old Bootstrap 3 Glyphicon name.
+The UI converts known legacy names to Bootstrap Icons, so existing Firebase
+records do not need to be changed. Both a bare name (`fire`) and its old
+`glyphicon-` class (`glyphicon-fire`) are accepted; values containing the old
+`glyphicon glyphicon-fire` class pair are accepted too.
+
+| Existing Firebase value | Bootstrap Icons class | Notes |
+| --- | --- | --- |
+| `bed` / `glyphicon-bed` | `bi bi-lamp` | |
+| `tent` / `glyphicon-tent` | `bi bi-house` | Closest available shelter icon |
+| `scale` / `glyphicon-scale` | `bi bi-speedometer2` | |
+| `cutlery` / `glyphicon-cutlery` | `bi bi-fork-knife` | |
+| `fire` / `glyphicon-fire` | `bi bi-fire` | |
+| `ice-lolly` / `glyphicon-ice-lolly` | `bi bi-cake2` | |
+| `ice-lolly-tasted` / `glyphicon-ice-lolly-tasted` | `bi bi-snow3` | |
+| `globe` / `glyphicon-globe` | `bi bi-globe-americas` | |
+| `tree-conifer` / `glyphicon-tree-conifer` | `bi bi-tree-fill` | |
+| `tree-deciduous` / `glyphicon-tree-deciduous` | `bi bi-tree-fill` | |
+| `tree-decidious` / `glyphicon-tree-decidious` | `bi bi-tree-fill` | Supports the existing misspelling |
+
+Other Bootstrap Icons names can be stored directly, with or without the
+`bi-` prefix (for example, `alarm` or `bi-alarm`). Unrecognized values using
+the old `glyphicon-` prefix, and malformed values, display
+`bi bi-question-circle`. To add an alias for an existing database value,
+update `src/helper/bootstrapIcon.js` and its unit tests.
 
 The project uses Vite for development/builds and Vitest for unit tests. Run
 `yarn serve` to start the development server, `yarn test:unit` to run tests,
